@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'examen - Maître du Jeu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Écran de jeu maître -->
+    <div id="game-screen" class="screen active">
+        <div class="top-bar">
+            <div class="stats-left">
+                <div class="lives-display-bar">
+                    <span class="heart-icon">❤️</span>
+                    <span id="lives">3</span>
+                </div>
+                <div class="energy-display-bar">
+                    <span class="lightning-icon">⚡</span>
+                    <span id="energy">3</span>
+                </div>
+                <div class="points-display-bar">
+                    <span class="star-icon">⭐</span>
+                    <span id="points">0</span>
+                </div>
+            </div>
+            <div class="timer-right">
+                <div class="timer-display" id="timer">04:00</div>
+                <div class="timer-controls">
+                    <button id="pauseBtn" class="timer-btn">Pause</button>
+                    <button id="resumeBtn" class="timer-btn" style="display: none;">Reprendre</button>
+                    <button id="resetBtn" class="timer-btn">Réinitialiser</button>
+                </div>
+            </div>
+        </div>
+        <div class="container game-layout">
+            <div class="players-sidebar" id="players-sidebar"></div>
+            <div id="grid" class="grid"></div>
+            <div class="actions-sidebar">
+                <button id="btn-groupe" class="action-btn action-btn-disabled" disabled>Groupe</button>
+                <button id="btn-indice" class="action-btn action-btn-disabled" disabled>Indice</button>
+                <button id="btn-choix" class="action-btn action-btn-disabled" disabled>Choix</button>
+                <button id="btn-vie" class="action-btn action-btn-disabled" disabled>Vie</button>
+                <button id="btn-points" class="action-btn action-btn-disabled" disabled>Points</button>
+                <button id="btn-temps" class="action-btn action-btn-disabled" disabled>Temps</button>
+            </div>
+        </div>
+        <button id="finishBtn" class="finish-btn">Fini</button>
+    </div>
+
+    <script src="common.js"></script>
+    <script src="mj.js"></script>
+</body>
+</html>

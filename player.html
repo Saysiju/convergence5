@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'examen - Joueur</title>
+    <link rel="stylesheet" href="game.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <!-- Écran de connexion -->
+    <div id="join-screen" class="screen active">
+        <div class="container">
+            <h1>Rejoindre une partie</h1>
+            <div class="form-group">
+                <label for="sessionCodeInput">Code de session :</label>
+                <input type="text" id="sessionCodeInput" placeholder="Entrez le code" maxlength="7">
+            </div>
+            <div class="form-group">
+                <label for="playerNameInput">Votre nom :</label>
+                <input type="text" id="playerNameInput" placeholder="Votre nom">
+            </div>
+            <button id="joinBtn" class="btn btn-primary">Rejoindre</button>
+            <div id="joinError" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Écran de configuration -->
+    <div id="config-screen" class="screen">
+        <div class="container">
+            <h1>Configuration</h1>
+            <p>Distribuez 3 points parmi les 9 thèmes disponibles.</p>
+            <div id="themesConfig" class="themes-config"></div>
+            <div class="points-summary">
+                <p>Points distribués : <span id="pointsSum">0</span>/3</p>
+            </div>
+            <div class="powers-section">
+                <h3>Choisissez un pouvoir</h3>
+                <div id="powersConfig" class="powers-config"></div>
+            </div>
+            <button id="readyBtn" class="btn btn-primary" disabled>Prêt</button>
+        </div>
+    </div>
+
+    <!-- Écran d'attente -->
+    <div id="waiting-screen" class="screen">
+        <div class="container">
+            <h1>En attente</h1>
+            <p>En attente que tous les joueurs soient prêts...</p>
+        </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="stat">
+                <span class="stat-label">Score :</span>
+                <span id="gameScore" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Vies :</span>
+                <span id="gameLives" class="stat-value">3</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Temps :</span>
+                <span id="gameTimer" class="stat-value">4:00</span>
+            </div>
+        </div>
+        <div id="propositions-container" class="propositions-container" style="display: none;">
+            <h2 id="propositionCategory"></h2>
+            <div id="powers-buttons" class="powers-buttons"></div>
+            <div id="propositions-grid" class="propositions-grid"></div>
+        </div>
+        <div id="waiting-message" class="waiting-message">
+            <p>En attente que le meneur révèle un thème...</p>
+        </div>
+    </div>
+
+    <!-- Écran de fin de partie -->
+    <div id="end-game-screen" class="screen">
+        <div class="container">
+            <h1 id="endGameTitle"></h1>
+            <p id="endGameMessage"></p>
+        </div>
+    </div>
+
+    <div id="gamePopup" class="game-popup-overlay">
+        <div class="game-popup">
+            <div id="popupIcon" class="game-popup-icon" style="display: none;"></div>
+            <h2 id="popupTitle" class="game-popup-title" style="display: none;"></h2>
+            <p id="popupMessage" class="game-popup-message"></p>
+            <div id="popupScore" class="game-popup-score" style="display: none;"></div>
+            <button id="popupBtn" class="game-popup-btn">OK</button>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+    <script src="player.js"></script>
+</body>
+</html>

@@ -1,0 +1,1532 @@
+[
+  {
+    "name": "Tintin",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Astérix",
+      "Rorschach (Watchmen)",
+      "Tintin",
+      "Blacksad",
+      "Batman",
+      "Daredevil",
+      "Lucky Luke",
+      "Spider-Man",
+      "Captain America"
+    ],
+    "indice_mot": "reporter",
+    "indice_phrase": "Un jeune reporter belge aux aventures exotiques"
+  },
+  {
+    "name": "Batman",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Daredevil",
+      "Spider-Man",
+      "Batman",
+      "Rorschach (Watchmen)",
+      "Corto Maltese",
+      "Blacksad",
+      "Lucky Luke",
+      "Astérix",
+      "Tintin"
+    ],
+    "indice_mot": "chauve-souris",
+    "indice_phrase": "Le justicier masqué de Gotham City"
+  },
+  {
+    "name": "Spider-Man",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Blacksad",
+      "Daredevil",
+      "Captain America",
+      "Spider-Man",
+      "Batman",
+      "Lucky Luke",
+      "Rorschach (Watchmen)",
+      "Tintin",
+      "Astérix"
+    ],
+    "indice_mot": "araignée",
+    "indice_phrase": "Super-héros qui grimpe aux murs à New York"
+  },
+  {
+    "name": "Corto Maltese",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Tintin",
+      "Blacksad",
+      "Spider-Man",
+      "Lucky Luke",
+      "Captain America",
+      "Corto Maltese",
+      "Batman",
+      "Rorschach (Watchmen)",
+      "Astérix"
+    ],
+    "indice_mot": "marin",
+    "indice_phrase": "Aventurier marin créé par Hugo Pratt"
+  },
+  {
+    "name": "Astérix",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Astérix",
+      "Blacksad",
+      "Corto Maltese",
+      "Batman",
+      "Captain America",
+      "Rorschach (Watchmen)",
+      "Tintin",
+      "Spider-Man",
+      "Lucky Luke"
+    ],
+    "indice_mot": "Gaulois",
+    "indice_phrase": "Petit Gaulois résistant à l'envahisseur romain"
+  },
+  {
+    "name": "Lucky Luke",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Astérix",
+      "Daredevil",
+      "Blacksad",
+      "Tintin",
+      "Captain America",
+      "Lucky Luke",
+      "Batman",
+      "Spider-Man",
+      "Corto Maltese"
+    ],
+    "indice_mot": "cow-boy",
+    "indice_phrase": "Le cow-boy qui tire plus vite que son ombre"
+  },
+  {
+    "name": "Rorschach (Watchmen)",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Astérix",
+      "Blacksad",
+      "Rorschach (Watchmen)",
+      "Daredevil",
+      "Lucky Luke",
+      "Tintin",
+      "Captain America",
+      "Corto Maltese",
+      "Batman"
+    ],
+    "indice_mot": "masque",
+    "indice_phrase": "Vigilant au masque de taches d'encre"
+  },
+  {
+    "name": "Blacksad",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Daredevil",
+      "Batman",
+      "Astérix",
+      "Captain America",
+      "Blacksad",
+      "Rorschach (Watchmen)",
+      "Lucky Luke",
+      "Corto Maltese",
+      "Spider-Man"
+    ],
+    "indice_mot": "détective",
+    "indice_phrase": "Détective félin dans un monde anthropomorphe"
+  },
+  {
+    "name": "Captain America",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Corto Maltese",
+      "Rorschach (Watchmen)",
+      "Lucky Luke",
+      "Captain America",
+      "Tintin",
+      "Daredevil",
+      "Blacksad",
+      "Spider-Man",
+      "Astérix"
+    ],
+    "indice_mot": "bouclier",
+    "indice_phrase": "Super-soldat américain au bouclier"
+  },
+  {
+    "name": "Daredevil",
+    "category": "Bande dessinée",
+    "propositions": [
+      "Batman",
+      "Captain America",
+      "Tintin",
+      "Blacksad",
+      "Daredevil",
+      "Rorschach (Watchmen)",
+      "Corto Maltese",
+      "Lucky Luke",
+      "Spider-Man"
+    ],
+    "indice_mot": "aveugle",
+    "indice_phrase": "Avocat aveugle justicier de Hell's Kitchen"
+  },
+  {
+    "name": "Vito Corleone (Le Parrain)",
+    "category": "Film",
+    "propositions": [
+      "Joker (The Dark Knight)",
+      "Tony Montana (Scarface)",
+      "Forrest Gump",
+      "Hannibal Lecter",
+      "Vito Corleone (Le Parrain)",
+      "Jules Winnfield (Pulp Fiction)",
+      "Tyler Durden (Fight Club)",
+      "Darth Vader",
+      "Indiana Jones"
+    ],
+    "indice_mot": "parrain",
+    "indice_phrase": "Le chef de la famille mafieuse Corleone"
+  },
+  {
+    "name": "Tony Montana (Scarface)",
+    "category": "Film",
+    "propositions": [
+      "Hannibal Lecter",
+      "Tony Montana (Scarface)",
+      "Indiana Jones",
+      "Darth Vader",
+      "Joker (The Dark Knight)",
+      "Vito Corleone (Le Parrain)",
+      "Neo (Matrix)",
+      "Forrest Gump",
+      "Tyler Durden (Fight Club)"
+    ],
+    "indice_mot": "cocaïne",
+    "indice_phrase": "Traficant cubain à Miami"
+  },
+  {
+    "name": "Neo (Matrix)",
+    "category": "Film",
+    "propositions": [
+      "Forrest Gump",
+      "Tony Montana (Scarface)",
+      "Neo (Matrix)",
+      "Vito Corleone (Le Parrain)",
+      "Jules Winnfield (Pulp Fiction)",
+      "Indiana Jones",
+      "Darth Vader",
+      "Hannibal Lecter",
+      "Tyler Durden (Fight Club)"
+    ],
+    "indice_mot": "pilule",
+    "indice_phrase": "L'élu qui découvre la réalité de la matrice"
+  },
+  {
+    "name": "Tyler Durden (Fight Club)",
+    "category": "Film",
+    "propositions": [
+      "Vito Corleone (Le Parrain)",
+      "Neo (Matrix)",
+      "Indiana Jones",
+      "Tyler Durden (Fight Club)",
+      "Tony Montana (Scarface)",
+      "Darth Vader",
+      "Jules Winnfield (Pulp Fiction)",
+      "Hannibal Lecter",
+      "Forrest Gump"
+    ],
+    "indice_mot": "savon",
+    "indice_phrase": "Fondateur d'un club de combat clandestin"
+  },
+  {
+    "name": "Hannibal Lecter",
+    "category": "Film",
+    "propositions": [
+      "Darth Vader",
+      "Tony Montana (Scarface)",
+      "Tyler Durden (Fight Club)",
+      "Forrest Gump",
+      "Jules Winnfield (Pulp Fiction)",
+      "Hannibal Lecter",
+      "Vito Corleone (Le Parrain)",
+      "Neo (Matrix)",
+      "Indiana Jones"
+    ],
+    "indice_mot": "cannibale",
+    "indice_phrase": "Psychiatre cannibale au QI exceptionnel"
+  },
+  {
+    "name": "Forrest Gump",
+    "category": "Film",
+    "propositions": [
+      "Hannibal Lecter",
+      "Jules Winnfield (Pulp Fiction)",
+      "Darth Vader",
+      "Forrest Gump",
+      "Neo (Matrix)",
+      "Tony Montana (Scarface)",
+      "Tyler Durden (Fight Club)",
+      "Vito Corleone (Le Parrain)",
+      "Indiana Jones"
+    ],
+    "indice_mot": "chocolat",
+    "indice_phrase": "Simple d'esprit qui traverse l'histoire américaine"
+  },
+  {
+    "name": "Indiana Jones",
+    "category": "Film",
+    "propositions": [
+      "Tony Montana (Scarface)",
+      "Indiana Jones",
+      "Darth Vader",
+      "Jules Winnfield (Pulp Fiction)",
+      "Forrest Gump",
+      "Tyler Durden (Fight Club)",
+      "Vito Corleone (Le Parrain)",
+      "Hannibal Lecter",
+      "Joker (The Dark Knight)"
+    ],
+    "indice_mot": "fouet",
+    "indice_phrase": "Archéologue aventurier au chapeau et au fouet"
+  },
+  {
+    "name": "Joker (The Dark Knight)",
+    "category": "Film",
+    "propositions": [
+      "Vito Corleone (Le Parrain)",
+      "Darth Vader",
+      "Tony Montana (Scarface)",
+      "Joker (The Dark Knight)",
+      "Neo (Matrix)",
+      "Jules Winnfield (Pulp Fiction)",
+      "Tyler Durden (Fight Club)",
+      "Indiana Jones",
+      "Hannibal Lecter"
+    ],
+    "indice_mot": "clown",
+    "indice_phrase": "Criminel au visage de clown à Gotham"
+  },
+  {
+    "name": "Jules Winnfield (Pulp Fiction)",
+    "category": "Film",
+    "propositions": [
+      "Neo (Matrix)",
+      "Darth Vader",
+      "Tony Montana (Scarface)",
+      "Hannibal Lecter",
+      "Jules Winnfield (Pulp Fiction)",
+      "Vito Corleone (Le Parrain)",
+      "Indiana Jones",
+      "Joker (The Dark Knight)",
+      "Tyler Durden (Fight Club)"
+    ],
+    "indice_mot": "bible",
+    "indice_phrase": "Tueur qui cite la Bible avant d'exécuter"
+  },
+  {
+    "name": "Darth Vader",
+    "category": "Film",
+    "propositions": [
+      "Indiana Jones",
+      "Jules Winnfield (Pulp Fiction)",
+      "Tyler Durden (Fight Club)",
+      "Neo (Matrix)",
+      "Forrest Gump",
+      "Joker (The Dark Knight)",
+      "Hannibal Lecter",
+      "Darth Vader",
+      "Tony Montana (Scarface)"
+    ],
+    "indice_mot": "respirateur",
+    "indice_phrase": "Seigneur Sith à l'armure noire"
+  },
+  {
+    "name": "Walter White (Breaking Bad)",
+    "category": "Série TV",
+    "propositions": [
+      "Walter White (Breaking Bad)",
+      "Saul Goodman (Better Call Saul)",
+      "Rick Grimes (The Walking Dead)",
+      "Tommy Shelby (Peaky Blinders)",
+      "Sherlock Holmes (Sherlock)",
+      "Tyrion Lannister (Game of Thrones)",
+      "Eleven (Stranger Things)",
+      "Michael Scofield (Prison Break)",
+      "Don Draper (Mad Men)"
+    ],
+    "indice_mot": "méthamphétamine",
+    "indice_phrase": "Professeur devenu producteur de crystal"
+  },
+  {
+    "name": "Tyrion Lannister (Game of Thrones)",
+    "category": "Série TV",
+    "propositions": [
+      "Saul Goodman (Better Call Saul)",
+      "Eleven (Stranger Things)",
+      "Rick Grimes (The Walking Dead)",
+      "Tyrion Lannister (Game of Thrones)",
+      "Michael Scofield (Prison Break)",
+      "Walter White (Breaking Bad)",
+      "Tommy Shelby (Peaky Blinders)",
+      "Omar Little (The Wire)",
+      "Don Draper (Mad Men)"
+    ],
+    "indice_mot": "nain",
+    "indice_phrase": "Nain politique le plus rusé de Westeros"
+  },
+  {
+    "name": "Tommy Shelby (Peaky Blinders)",
+    "category": "Série TV",
+    "propositions": [
+      "Saul Goodman (Better Call Saul)",
+      "Don Draper (Mad Men)",
+      "Sherlock Holmes (Sherlock)",
+      "Walter White (Breaking Bad)",
+      "Omar Little (The Wire)",
+      "Rick Grimes (The Walking Dead)",
+      "Eleven (Stranger Things)",
+      "Tommy Shelby (Peaky Blinders)",
+      "Tyrion Lannister (Game of Thrones)"
+    ],
+    "indice_mot": "Birmingham",
+    "indice_phrase": "Chef de gang dans l'Angleterre des années 20"
+  },
+  {
+    "name": "Saul Goodman (Better Call Saul)",
+    "category": "Série TV",
+    "propositions": [
+      "Eleven (Stranger Things)",
+      "Tyrion Lannister (Game of Thrones)",
+      "Don Draper (Mad Men)",
+      "Walter White (Breaking Bad)",
+      "Rick Grimes (The Walking Dead)",
+      "Saul Goodman (Better Call Saul)",
+      "Omar Little (The Wire)",
+      "Sherlock Holmes (Sherlock)",
+      "Tommy Shelby (Peaky Blinders)"
+    ],
+    "indice_mot": "avocat",
+    "indice_phrase": "Avocat véreux avant Breaking Bad"
+  },
+  {
+    "name": "Omar Little (The Wire)",
+    "category": "Série TV",
+    "propositions": [
+      "Rick Grimes (The Walking Dead)",
+      "Tyrion Lannister (Game of Thrones)",
+      "Walter White (Breaking Bad)",
+      "Saul Goodman (Better Call Saul)",
+      "Sherlock Holmes (Sherlock)",
+      "Eleven (Stranger Things)",
+      "Michael Scofield (Prison Break)",
+      "Omar Little (The Wire)",
+      "Don Draper (Mad Men)"
+    ],
+    "indice_mot": "sifflet",
+    "indice_phrase": "Braqueur de trafiquants à Baltimore"
+  },
+  {
+    "name": "Don Draper (Mad Men)",
+    "category": "Série TV",
+    "propositions": [
+      "Sherlock Holmes (Sherlock)",
+      "Tyrion Lannister (Game of Thrones)",
+      "Rick Grimes (The Walking Dead)",
+      "Saul Goodman (Better Call Saul)",
+      "Eleven (Stranger Things)",
+      "Walter White (Breaking Bad)",
+      "Don Draper (Mad Men)",
+      "Omar Little (The Wire)",
+      "Tommy Shelby (Peaky Blinders)"
+    ],
+    "indice_mot": "publicité",
+    "indice_phrase": "Directeur créatif dans les années 60"
+  },
+  {
+    "name": "Sherlock Holmes (Sherlock)",
+    "category": "Série TV",
+    "propositions": [
+      "Michael Scofield (Prison Break)",
+      "Rick Grimes (The Walking Dead)",
+      "Walter White (Breaking Bad)",
+      "Tyrion Lannister (Game of Thrones)",
+      "Omar Little (The Wire)",
+      "Tommy Shelby (Peaky Blinders)",
+      "Sherlock Holmes (Sherlock)",
+      "Don Draper (Mad Men)",
+      "Eleven (Stranger Things)"
+    ],
+    "indice_mot": "déduction",
+    "indice_phrase": "Détective génial au manteau bleu"
+  },
+  {
+    "name": "Michael Scofield (Prison Break)",
+    "category": "Série TV",
+    "propositions": [
+      "Tommy Shelby (Peaky Blinders)",
+      "Eleven (Stranger Things)",
+      "Rick Grimes (The Walking Dead)",
+      "Michael Scofield (Prison Break)",
+      "Saul Goodman (Better Call Saul)",
+      "Sherlock Holmes (Sherlock)",
+      "Don Draper (Mad Men)",
+      "Tyrion Lannister (Game of Thrones)",
+      "Omar Little (The Wire)"
+    ],
+    "indice_mot": "tatouage",
+    "indice_phrase": "Ingénieur qui se fait incarcérer pour évader son frère"
+  },
+  {
+    "name": "Rick Grimes (The Walking Dead)",
+    "category": "Série TV",
+    "propositions": [
+      "Omar Little (The Wire)",
+      "Tyrion Lannister (Game of Thrones)",
+      "Don Draper (Mad Men)",
+      "Tommy Shelby (Peaky Blinders)",
+      "Rick Grimes (The Walking Dead)",
+      "Walter White (Breaking Bad)",
+      "Saul Goodman (Better Call Saul)",
+      "Sherlock Holmes (Sherlock)",
+      "Eleven (Stranger Things)"
+    ],
+    "indice_mot": "shérif",
+    "indice_phrase": "Shérif survivant en monde post-apocalyptique"
+  },
+  {
+    "name": "Eleven (Stranger Things)",
+    "category": "Série TV",
+    "propositions": [
+      "Tyrion Lannister (Game of Thrones)",
+      "Sherlock Holmes (Sherlock)",
+      "Rick Grimes (The Walking Dead)",
+      "Omar Little (The Wire)",
+      "Don Draper (Mad Men)",
+      "Tommy Shelby (Peaky Blinders)",
+      "Eleven (Stranger Things)",
+      "Michael Scofield (Prison Break)",
+      "Walter White (Breaking Bad)"
+    ],
+    "indice_mot": "télékinésie",
+    "indice_phrase": "Enfant aux pouvoirs psychiques"
+  },
+  {
+    "name": "Socrate",
+    "category": "Philosophe",
+    "propositions": [
+      "Aristote",
+      "Michel Foucault",
+      "Nietzsche",
+      "Jean-Paul Sartre",
+      "Kant",
+      "Descartes",
+      "Hannah Arendt",
+      "Socrate",
+      "Machiavel"
+    ],
+    "indice_mot": "maïeutique",
+    "indice_phrase": "Philosophe grec condamné à boire la ciguë"
+  },
+  {
+    "name": "Platon",
+    "category": "Philosophe",
+    "propositions": [
+      "Aristote",
+      "Descartes",
+      "Machiavel",
+      "Michel Foucault",
+      "Kant",
+      "Nietzsche",
+      "Jean-Paul Sartre",
+      "Platon",
+      "Hannah Arendt"
+    ],
+    "indice_mot": "caverne",
+    "indice_phrase": "Disciple de Socrate, auteur de la théorie des Idées"
+  },
+  {
+    "name": "Aristote",
+    "category": "Philosophe",
+    "propositions": [
+      "Machiavel",
+      "Kant",
+      "Platon",
+      "Jean-Paul Sartre",
+      "Michel Foucault",
+      "Aristote",
+      "Descartes",
+      "Socrate",
+      "Nietzsche"
+    ],
+    "indice_mot": "Lyceum",
+    "indice_phrase": "Philosophe grec précepteur d'Alexandre"
+  },
+  {
+    "name": "Machiavel",
+    "category": "Philosophe",
+    "propositions": [
+      "Platon",
+      "Socrate",
+      "Machiavel",
+      "Jean-Paul Sartre",
+      "Michel Foucault",
+      "Kant",
+      "Hannah Arendt",
+      "Nietzsche",
+      "Aristote"
+    ],
+    "indice_mot": "Prince",
+    "indice_phrase": "Auteur du Prince, conseiller politique florentin"
+  },
+  {
+    "name": "Nietzsche",
+    "category": "Philosophe",
+    "propositions": [
+      "Socrate",
+      "Aristote",
+      "Descartes",
+      "Machiavel",
+      "Hannah Arendt",
+      "Jean-Paul Sartre",
+      "Nietzsche",
+      "Platon",
+      "Michel Foucault"
+    ],
+    "indice_mot": "surhomme",
+    "indice_phrase": "Philosophe de la volonté de puissance"
+  },
+  {
+    "name": "Descartes",
+    "category": "Philosophe",
+    "propositions": [
+      "Platon",
+      "Kant",
+      "Michel Foucault",
+      "Descartes",
+      "Aristote",
+      "Hannah Arendt",
+      "Machiavel",
+      "Socrate",
+      "Jean-Paul Sartre"
+    ],
+    "indice_mot": "cogito",
+    "indice_phrase": "Philosophe du cogito ergo sum"
+  },
+  {
+    "name": "Kant",
+    "category": "Philosophe",
+    "propositions": [
+      "Machiavel",
+      "Aristote",
+      "Hannah Arendt",
+      "Michel Foucault",
+      "Platon",
+      "Descartes",
+      "Jean-Paul Sartre",
+      "Kant",
+      "Socrate"
+    ],
+    "indice_mot": "impératif",
+    "indice_phrase": "Philosophe des Lumières de Königsberg"
+  },
+  {
+    "name": "Hannah Arendt",
+    "category": "Philosophe",
+    "propositions": [
+      "Platon",
+      "Hannah Arendt",
+      "Nietzsche",
+      "Michel Foucault",
+      "Kant",
+      "Jean-Paul Sartre",
+      "Aristote",
+      "Socrate",
+      "Machiavel"
+    ],
+    "indice_mot": "banalité",
+    "indice_phrase": "Philosophe de la condition humaine"
+  },
+  {
+    "name": "Jean-Paul Sartre",
+    "category": "Philosophe",
+    "propositions": [
+      "Socrate",
+      "Kant",
+      "Machiavel",
+      "Michel Foucault",
+      "Aristote",
+      "Jean-Paul Sartre",
+      "Hannah Arendt",
+      "Nietzsche",
+      "Platon"
+    ],
+    "indice_mot": "existentialisme",
+    "indice_phrase": "Philosophe de l'existentialisme et de la liberté"
+  },
+  {
+    "name": "Michel Foucault",
+    "category": "Philosophe",
+    "propositions": [
+      "Nietzsche",
+      "Michel Foucault",
+      "Descartes",
+      "Platon",
+      "Jean-Paul Sartre",
+      "Socrate",
+      "Kant",
+      "Hannah Arendt",
+      "Aristote"
+    ],
+    "indice_mot": "surveillance",
+    "indice_phrase": "Philosophe du pouvoir et des institutions"
+  },
+  {
+    "name": "Victor Hugo",
+    "category": "Écrivain",
+    "propositions": [
+      "Victor Hugo",
+      "Ernest Hemingway",
+      "Franz Kafka",
+      "Jules Verne",
+      "Fiodor Dostoïevski",
+      "Albert Camus",
+      "George Orwell",
+      "Margaret Atwood",
+      "Stephen King"
+    ],
+    "indice_mot": "Notre-Dame",
+    "indice_phrase": "Auteur des Misérables et de Notre-Dame de Paris"
+  },
+  {
+    "name": "Albert Camus",
+    "category": "Écrivain",
+    "propositions": [
+      "Fiodor Dostoïevski",
+      "Ernest Hemingway",
+      "George Orwell",
+      "Franz Kafka",
+      "Stephen King",
+      "Albert Camus",
+      "Jules Verne",
+      "Victor Hugo",
+      "Philip K. Dick"
+    ],
+    "indice_mot": "absurde",
+    "indice_phrase": "Auteur de L'Étranger et du Mythe de Sisyphe"
+  },
+  {
+    "name": "George Orwell",
+    "category": "Écrivain",
+    "propositions": [
+      "Jules Verne",
+      "Franz Kafka",
+      "Albert Camus",
+      "Philip K. Dick",
+      "Victor Hugo",
+      "Margaret Atwood",
+      "Fiodor Dostoïevski",
+      "George Orwell",
+      "Stephen King"
+    ],
+    "indice_mot": "Big Brother",
+    "indice_phrase": "Auteur de 1984 et de La Ferme des animaux"
+  },
+  {
+    "name": "Franz Kafka",
+    "category": "Écrivain",
+    "propositions": [
+      "Victor Hugo",
+      "Albert Camus",
+      "Jules Verne",
+      "Philip K. Dick",
+      "Fiodor Dostoïevski",
+      "Franz Kafka",
+      "Stephen King",
+      "Margaret Atwood",
+      "Ernest Hemingway"
+    ],
+    "indice_mot": "métamorphose",
+    "indice_phrase": "Auteur de La Métamorphose"
+  },
+  {
+    "name": "Fiodor Dostoïevski",
+    "category": "Écrivain",
+    "propositions": [
+      "Fiodor Dostoïevski",
+      "Philip K. Dick",
+      "Victor Hugo",
+      "Margaret Atwood",
+      "Franz Kafka",
+      "Stephen King",
+      "Ernest Hemingway",
+      "Albert Camus",
+      "George Orwell"
+    ],
+    "indice_mot": "Crime",
+    "indice_phrase": "Auteur russe de Crime et Châtiment"
+  },
+  {
+    "name": "Jules Verne",
+    "category": "Écrivain",
+    "propositions": [
+      "Fiodor Dostoïevski",
+      "Victor Hugo",
+      "Franz Kafka",
+      "Ernest Hemingway",
+      "Stephen King",
+      "Margaret Atwood",
+      "Jules Verne",
+      "Albert Camus",
+      "George Orwell"
+    ],
+    "indice_mot": "Nautilus",
+    "indice_phrase": "Auteur de Vingt mille lieues sous les mers"
+  },
+  {
+    "name": "Ernest Hemingway",
+    "category": "Écrivain",
+    "propositions": [
+      "Stephen King",
+      "Philip K. Dick",
+      "Margaret Atwood",
+      "Jules Verne",
+      "Victor Hugo",
+      "Ernest Hemingway",
+      "Fiodor Dostoïevski",
+      "Franz Kafka",
+      "George Orwell"
+    ],
+    "indice_mot": "vieil homme",
+    "indice_phrase": "Auteur du Vieil Homme et la Mer"
+  },
+  {
+    "name": "Stephen King",
+    "category": "Écrivain",
+    "propositions": [
+      "Philip K. Dick",
+      "Margaret Atwood",
+      "Albert Camus",
+      "Stephen King",
+      "Fiodor Dostoïevski",
+      "Ernest Hemingway",
+      "Franz Kafka",
+      "Jules Verne",
+      "George Orwell"
+    ],
+    "indice_mot": "horreur",
+    "indice_phrase": "Maître du roman d'horreur américain"
+  },
+  {
+    "name": "Philip K. Dick",
+    "category": "Écrivain",
+    "propositions": [
+      "Albert Camus",
+      "Fiodor Dostoïevski",
+      "Stephen King",
+      "Franz Kafka",
+      "Philip K. Dick",
+      "Ernest Hemingway",
+      "George Orwell",
+      "Jules Verne",
+      "Margaret Atwood"
+    ],
+    "indice_mot": "androïdes",
+    "indice_phrase": "Auteur de science-fiction, Blade Runner"
+  },
+  {
+    "name": "Margaret Atwood",
+    "category": "Écrivain",
+    "propositions": [
+      "Albert Camus",
+      "Margaret Atwood",
+      "George Orwell",
+      "Victor Hugo",
+      "Jules Verne",
+      "Franz Kafka",
+      "Fiodor Dostoïevski",
+      "Ernest Hemingway",
+      "Stephen King"
+    ],
+    "indice_mot": "servante",
+    "indice_phrase": "Auteure de La Servante écarlate"
+  },
+  {
+    "name": "Al Pacino",
+    "category": "Acteur",
+    "propositions": [
+      "Brad Pitt",
+      "Mads Mikkelsen",
+      "Al Pacino",
+      "Robert De Niro",
+      "Jack Nicholson",
+      "Joaquin Phoenix",
+      "Johnny Depp",
+      "Leonardo DiCaprio",
+      "Denzel Washington"
+    ],
+    "indice_mot": "Parrain",
+    "indice_phrase": "Acteur du Parrain et de Scarface"
+  },
+  {
+    "name": "Robert De Niro",
+    "category": "Acteur",
+    "propositions": [
+      "Robert De Niro",
+      "Denzel Washington",
+      "Tom Hanks",
+      "Joaquin Phoenix",
+      "Leonardo DiCaprio",
+      "Mads Mikkelsen",
+      "Johnny Depp",
+      "Al Pacino",
+      "Brad Pitt"
+    ],
+    "indice_mot": "Taxi Driver",
+    "indice_phrase": "Acteur des Affranchis et de Taxi Driver"
+  },
+  {
+    "name": "Leonardo DiCaprio",
+    "category": "Acteur",
+    "propositions": [
+      "Jack Nicholson",
+      "Tom Hanks",
+      "Denzel Washington",
+      "Brad Pitt",
+      "Leonardo DiCaprio",
+      "Joaquin Phoenix",
+      "Johnny Depp",
+      "Mads Mikkelsen",
+      "Al Pacino"
+    ],
+    "indice_mot": "Titanic",
+    "indice_phrase": "Acteur de Titanic et de Revenant"
+  },
+  {
+    "name": "Joaquin Phoenix",
+    "category": "Acteur",
+    "propositions": [
+      "Jack Nicholson",
+      "Leonardo DiCaprio",
+      "Brad Pitt",
+      "Denzel Washington",
+      "Joaquin Phoenix",
+      "Tom Hanks",
+      "Robert De Niro",
+      "Mads Mikkelsen",
+      "Al Pacino"
+    ],
+    "indice_mot": "Joker",
+    "indice_phrase": "Acteur du Joker et de Gladiator"
+  },
+  {
+    "name": "Brad Pitt",
+    "category": "Acteur",
+    "propositions": [
+      "Leonardo DiCaprio",
+      "Johnny Depp",
+      "Jack Nicholson",
+      "Mads Mikkelsen",
+      "Tom Hanks",
+      "Robert De Niro",
+      "Al Pacino",
+      "Brad Pitt",
+      "Joaquin Phoenix"
+    ],
+    "indice_mot": "Fight Club",
+    "indice_phrase": "Acteur de Fight Club et d'Ocean's Eleven"
+  },
+  {
+    "name": "Tom Hanks",
+    "category": "Acteur",
+    "propositions": [
+      "Jack Nicholson",
+      "Leonardo DiCaprio",
+      "Joaquin Phoenix",
+      "Al Pacino",
+      "Tom Hanks",
+      "Johnny Depp",
+      "Brad Pitt",
+      "Mads Mikkelsen",
+      "Robert De Niro"
+    ],
+    "indice_mot": "Forrest",
+    "indice_phrase": "Acteur de Forrest Gump et de Cast Away"
+  },
+  {
+    "name": "Mads Mikkelsen",
+    "category": "Acteur",
+    "propositions": [
+      "Al Pacino",
+      "Robert De Niro",
+      "Jack Nicholson",
+      "Brad Pitt",
+      "Leonardo DiCaprio",
+      "Tom Hanks",
+      "Denzel Washington",
+      "Mads Mikkelsen",
+      "Johnny Depp"
+    ],
+    "indice_mot": "Hannibal",
+    "indice_phrase": "Acteur danois de Hannibal et Casino Royale"
+  },
+  {
+    "name": "Johnny Depp",
+    "category": "Acteur",
+    "propositions": [
+      "Al Pacino",
+      "Robert De Niro",
+      "Tom Hanks",
+      "Jack Nicholson",
+      "Leonardo DiCaprio",
+      "Mads Mikkelsen",
+      "Denzel Washington",
+      "Joaquin Phoenix",
+      "Johnny Depp"
+    ],
+    "indice_mot": "Pirates",
+    "indice_phrase": "Acteur de Pirates des Caraïbes"
+  },
+  {
+    "name": "Denzel Washington",
+    "category": "Acteur",
+    "propositions": [
+      "Brad Pitt",
+      "Robert De Niro",
+      "Johnny Depp",
+      "Joaquin Phoenix",
+      "Jack Nicholson",
+      "Al Pacino",
+      "Tom Hanks",
+      "Leonardo DiCaprio",
+      "Denzel Washington"
+    ],
+    "indice_mot": "Training",
+    "indice_phrase": "Acteur de Training Day et Malcolm X"
+  },
+  {
+    "name": "Jack Nicholson",
+    "category": "Acteur",
+    "propositions": [
+      "Jack Nicholson",
+      "Robert De Niro",
+      "Mads Mikkelsen",
+      "Denzel Washington",
+      "Joaquin Phoenix",
+      "Leonardo DiCaprio",
+      "Tom Hanks",
+      "Al Pacino",
+      "Brad Pitt"
+    ],
+    "indice_mot": "Shining",
+    "indice_phrase": "Acteur du Shining et de Vol au-dessus d'un nid de coucou"
+  },
+  {
+    "name": "Martin Scorsese",
+    "category": "Réalisateur",
+    "propositions": [
+      "Christopher Nolan",
+      "Denis Villeneuve",
+      "David Fincher",
+      "Martin Scorsese",
+      "Quentin Tarantino",
+      "Stanley Kubrick",
+      "Alfred Hitchcock",
+      "Steven Spielberg",
+      "James Cameron"
+    ],
+    "indice_mot": "mob",
+    "indice_phrase": "Réalisateur des Affranchis et de Taxi Driver"
+  },
+  {
+    "name": "Christopher Nolan",
+    "category": "Réalisateur",
+    "propositions": [
+      "Alfred Hitchcock",
+      "Christopher Nolan",
+      "Quentin Tarantino",
+      "Denis Villeneuve",
+      "Steven Spielberg",
+      "Stanley Kubrick",
+      "Ridley Scott",
+      "James Cameron",
+      "David Fincher"
+    ],
+    "indice_mot": "Inception",
+    "indice_phrase": "Réalisateur d'Inception et de Dark Knight"
+  },
+  {
+    "name": "Quentin Tarantino",
+    "category": "Réalisateur",
+    "propositions": [
+      "James Cameron",
+      "Quentin Tarantino",
+      "Christopher Nolan",
+      "Martin Scorsese",
+      "Ridley Scott",
+      "Steven Spielberg",
+      "Stanley Kubrick",
+      "David Fincher",
+      "Alfred Hitchcock"
+    ],
+    "indice_mot": "Pulp Fiction",
+    "indice_phrase": "Réalisateur de Pulp Fiction et Kill Bill"
+  },
+  {
+    "name": "Steven Spielberg",
+    "category": "Réalisateur",
+    "propositions": [
+      "Quentin Tarantino",
+      "Stanley Kubrick",
+      "Denis Villeneuve",
+      "Ridley Scott",
+      "David Fincher",
+      "James Cameron",
+      "Martin Scorsese",
+      "Steven Spielberg",
+      "Alfred Hitchcock"
+    ],
+    "indice_mot": "dinosaures",
+    "indice_phrase": "Réalisateur de Jurassic Park et E.T."
+  },
+  {
+    "name": "Stanley Kubrick",
+    "category": "Réalisateur",
+    "propositions": [
+      "Martin Scorsese",
+      "Christopher Nolan",
+      "Steven Spielberg",
+      "Stanley Kubrick",
+      "Denis Villeneuve",
+      "Quentin Tarantino",
+      "Alfred Hitchcock",
+      "James Cameron",
+      "David Fincher"
+    ],
+    "indice_mot": "Shining",
+    "indice_phrase": "Réalisateur de 2001 et du Shining"
+  },
+  {
+    "name": "David Fincher",
+    "category": "Réalisateur",
+    "propositions": [
+      "Denis Villeneuve",
+      "Alfred Hitchcock",
+      "James Cameron",
+      "Quentin Tarantino",
+      "Martin Scorsese",
+      "Steven Spielberg",
+      "Stanley Kubrick",
+      "David Fincher",
+      "Ridley Scott"
+    ],
+    "indice_mot": "Fight Club",
+    "indice_phrase": "Réalisateur de Fight Club et Seven"
+  },
+  {
+    "name": "Ridley Scott",
+    "category": "Réalisateur",
+    "propositions": [
+      "Steven Spielberg",
+      "Ridley Scott",
+      "James Cameron",
+      "Quentin Tarantino",
+      "Martin Scorsese",
+      "Alfred Hitchcock",
+      "David Fincher",
+      "Christopher Nolan",
+      "Denis Villeneuve"
+    ],
+    "indice_mot": "Alien",
+    "indice_phrase": "Réalisateur d'Alien et de Blade Runner"
+  },
+  {
+    "name": "Alfred Hitchcock",
+    "category": "Réalisateur",
+    "propositions": [
+      "Denis Villeneuve",
+      "Quentin Tarantino",
+      "David Fincher",
+      "Martin Scorsese",
+      "Alfred Hitchcock",
+      "Ridley Scott",
+      "James Cameron",
+      "Christopher Nolan",
+      "Stanley Kubrick"
+    ],
+    "indice_mot": "Psychose",
+    "indice_phrase": "Maître du suspense, auteur de Psychose"
+  },
+  {
+    "name": "Denis Villeneuve",
+    "category": "Réalisateur",
+    "propositions": [
+      "Quentin Tarantino",
+      "Stanley Kubrick",
+      "Alfred Hitchcock",
+      "David Fincher",
+      "Christopher Nolan",
+      "James Cameron",
+      "Steven Spielberg",
+      "Denis Villeneuve",
+      "Ridley Scott"
+    ],
+    "indice_mot": "Dune",
+    "indice_phrase": "Réalisateur de Dune et Arrival"
+  },
+  {
+    "name": "James Cameron",
+    "category": "Réalisateur",
+    "propositions": [
+      "Martin Scorsese",
+      "David Fincher",
+      "James Cameron",
+      "Quentin Tarantino",
+      "Steven Spielberg",
+      "Christopher Nolan",
+      "Ridley Scott",
+      "Stanley Kubrick",
+      "Alfred Hitchcock"
+    ],
+    "indice_mot": "Titanic",
+    "indice_phrase": "Réalisateur de Titanic et Avatar"
+  },
+  {
+    "name": "MrBeast",
+    "category": "Influenceur",
+    "propositions": [
+      "PewDiePie",
+      "Elon Musk",
+      "Amixem",
+      "Léna Situations",
+      "MrBeast",
+      "Andrew Tate",
+      "Squeezie",
+      "Inoxtag",
+      "HugoDécrypte"
+    ],
+    "indice_mot": "YouTube",
+    "indice_phrase": "Créateur aux défis et giveaways géants"
+  },
+  {
+    "name": "Squeezie",
+    "category": "Influenceur",
+    "propositions": [
+      "Squeezie",
+      "Gary Vaynerchuk",
+      "Elon Musk",
+      "Andrew Tate",
+      "PewDiePie",
+      "HugoDécrypte",
+      "Léna Situations",
+      "Inoxtag",
+      "MrBeast"
+    ],
+    "indice_mot": "streaming",
+    "indice_phrase": "Streamer et YouTuber français"
+  },
+  {
+    "name": "Inoxtag",
+    "category": "Influenceur",
+    "propositions": [
+      "Amixem",
+      "MrBeast",
+      "Léna Situations",
+      "Squeezie",
+      "PewDiePie",
+      "Andrew Tate",
+      "HugoDécrypte",
+      "Inoxtag",
+      "Gary Vaynerchuk"
+    ],
+    "indice_mot": "Minecraft",
+    "indice_phrase": "Streamer français connu pour Minecraft"
+  },
+  {
+    "name": "Léna Situations",
+    "category": "Influenceur",
+    "propositions": [
+      "MrBeast",
+      "PewDiePie",
+      "Léna Situations",
+      "Inoxtag",
+      "Elon Musk",
+      "Squeezie",
+      "HugoDécrypte",
+      "Gary Vaynerchuk",
+      "Andrew Tate"
+    ],
+    "indice_mot": "lifestyle",
+    "indice_phrase": "Influenceuse lifestyle française"
+  },
+  {
+    "name": "Elon Musk",
+    "category": "Influenceur",
+    "propositions": [
+      "MrBeast",
+      "Inoxtag",
+      "HugoDécrypte",
+      "Amixem",
+      "Andrew Tate",
+      "PewDiePie",
+      "Elon Musk",
+      "Squeezie",
+      "Léna Situations"
+    ],
+    "indice_mot": "Tesla",
+    "indice_phrase": "PDG de Tesla et SpaceX"
+  },
+  {
+    "name": "Andrew Tate",
+    "category": "Influenceur",
+    "propositions": [
+      "Elon Musk",
+      "HugoDécrypte",
+      "MrBeast",
+      "Gary Vaynerchuk",
+      "Amixem",
+      "Andrew Tate",
+      "Inoxtag",
+      "Squeezie",
+      "PewDiePie"
+    ],
+    "indice_mot": "kickboxing",
+    "indice_phrase": "Influenceur controversé, ancien kickboxeur"
+  },
+  {
+    "name": "Amixem",
+    "category": "Influenceur",
+    "propositions": [
+      "Amixem",
+      "Gary Vaynerchuk",
+      "MrBeast",
+      "HugoDécrypte",
+      "PewDiePie",
+      "Andrew Tate",
+      "Léna Situations",
+      "Squeezie",
+      "Inoxtag"
+    ],
+    "indice_mot": "YouTube",
+    "indice_phrase": "YouTuber français aux vidéos variées"
+  },
+  {
+    "name": "HugoDécrypte",
+    "category": "Influenceur",
+    "propositions": [
+      "Amixem",
+      "Gary Vaynerchuk",
+      "Inoxtag",
+      "Andrew Tate",
+      "HugoDécrypte",
+      "Squeezie",
+      "PewDiePie",
+      "Léna Situations",
+      "Elon Musk"
+    ],
+    "indice_mot": "actualités",
+    "indice_phrase": "YouTuber d'actualités et vulgarisation"
+  },
+  {
+    "name": "Gary Vaynerchuk",
+    "category": "Influenceur",
+    "propositions": [
+      "HugoDécrypte",
+      "Gary Vaynerchuk",
+      "Amixem",
+      "Squeezie",
+      "Léna Situations",
+      "MrBeast",
+      "PewDiePie",
+      "Elon Musk",
+      "Inoxtag"
+    ],
+    "indice_mot": "marketing",
+    "indice_phrase": "Entrepreneur et expert en marketing"
+  },
+  {
+    "name": "PewDiePie",
+    "category": "Influenceur",
+    "propositions": [
+      "Léna Situations",
+      "Squeezie",
+      "Elon Musk",
+      "HugoDécrypte",
+      "PewDiePie",
+      "Inoxtag",
+      "Andrew Tate",
+      "Amixem",
+      "MrBeast"
+    ],
+    "indice_mot": "YouTube",
+    "indice_phrase": "YouTuber suédois au plus d'abonnés"
+  },
+  {
+    "name": "Mario",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Lara Croft",
+      "Pac-Man",
+      "Link (Zelda)",
+      "Kratos (God of War)",
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Mario",
+      "Solid Snake (Metal Gear)",
+      "Ezio Auditore (Assassin's Creed)",
+      "Master Chief (Halo)"
+    ],
+    "indice_mot": "plombier",
+    "indice_phrase": "Plombier italien sauteur de Nintendo"
+  },
+  {
+    "name": "Link (Zelda)",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Kratos (God of War)",
+      "Lara Croft",
+      "Solid Snake (Metal Gear)",
+      "Link (Zelda)",
+      "Geralt de Riv (The Witcher)",
+      "Ezio Auditore (Assassin's Creed)",
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Pac-Man",
+      "Mario"
+    ],
+    "indice_mot": "épée",
+    "indice_phrase": "Héros de la série Zelda"
+  },
+  {
+    "name": "Lara Croft",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Master Chief (Halo)",
+      "Lara Croft",
+      "Mario",
+      "Pac-Man",
+      "Geralt de Riv (The Witcher)",
+      "Solid Snake (Metal Gear)",
+      "Ezio Auditore (Assassin's Creed)",
+      "Link (Zelda)"
+    ],
+    "indice_mot": "archéologue",
+    "indice_phrase": "Archéologue aventurière de Tomb Raider"
+  },
+  {
+    "name": "Kratos (God of War)",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Pac-Man",
+      "Kratos (God of War)",
+      "Geralt de Riv (The Witcher)",
+      "Lara Croft",
+      "Mario",
+      "Solid Snake (Metal Gear)",
+      "Ezio Auditore (Assassin's Creed)",
+      "Master Chief (Halo)"
+    ],
+    "indice_mot": "Sparte",
+    "indice_phrase": "Dieu de la guerre spartiate"
+  },
+  {
+    "name": "Geralt de Riv (The Witcher)",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Mario",
+      "Solid Snake (Metal Gear)",
+      "Pac-Man",
+      "Link (Zelda)",
+      "Master Chief (Halo)",
+      "Geralt de Riv (The Witcher)",
+      "Lara Croft",
+      "Kratos (God of War)"
+    ],
+    "indice_mot": "sorcelerie",
+    "indice_phrase": "Chasseur de monstres mutant"
+  },
+  {
+    "name": "Solid Snake (Metal Gear)",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Solid Snake (Metal Gear)",
+      "Lara Croft",
+      "Link (Zelda)",
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Mario",
+      "Pac-Man",
+      "Kratos (God of War)",
+      "Master Chief (Halo)",
+      "Geralt de Riv (The Witcher)"
+    ],
+    "indice_mot": "infiltration",
+    "indice_phrase": "Agent d'infiltration légendaire"
+  },
+  {
+    "name": "Ezio Auditore (Assassin's Creed)",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Geralt de Riv (The Witcher)",
+      "Master Chief (Halo)",
+      "Solid Snake (Metal Gear)",
+      "Pac-Man",
+      "Mario",
+      "Ezio Auditore (Assassin's Creed)",
+      "Kratos (God of War)",
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Link (Zelda)"
+    ],
+    "indice_mot": "assassin",
+    "indice_phrase": "Assassin de la Renaissance italienne"
+  },
+  {
+    "name": "Master Chief (Halo)",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Solid Snake (Metal Gear)",
+      "Kratos (God of War)",
+      "Ezio Auditore (Assassin's Creed)",
+      "Geralt de Riv (The Witcher)",
+      "Master Chief (Halo)",
+      "Pac-Man",
+      "Lara Croft",
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Link (Zelda)"
+    ],
+    "indice_mot": "Spartan",
+    "indice_phrase": "Super-soldat Spartan de Halo"
+  },
+  {
+    "name": "Arthur Morgan (Red Dead Redemption 2)",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Pac-Man",
+      "Solid Snake (Metal Gear)",
+      "Ezio Auditore (Assassin's Creed)",
+      "Link (Zelda)",
+      "Geralt de Riv (The Witcher)",
+      "Kratos (God of War)",
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Mario",
+      "Lara Croft"
+    ],
+    "indice_mot": "cow-boy",
+    "indice_phrase": "Hors-la-loi du Far West"
+  },
+  {
+    "name": "Pac-Man",
+    "category": "Jeu vidéo",
+    "propositions": [
+      "Geralt de Riv (The Witcher)",
+      "Mario",
+      "Master Chief (Halo)",
+      "Ezio Auditore (Assassin's Creed)",
+      "Arthur Morgan (Red Dead Redemption 2)",
+      "Link (Zelda)",
+      "Lara Croft",
+      "Solid Snake (Metal Gear)",
+      "Pac-Man"
+    ],
+    "indice_mot": "fantômes",
+    "indice_phrase": "Personnage jaune qui mange des pastilles"
+  }
+]

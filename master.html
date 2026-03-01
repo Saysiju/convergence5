@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'examen - Maître du Jeu</title>
+    <link rel="stylesheet" href="game.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <!-- Écran de création de session -->
+    <div id="create-session-screen" class="screen active">
+        <div class="container">
+            <h1>Maître du Jeu</h1>
+            <div class="form-group">
+                <label for="maxPlayers">Nombre de joueurs :</label>
+                <input type="number" id="maxPlayers" min="2" max="10" value="4">
+            </div>
+            <button id="createSessionBtn" class="btn btn-primary">Créer une partie</button>
+            <div id="sessionInfo" class="session-info" style="display: none;">
+                <p><strong>Code de session :</strong> <span id="sessionCode"></span></p>
+                <p>Partagez ce code avec les joueurs pour qu'ils rejoignent la partie.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran d'attente des joueurs -->
+    <div id="waiting-players-screen" class="screen">
+        <div class="container">
+            <h1>En attente des joueurs</h1>
+            <p>Code de session : <strong id="sessionCodeDisplay"></strong></p>
+            <div id="playersList" class="players-list"></div>
+            <button id="selectLeaderBtn" class="btn btn-primary" style="display: none; margin-top: 20px;">Choisir le meneur</button>
+            <button id="stopSessionBtn" class="btn btn-danger" style="margin-top: 10px;">Arrêter la partie</button>
+        </div>
+    </div>
+
+    <!-- Écran de sélection du meneur -->
+    <div id="select-leader-screen" class="screen">
+        <div class="container">
+            <h1>Choisir le meneur</h1>
+            <div id="leaderList" class="players-list"></div>
+        </div>
+    </div>
+
+    <!-- Écran de sélection des thèmes -->
+    <div id="select-themes-screen" class="screen">
+        <div class="container">
+            <h1>Choisir 3 thèmes</h1>
+            <p>Meneur sélectionné : <strong id="selectedLeaderName"></strong></p>
+            <div id="themesList" class="themes-grid"></div>
+            <div id="selectedThemes" class="selected-themes">
+                <h3>Thèmes sélectionnés (3/3) :</h3>
+                <div id="selectedThemesList"></div>
+            </div>
+            <button id="startGameBtn" class="btn btn-primary" disabled>Lancer la partie</button>
+        </div>
+    </div>
+
+    <!-- Écran de jeu (surveillance) -->
+    <div id="game-screen" class="screen">
+        <div class="container">
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">Score :</span>
+                    <span id="gameScore" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Vies :</span>
+                    <span id="gameLives" class="stat-value">3</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Temps :</span>
+                    <span id="gameTimer" class="stat-value">4:00</span>
+                </div>
+            </div>
+            <p>La partie est en cours. Surveillez le score et les vies.</p>
+        </div>
+    </div>
+
+    <!-- Écran de fin de partie -->
+    <div id="end-game-screen" class="screen">
+        <div class="container">
+            <h1 id="endGameTitle"></h1>
+            <p id="endGameMessage"></p>
+            <button id="newGameBtn" class="btn btn-primary">Nouvelle partie</button>
+        </div>
+    </div>
+
+    <div id="gamePopup" class="game-popup-overlay">
+        <div class="game-popup">
+            <div id="popupIcon" class="game-popup-icon" style="display: none;"></div>
+            <h2 id="popupTitle" class="game-popup-title" style="display: none;"></h2>
+            <p id="popupMessage" class="game-popup-message"></p>
+            <div id="popupScore" class="game-popup-score" style="display: none;"></div>
+            <button id="popupBtn" class="game-popup-btn">OK</button>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+    <script src="master.js"></script>
+</body>
+</html>

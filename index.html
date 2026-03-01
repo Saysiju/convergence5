@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'examen - Jeu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Écran d'accueil -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-container">
+            <h1 class="welcome-title">L'examen</h1>
+            <button id="playBtn" class="welcome-btn">Jouer</button>
+        </div>
+    </div>
+
+    <!-- Écran de configuration des joueurs -->
+    <div id="players-setup-screen" class="screen">
+        <div class="setup-container">
+            <h2>Configuration des joueurs</h2>
+            <div id="players-list" class="players-list"></div>
+            <div class="setup-actions">
+                <button id="addPlayerBtn" class="setup-btn">+ Ajouter un joueur</button>
+                <button id="startGameBtn" class="setup-btn setup-btn-primary">Commencer le jeu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="screen">
+        <div class="top-bar">
+            <div class="stats-left">
+                <div class="lives-display-bar">
+                    <span class="heart-icon">❤️</span>
+                    <span id="lives">3</span>
+                </div>
+                <div class="energy-display-bar">
+                    <span class="lightning-icon">⚡</span>
+                    <span id="energy">3</span>
+                </div>
+                <div class="points-display-bar">
+                    <span class="star-icon">⭐</span>
+                    <span id="points">0</span>
+                </div>
+            </div>
+            <div class="timer-right">
+                <div class="timer-display" id="timer">04:00</div>
+                <div class="timer-controls">
+                    <button id="pauseBtn" class="timer-btn">Pause</button>
+                    <button id="resumeBtn" class="timer-btn" style="display: none;">Reprendre</button>
+                    <button id="resetBtn" class="timer-btn">Réinitialiser</button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div id="grid" class="grid"></div>
+        </div>
+        <button id="finishBtn" class="finish-btn">Fini</button>
+    </div>
+
+    <script src="common.js"></script>
+    <script src="setup.js"></script>
+    <script src="player.js"></script>
+</body>
+</html>
