@@ -1,7 +1,7 @@
 {
   "name": "Convergence 5 - Accueil",
   "short_name": "Conv5 Accueil",
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "fullscreen",
   "orientation": "landscape",
   "background_color": "#020617",

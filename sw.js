@@ -1,5 +1,5 @@
 // Service worker minimal pour Convergence 5 (mode PWA)
-const CACHE_NAME = 'convergence5-static-v1';
+const CACHE_NAME = 'convergence5-static-v2';
 const ASSETS = [
   '/',
   '/index.html',

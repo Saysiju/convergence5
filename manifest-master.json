@@ -1,7 +1,7 @@
 {
   "name": "Convergence 5 - Maître du Jeu",
   "short_name": "Conv5 MJ",
-  "start_url": "/master.html",
+  "start_url": "master.html",
   "display": "fullscreen",
   "orientation": "landscape",
   "background_color": "#020617",

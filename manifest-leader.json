@@ -1,7 +1,7 @@
 {
   "name": "Convergence 5 - Meneur",
   "short_name": "Conv5 Meneur",
-  "start_url": "/leader.html",
+  "start_url": "leader.html",
   "display": "fullscreen",
   "orientation": "landscape",
   "background_color": "#020617",
