@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convergence 5 - Jeu</title>
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/manifest-index.json">
     <meta name="theme-color" content="#020617">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -53,6 +53,7 @@
             <div class="timer-right">
                 <div class="timer-display" id="timer">04:00</div>
                 <div class="timer-controls">
+                    <button id="fullscreenBtn" class="timer-btn">Plein écran</button>
                     <button id="pauseBtn" class="timer-btn">Pause</button>
                     <button id="resumeBtn" class="timer-btn" style="display: none;">Reprendre</button>
                     <button id="resetBtn" class="timer-btn">Réinitialiser</button>
@@ -71,6 +72,24 @@
                 navigator.serviceWorker.register('/sw.js').catch(() => {});
             });
         }
+
+        function requestFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const fsBtn = document.getElementById('fullscreenBtn');
+            if (fsBtn) {
+                fsBtn.addEventListener('click', requestFullscreen);
+            }
+        });
     </script>
     <script src="common.js"></script>
     <script src="setup.js"></script>

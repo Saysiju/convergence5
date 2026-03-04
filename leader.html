@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convergence 5 - Meneur</title>
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/manifest-leader.json">
     <meta name="theme-color" content="#020617">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,6 +17,7 @@
     <div id="join-screen" class="screen active">
         <div class="container">
             <h1>Convergence 5 - Meneur</h1>
+            <button id="fullscreenBtn" class="btn btn-small">Plein écran</button>
             <div class="form-group">
                 <label for="sessionCodeInput">Code de session :</label>
                 <input type="text" id="sessionCodeInput" placeholder="Entrez le code" maxlength="7">
@@ -88,6 +89,24 @@
                 navigator.serviceWorker.register('/sw.js').catch(() => {});
             });
         }
+
+        function requestFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const fsBtn = document.getElementById('fullscreenBtn');
+            if (fsBtn) {
+                fsBtn.addEventListener('click', requestFullscreen);
+            }
+        });
     </script>
     <script src="popup.js"></script>
     <script src="leader.js"></script>

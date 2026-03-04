@@ -1,0 +1,11 @@
+{
+  "name": "Convergence 5 - Joueur",
+  "short_name": "Conv5 Joueur",
+  "start_url": "/player.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "description": "Convergence 5 - Joueur"
+}
+

@@ -1,0 +1,11 @@
+{
+  "name": "Convergence 5 - Accueil",
+  "short_name": "Conv5 Accueil",
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "description": "Convergence 5 - Mode local"
+}
+
