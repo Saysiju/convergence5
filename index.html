@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'examen - Jeu</title>
+    <title>Convergence 5 - Jeu</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#020617">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Convergence 5">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Écran d'accueil -->
     <div id="welcome-screen" class="screen active">
         <div class="welcome-container">
-            <h1 class="welcome-title">L'examen</h1>
+            <h1 class="welcome-title">Convergence 5</h1>
+            <p class="welcome-tagline">5 thèmes. 1 équipe. 1 objectif.</p>
             <button id="playBtn" class="welcome-btn">Jouer</button>
         </div>
     </div>
@@ -59,6 +65,13 @@
         <button id="finishBtn" class="finish-btn">Fini</button>
     </div>
 
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
     <script src="common.js"></script>
     <script src="setup.js"></script>
     <script src="player.js"></script>

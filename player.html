@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'examen - Joueur</title>
+    <title>Convergence 5 - Joueur</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#020617">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Convergence 5">
     <link rel="stylesheet" href="game.css">
     <script src="/socket.io/socket.io.js"></script>
 </head>
@@ -11,7 +16,7 @@
     <!-- Écran de connexion -->
     <div id="join-screen" class="screen active">
         <div class="container">
-            <h1>Rejoindre une partie</h1>
+            <h1>Convergence 5 - Rejoindre une partie</h1>
             <div class="form-group">
                 <label for="sessionCodeInput">Code de session :</label>
                 <input type="text" id="sessionCodeInput" placeholder="Entrez le code" maxlength="7">
@@ -93,6 +98,13 @@
             <button id="popupBtn" class="game-popup-btn">OK</button>
         </div>
     </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
     <script src="popup.js"></script>
     <script src="player.js"></script>
 </body>

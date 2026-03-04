@@ -5,9 +5,15 @@
 }
 
 body {
-    font-family: 'Inter', 'System-UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background:
+        radial-gradient(circle at 10% 0%, rgba(255, 138, 0, 0.18), transparent 55%),
+        radial-gradient(circle at 90% 0%, rgba(0, 200, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 0% 80%, rgba(46, 255, 123, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 80%, rgba(168, 85, 255, 0.16), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(255, 59, 170, 0.12), transparent 65%),
+        radial-gradient(circle at 50% 120%, #020617 0, #020617 45%, #000 80%);
+    color: #e5ecff;
     min-height: 100vh;
     padding: 20px;
 }
@@ -21,19 +27,31 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-    background: white;
-    border-radius: 16px;
+    background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.3), transparent 55%),
+               radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.25), transparent 55%),
+               rgba(15, 23, 42, 0.92);
+    border-radius: 24px;
     padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 24px 80px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 0 40px rgba(56, 189, 248, 0.5);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    backdrop-filter: blur(24px);
 }
 
 h1 {
-    color: #667eea;
+    color: #e5ecff;
     margin-bottom: 30px;
     text-align: center;
-    font-size: 32px;
+    font-size: 30px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 14px rgba(37, 99, 235, 0.9),
+        0 0 28px rgba(59, 130, 246, 0.9);
 }
 
 .form-group {
@@ -44,23 +62,27 @@ label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: #555;
+    color: #cbd5f5;
 }
 
 input[type="text"],
 input[type="number"] {
     width: 100%;
     padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    border: 2px solid rgba(148, 163, 184, 0.8);
+    border-radius: 10px;
     font-size: 16px;
     transition: border-color 0.3s;
+    background: rgba(15, 23, 42, 0.85);
+    color: #e5ecff;
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #38bdf8;
+    background: rgba(15, 23, 42, 0.98);
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6), 0 0 18px rgba(59, 130, 246, 0.9);
 }
 
 .btn {
@@ -68,7 +90,7 @@ input[type="number"]:focus {
     font-size: 16px;
     font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     cursor: pointer;
     transition: all 0.3s;
     width: 100%;
@@ -76,14 +98,14 @@ input[type="number"]:focus {
 }
 
 .btn-primary {
-    background: #667eea;
-    color: white;
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: #0b1120;
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: #5568d3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #0ea5e9, #4f46e5);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 18px rgba(56, 189, 248, 0.7);
 }
 
 .btn-primary:disabled {
@@ -110,12 +132,14 @@ input[type="number"]:focus {
 }
 
 .btn-danger {
-    background: #dc3545;
-    color: white;
+    background: radial-gradient(circle at 0 0, rgba(248, 113, 113, 0.35), transparent 60%),
+               #7f1d1d;
+    color: #fee2e2;
+    border: 1px solid rgba(248, 113, 113, 0.7);
 }
 
 .btn-danger:hover {
-    background: #c82333;
+    background: linear-gradient(135deg, #ef4444, #fb7185);
 }
 
 .btn-small {
@@ -137,7 +161,8 @@ input[type="number"]:focus {
 .session-info {
     margin-top: 20px;
     padding: 20px;
-    background: #f0f4ff;
+    background: radial-gradient(circle at 50% 0, rgba(59, 130, 246, 0.35), transparent 65%),
+               rgba(15, 23, 42, 0.95);
     border-radius: 8px;
     text-align: center;
 }
@@ -157,12 +182,14 @@ input[type="number"]:focus {
 
 .player-item {
     padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
+    background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.25), transparent 60%),
+               rgba(15, 23, 42, 0.95);
+    border-radius: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid #e0e0e0;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.85);
 }
 
 .player-item.clickable {
@@ -171,8 +198,9 @@ input[type="number"]:focus {
 }
 
 .player-item.clickable:hover {
-    background: #e9ecef;
-    border-color: #667eea;
+    background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.35), transparent 60%),
+               rgba(15, 23, 42, 1);
+    border-color: rgba(56, 189, 248, 0.9);
 }
 
 .player-name {
@@ -187,23 +215,23 @@ input[type="number"]:focus {
 }
 
 .player-status.ready {
-    background: #d4edda;
-    color: #155724;
+    background: rgba(34, 197, 94, 0.25);
+    color: #bbf7d0;
 }
 
 .player-status.not-ready {
-    background: #fff3cd;
-    color: #856404;
+    background: rgba(250, 204, 21, 0.18);
+    color: #facc15;
 }
 
 .player-points {
-    color: #667eea;
+    color: #38bdf8;
     font-weight: 600;
 }
 
 .leader-badge {
-    background: #ffc107;
-    color: #333;
+    background: linear-gradient(135deg, #f97316, #facc15);
+    color: #0f172a;
     padding: 3px 8px;
     border-radius: 12px;
     font-size: 12px;
@@ -220,9 +248,10 @@ input[type="number"]:focus {
 
 .theme-item {
     padding: 15px;
-    background: #f8f9fa;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.25), transparent 60%),
+               rgba(15, 23, 42, 0.95);
+    border: 2px solid rgba(148, 163, 184, 0.7);
+    border-radius: 14px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
@@ -230,21 +259,23 @@ input[type="number"]:focus {
 }
 
 .theme-item:hover {
-    background: #e9ecef;
-    border-color: #667eea;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.4), transparent 60%),
+               rgba(15, 23, 42, 1);
+    border-color: rgba(56, 189, 248, 0.95);
     transform: translateY(-2px);
 }
 
 .theme-item.selected {
-    background: #667eea;
-    color: white;
-    border-color: #667eea;
+    background: linear-gradient(135deg, #f97316, #facc15);
+    color: #0f172a;
+    border-color: rgba(248, 250, 252, 0.9);
 }
 
 .selected-themes {
     margin: 20px 0;
     padding: 20px;
-    background: #f0f4ff;
+    background: radial-gradient(circle at 50% 0, rgba(250, 204, 21, 0.25), transparent 60%),
+               rgba(15, 23, 42, 0.95);
     border-radius: 8px;
 }
 
@@ -252,15 +283,15 @@ input[type="number"]:focus {
     display: inline-block;
     padding: 8px 16px;
     margin: 5px;
-    background: #667eea;
-    color: white;
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: #0b1120;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s;
 }
 
 .selected-theme:hover {
-    background: #5568d3;
+    background: linear-gradient(135deg, #0ea5e9, #4f46e5);
     transform: scale(1.05);
 }
 
@@ -276,14 +307,16 @@ input[type="number"]:focus {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.2), transparent 65%),
+               rgba(15, 23, 42, 0.92);
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.8);
 }
 
 .theme-name {
     font-weight: 600;
     font-size: 16px;
+    color: #e5ecff;
 }
 
 .theme-controls {
@@ -297,15 +330,16 @@ input[type="number"]:focus {
     text-align: center;
     font-weight: 600;
     font-size: 18px;
-    color: #667eea;
+    color: #facc15;
 }
 
 .points-summary {
     text-align: center;
     margin: 20px 0;
     padding: 15px;
-    background: #f0f4ff;
-    border-radius: 8px;
+    background: radial-gradient(circle at 50% 0, rgba(250, 204, 21, 0.25), transparent 60%),
+               rgba(15, 23, 42, 0.95);
+    border-radius: 12px;
     font-size: 18px;
     font-weight: 600;
 }
@@ -313,14 +347,15 @@ input[type="number"]:focus {
 .powers-section {
     margin: 25px 0;
     padding: 20px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 60%),
+               rgba(15, 23, 42, 0.96);
+    border-radius: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.7);
 }
 
 .powers-section h3 {
     margin-bottom: 15px;
-    color: #667eea;
+    color: #e5ecff;
     font-size: 18px;
 }
 
@@ -335,23 +370,23 @@ input[type="number"]:focus {
     padding: 10px 18px;
     font-size: 14px;
     font-weight: 600;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    background: white;
-    color: #555;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% 0, rgba(56, 189, 248, 0.3), rgba(15, 23, 42, 0.9));
+    color: #e5ecff;
     cursor: pointer;
     transition: all 0.3s;
 }
 
 .power-select-btn:hover {
-    border-color: #667eea;
-    color: #667eea;
+    border-color: rgba(56, 189, 248, 0.95);
+    color: #e0f2fe;
 }
 
 .power-select-btn.selected {
-    background: #667eea;
-    border-color: #667eea;
-    color: white;
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    border-color: rgba(248, 250, 252, 0.9);
+    color: #0b1120;
 }
 
 .powers-buttons {
@@ -384,11 +419,12 @@ input[type="number"]:focus {
 .game-header {
     display: flex;
     justify-content: space-around;
-    background: white;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.2), transparent 60%),
+               rgba(15, 23, 42, 0.96);
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 16px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
 }
 
 .stat {
@@ -398,7 +434,7 @@ input[type="number"]:focus {
 .stat-label {
     display: block;
     font-size: 14px;
-    color: #666;
+    color: #cbd5f5;
     margin-bottom: 5px;
 }
 
@@ -406,14 +442,15 @@ input[type="number"]:focus {
     display: block;
     font-size: 24px;
     font-weight: 700;
-    color: #667eea;
+    color: #facc15;
 }
 
 .grid-container {
-    background: white;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 60%),
+               rgba(15, 23, 42, 0.96);
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
 }
 
 .grid {
@@ -427,9 +464,10 @@ input[type="number"]:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #667eea;
-    color: white;
-    border-radius: 8px;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.35), transparent 65%),
+               rgba(15, 23, 42, 0.96);
+    color: #e5ecff;
+    border-radius: 14px;
     cursor: pointer;
     font-weight: 600;
     font-size: 14px;
@@ -439,23 +477,24 @@ input[type="number"]:focus {
 }
 
 .grid-cell:hover {
-    background: #5568d3;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    transform: scale(1.06);
+    box-shadow: 0 10px 26px rgba(56, 189, 248, 0.75);
 }
 
 .grid-cell-correct {
-    background: #28a745 !important;
-    color: white;
+    background: linear-gradient(135deg, #22c55e, #a3e635) !important;
+    color: #022c22;
 }
 
 .grid-cell-incorrect {
-    background: #000000 !important;
-    color: white;
+    background: #020617 !important;
+    color: #e5ecff;
 }
 
 .grid-cell-selected {
-    background: #ffc107 !important;
-    color: #333;
+    background: linear-gradient(135deg, #f97316, #facc15) !important;
+    color: #0f172a;
 }
 
 .grid-cell-correct:hover,
@@ -476,9 +515,10 @@ input[type="number"]:focus {
 .cell-details {
     margin-top: 20px;
     padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.3), transparent 60%),
+               rgba(15, 23, 42, 0.96);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
     text-align: center;
 }
 
@@ -490,21 +530,22 @@ input[type="number"]:focus {
     display: block;
     font-size: 24px;
     font-weight: 700;
-    color: #667eea;
+    color: #facc15;
     margin: 15px 0;
 }
 
 .propositions-container {
-    background: white;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.25), transparent 65%),
+               rgba(15, 23, 42, 0.96);
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
     margin-top: 20px;
 }
 
 .propositions-container h2 {
     text-align: center;
-    color: #667eea;
+    color: #e5ecff;
     margin-bottom: 20px;
 }
 
@@ -516,20 +557,22 @@ input[type="number"]:focus {
 
 .proposition-btn {
     padding: 20px;
-    background: #f8f9fa;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 65%),
+               rgba(15, 23, 42, 0.96);
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    border-radius: 14px;
     font-size: 16px;
     font-weight: 600;
+    color: #e5ecff;
     cursor: pointer;
     transition: all 0.3s;
     text-align: center;
 }
 
 .proposition-btn:hover {
-    background: #667eea;
-    color: white;
-    border-color: #667eea;
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: #0b1120;
+    border-color: rgba(248, 250, 252, 0.9);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
@@ -537,15 +580,16 @@ input[type="number"]:focus {
 .waiting-message {
     text-align: center;
     padding: 40px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.2), transparent 65%),
+               rgba(15, 23, 42, 0.96);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
     margin-top: 20px;
 }
 
 .waiting-message p {
     font-size: 18px;
-    color: #666;
+    color: #cbd5f5;
 }
 
 #end-game-screen {
@@ -603,8 +647,10 @@ input[type="number"]:focus {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(102, 126, 234, 0.4);
-    backdrop-filter: blur(4px);
+    background: radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.35), transparent 60%),
+                radial-gradient(circle at 90% 100%, rgba(236, 72, 153, 0.35), transparent 60%),
+                rgba(2, 6, 23, 0.9);
+    backdrop-filter: blur(10px);
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -622,13 +668,17 @@ input[type="number"]:focus {
 }
 
 .game-popup {
-    background: white;
-    border-radius: 16px;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.25), transparent 60%),
+               rgba(15, 23, 42, 0.98);
+    border-radius: 20px;
     padding: 32px;
     max-width: 400px;
     width: 100%;
-    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.35);
-    border: 2px solid rgba(102, 126, 234, 0.2);
+    box-shadow:
+        0 24px 80px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 0 32px rgba(56, 189, 248, 0.7);
+    border: 1px solid rgba(148, 163, 184, 0.7);
     text-align: center;
     animation: popupSlideIn 0.3s ease;
 }
@@ -647,13 +697,13 @@ input[type="number"]:focus {
 .game-popup-title {
     font-size: 24px;
     font-weight: 700;
-    color: #667eea;
+    color: #facc15;
     margin-bottom: 12px;
 }
 
 .game-popup-message {
     font-size: 16px;
-    color: #555;
+    color: #e5ecff;
     line-height: 1.5;
     margin-bottom: 24px;
 }
@@ -661,7 +711,7 @@ input[type="number"]:focus {
 .game-popup-score {
     font-size: 48px;
     font-weight: 700;
-    color: #667eea;
+    color: #38bdf8;
     margin: 20px 0;
 }
 
@@ -670,20 +720,20 @@ input[type="number"]:focus {
     font-size: 16px;
     font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     cursor: pointer;
-    background: #667eea;
-    color: white;
+    background: linear-gradient(135deg, #f97316, #facc15);
+    color: #0f172a;
     transition: all 0.3s;
 }
 
 .game-popup-btn:hover {
-    background: #5568d3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #fbbf24, #fde047);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 24px rgba(250, 204, 21, 0.8);
 }
 
 .game-popup-icon {
-    font-size: 48px;
+    font-size: 56px;
     margin-bottom: 16px;
 }

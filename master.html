@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'examen - Maître du Jeu</title>
+    <title>Convergence 5 - Maître du Jeu</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#020617">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Convergence 5">
     <link rel="stylesheet" href="game.css">
     <script src="/socket.io/socket.io.js"></script>
 </head>
@@ -11,7 +16,7 @@
     <!-- Écran de création de session -->
     <div id="create-session-screen" class="screen active">
         <div class="container">
-            <h1>Maître du Jeu</h1>
+            <h1>Convergence 5 - Maître du Jeu</h1>
             <div class="form-group">
                 <label for="maxPlayers">Nombre de joueurs :</label>
                 <input type="number" id="maxPlayers" min="2" max="10" value="4">
@@ -96,6 +101,13 @@
             <button id="popupBtn" class="game-popup-btn">OK</button>
         </div>
     </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
     <script src="popup.js"></script>
     <script src="master.js"></script>
 </body>

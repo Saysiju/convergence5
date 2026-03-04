@@ -5,12 +5,19 @@
 }
 
 body {
-    font-family: 'Inter', 'System-UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #eaf2fb;
-    color: #333;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background:
+        radial-gradient(circle at 10% 0%, rgba(255, 138, 0, 0.18), transparent 55%),
+        radial-gradient(circle at 90% 0%, rgba(0, 200, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 0% 80%, rgba(46, 255, 123, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 80%, rgba(168, 85, 255, 0.16), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(255, 59, 170, 0.12), transparent 65%),
+        radial-gradient(circle at 50% 120%, #020617 0, #020617 45%, #000 80%);
+    color: #e5ecff;
     padding: 40px 20px;
     min-height: 100vh;
     position: relative;
+    overflow-x: hidden;
 }
 
 /* Gestion des écrans */
@@ -29,51 +36,83 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 80vh;
-    gap: 40px;
+    gap: 32px;
 }
 
 .welcome-title {
-    font-size: 64px;
-    font-weight: 700;
-    color: #3b82f6;
+    font-size: clamp(3.2rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f9fafb;
     text-align: center;
     margin: 0;
+    text-shadow:
+        0 0 12px rgba(15, 23, 42, 0.9),
+        0 0 24px rgba(56, 189, 248, 0.9),
+        0 0 48px rgba(59, 130, 246, 0.9);
+}
+
+.welcome-tagline {
+    font-size: 1.1rem;
+    text-align: center;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #facc15;
+    text-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
 }
 
 .welcome-btn {
-    padding: 20px 60px;
-    font-size: 24px;
-    font-weight: 600;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 12px;
+    padding: 20px 72px;
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f97316, #facc15);
+    color: #0f172a;
+    border: 2px solid rgba(248, 250, 252, 0.9);
+    border-radius: 999px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    transition: all 0.25s ease;
+    box-shadow:
+        0 0 18px rgba(248, 250, 252, 0.6),
+        0 0 36px rgba(249, 115, 22, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
 }
 
 .welcome-btn:hover {
-    background-color: #2563eb;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+        0 0 24px rgba(248, 250, 252, 0.9),
+        0 0 52px rgba(249, 115, 22, 1);
 }
 
 /* Écran de configuration des joueurs */
 .setup-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 40px;
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.3), transparent 55%),
+               radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.25), transparent 55%),
+               rgba(15, 23, 42, 0.92);
+    border-radius: 24px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    box-shadow:
+        0 24px 80px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 0 40px rgba(56, 189, 248, 0.5);
+    backdrop-filter: blur(24px);
 }
 
 .setup-container h2 {
     text-align: center;
-    color: #3b82f6;
+    color: #e5ecff;
     margin-bottom: 30px;
-    font-size: 32px;
+    font-size: 30px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 14px rgba(37, 99, 235, 0.9),
+        0 0 28px rgba(59, 130, 246, 0.9);
 }
 
 .players-list {
@@ -84,10 +123,12 @@ body {
 }
 
 .player-item {
-    padding: 20px;
-    background-color: #f8fafc;
-    border-radius: 12px;
-    border: 2px solid #e2e8f0;
+    padding: 18px 20px;
+    background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.25), transparent 60%),
+               rgba(15, 23, 42, 0.95);
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.55);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.85);
 }
 
 .player-input-group {
@@ -105,14 +146,18 @@ body {
     width: 100%;
     padding: 12px;
     font-size: 16px;
-    border: 2px solid #cbd5e1;
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
+    border: 2px solid rgba(148, 163, 184, 0.8);
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #e5ecff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .player-name-input:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: #38bdf8;
+    background: rgba(15, 23, 42, 0.98);
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6), 0 0 18px rgba(59, 130, 246, 0.9);
 }
 
 .player-stats {
@@ -131,8 +176,10 @@ body {
 .themes-assignment h3 {
     font-size: 18px;
     font-weight: 600;
-    color: #3b82f6;
+    color: #e5ecff;
     margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .themes-grid {
@@ -146,9 +193,10 @@ body {
     flex-direction: column;
     gap: 8px;
     padding: 12px;
-    background-color: #f8fafc;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.2), transparent 65%),
+               rgba(15, 23, 42, 0.92);
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
 }
 
 .theme-assignment-item label {
@@ -178,10 +226,10 @@ body {
 .stat-btn {
     width: 36px;
     height: 36px;
-    border: 2px solid #3b82f6;
-    background-color: white;
-    color: #3b82f6;
-    border-radius: 8px;
+    border: 2px solid rgba(56, 189, 248, 0.9);
+    background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.45), rgba(15, 23, 42, 0.9));
+    color: #e5ecff;
+    border-radius: 10px;
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;
@@ -189,8 +237,8 @@ body {
 }
 
 .stat-btn:hover {
-    background-color: #3b82f6;
-    color: white;
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: #0b1120;
 }
 
 .stat-value {
@@ -198,15 +246,16 @@ body {
     text-align: center;
     font-size: 20px;
     font-weight: 600;
-    color: #1e293b;
+    color: #e5ecff;
 }
 
 .remove-player-btn {
     padding: 8px 16px;
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    border-radius: 8px;
+    background: radial-gradient(circle at 0 0, rgba(248, 113, 113, 0.35), transparent 60%),
+               #7f1d1d;
+    color: #fee2e2;
+    border: 1px solid rgba(248, 113, 113, 0.7);
+    border-radius: 999px;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -214,7 +263,7 @@ body {
 }
 
 .remove-player-btn:hover {
-    background-color: #dc2626;
+    background: linear-gradient(135deg, #ef4444, #fb7185);
 }
 
 .setup-actions {
@@ -229,27 +278,27 @@ body {
     font-size: 16px;
     font-weight: 500;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .setup-btn:first-child {
-    background-color: #10b981;
-    color: white;
+    background: linear-gradient(135deg, #22c55e, #a3e635);
+    color: #022c22;
 }
 
 .setup-btn:first-child:hover {
-    background-color: #059669;
+    background: linear-gradient(135deg, #22c55e, #bef264);
 }
 
 .setup-btn-primary {
-    background-color: #3b82f6;
-    color: white;
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: #0b1120;
 }
 
 .setup-btn-primary:hover {
-    background-color: #2563eb;
+    background: linear-gradient(135deg, #0ea5e9, #4f46e5);
 }
 
 /* Bandeau en haut */
