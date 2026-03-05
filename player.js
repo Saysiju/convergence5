@@ -129,8 +129,15 @@ const POWER_LABELS = {
     indice: 'Indice',
     vie: 'Vie',
     points: 'Points',
-    temps: 'Temps',
     rafraichissement: 'Rafraîchissement'
+};
+
+const POWER_DESCRIPTIONS = {
+    grille: 'Réduit le nombre de propositions pour la case actuelle. Avec 1 joueur : 6 propositions, avec 2 ou plus : 3 propositions.',
+    indice: 'Affiche un indice sur la case actuelle. Avec 1 joueur : un mot indice, avec 2 ou plus : une phrase indice.',
+    vie: 'Ajoute des vies à l’équipe sur la prochaine bonne réponse (autant de vies que de joueurs ayant ce pouvoir, jusqu’à 10 vies maximum).',
+    points: 'Multiplie les points de la prochaine bonne réponse (×2, ×3 ou ×4 selon le nombre de joueurs ayant ce pouvoir).',
+    rafraichissement: 'Remplace tous les mots des cases déjà noires (mauvaises réponses ou “pass”), une seule fois par partie.'
 };
 
 function renderPowersConfig() {
@@ -146,9 +153,23 @@ function renderPowersConfig() {
             selectedPower = id;
             renderPowersConfig();
             socket.emit('player:update-power', { sessionId: currentSessionId, power: id });
+            const descEl = document.getElementById('powerDescription');
+            if (descEl) {
+                descEl.textContent = POWER_DESCRIPTIONS[id] || '';
+            }
         });
         container.appendChild(btn);
     });
+
+    // Mettre à jour la description si un pouvoir est déjà sélectionné
+    const descEl = document.getElementById('powerDescription');
+    if (descEl) {
+        if (selectedPower) {
+            descEl.textContent = POWER_DESCRIPTIONS[selectedPower] || '';
+        } else {
+            descEl.textContent = 'Sélectionnez un pouvoir pour voir sa description.';
+        }
+    }
 }
 
 // Changer la valeur d'un thème
@@ -262,7 +283,7 @@ socket.on('player:indice-revealed', (data) => {
 });
 
 socket.on('player:power-activated', (data) => {
-    const labels = { vie: 'Vie', points: 'Points', temps: 'Temps' };
+    const labels = { vie: 'Vie', points: 'Points' };
     showGamePopup({ title: 'Pouvoir activé', message: `${labels[data.power]} sera appliqué à la prochaine bonne réponse !` });
 });
 

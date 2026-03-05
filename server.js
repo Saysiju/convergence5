@@ -335,7 +335,7 @@ io.on('connection', (socket) => {
         
         if (!session) return;
         
-        const validPowers = ['grille', 'indice', 'vie', 'points', 'temps', 'rafraichissement'];
+        const validPowers = ['grille', 'indice', 'vie', 'points', 'rafraichissement'];
         if (!validPowers.includes(power)) return;
         
         const player = session.players.find(p => p.id === socket.id);
@@ -648,7 +648,6 @@ io.on('connection', (socket) => {
                 
             case 'vie':
             case 'points':
-            case 'temps':
                 if (session.activePowerEffects[power]) return;
                 session.activePowerEffects[power] = count;
                 io.to(socket.id).emit('player:power-activated', { power });
@@ -755,13 +754,6 @@ io.on('connection', (socket) => {
             // Pouvoir Vie : ajouter des vies
             if (effects.vie) {
                 session.lives = Math.min(10, session.lives + effects.vie);
-            }
-            
-            // Pouvoir Temps : ajouter du temps
-            if (effects.temps) {
-                const addSeconds = effects.temps >= 3 ? 180 : (effects.temps >= 2 ? 120 : 60);
-                session.timer += addSeconds;
-                io.to(sessionId).emit('session:timer-update', { timer: session.timer });
             }
             
             session.cellAnswers[cellIndex] = 'correct';
