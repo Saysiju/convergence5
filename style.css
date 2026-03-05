@@ -20,6 +20,37 @@ body {
     overflow-x: hidden;
 }
 
+/* Optimisation tablette paysage (Lenovo Tab One ~10") pour le mode local */
+@media (min-width: 900px) and (max-width: 1400px) and (orientation: landscape) {
+    body {
+        padding: 16px 12px;
+    }
+
+    .top-bar {
+        padding: 10px 16px;
+    }
+
+    .container {
+        padding-top: 80px;
+    }
+
+    h1 {
+        font-size: 26px;
+        margin-bottom: 24px;
+        padding: 16px 20px;
+    }
+
+    .grid {
+        gap: 10px;
+    }
+
+    .cell {
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 12px;
+    }
+}
+
 /* Gestion des écrans */
 .screen {
     display: none;

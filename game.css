@@ -639,6 +639,80 @@ input[type="number"]:focus {
     }
 }
 
+/* Optimisation tablette paysage (Lenovo Tab One ~10") */
+@media (min-width: 900px) and (max-width: 1400px) and (orientation: landscape) {
+    body {
+        padding: 8px;
+    }
+
+    .container {
+        padding: 16px 20px;
+        border-radius: 16px;
+    }
+
+    .game-header,
+    .game-stats {
+        padding: 8px 16px;
+        margin-bottom: 8px;
+    }
+
+    .stat-label {
+        font-size: 12px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+
+    /* Grille principale 5x5 plus compacte (meneur / MJ réseau) */
+    .grid-container {
+        padding: 10px;
+        border-radius: 16px;
+    }
+
+    .grid {
+        gap: 6px;
+    }
+
+    .grid-cell {
+        padding: 4px;
+        border-radius: 10px;
+        font-size: 12px;
+    }
+
+    /* Grille de propositions côté joueurs plus compacte */
+    .propositions-container {
+        padding: 12px 14px;
+        margin-top: 8px;
+        border-radius: 14px;
+    }
+
+    .propositions-container h2 {
+        margin-bottom: 8px;
+        font-size: 18px;
+    }
+
+    .propositions-grid {
+        gap: 8px;
+    }
+
+    .proposition-btn {
+        padding: 10px 8px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    .waiting-message {
+        padding: 20px;
+        margin-top: 8px;
+    }
+}
+
 /* Popup / Modal assorti au jeu */
 .game-popup-overlay {
     display: none;
