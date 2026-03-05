@@ -11,6 +11,7 @@
     <meta name="apple-mobile-web-app-title" content="Convergence 5">
     <link rel="stylesheet" href="game.css">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="sounds.js"></script>
 </head>
 <body>
     <!-- Écran de connexion -->
@@ -18,15 +19,14 @@
         <div class="container">
             <h1>Convergence 5 - Rejoindre une partie</h1>
             <button id="fullscreenBtn" class="btn btn-small">Plein écran</button>
-            <div class="form-group">
-                <label for="sessionCodeInput">Code de session :</label>
-                <input type="text" id="sessionCodeInput" placeholder="Entrez le code" maxlength="7">
+            <div id="sessionStatus" class="session-info">
+                En attente de la création de la partie...
             </div>
             <div class="form-group">
                 <label for="playerNameInput">Votre nom :</label>
                 <input type="text" id="playerNameInput" placeholder="Votre nom">
             </div>
-            <button id="joinBtn" class="btn btn-primary">Rejoindre</button>
+            <button id="joinBtn" class="btn btn-primary" disabled>Rejoindre</button>
             <div id="joinError" class="error-message"></div>
         </div>
     </div>

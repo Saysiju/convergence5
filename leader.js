@@ -7,35 +7,79 @@ let currentCellIndex = null;
 let currentCell = null;
 let cellAnswers = {}; // { cellIndex: 'correct' | 'incorrect' | 'pass' }
 
+// État de la session (une seule partie à la fois)
+let sessionAvailable = false;
+let sessionMaxPlayers = null;
+let sessionCurrentPlayers = 0;
+
 // Éléments DOM
 const joinScreen = document.getElementById('join-screen');
 const waitingScreen = document.getElementById('waiting-screen');
 const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
+const sessionStatusEl = document.getElementById('sessionStatus');
+const joinBtn = document.getElementById('joinBtn');
 
-// Rejoindre la session
-document.getElementById('joinBtn').addEventListener('click', () => {
-    const sessionCode = document.getElementById('sessionCodeInput').value.trim().toUpperCase();
+function updateSessionStatus() {
+    if (sessionStatusEl) {
+        if (!sessionAvailable) {
+            sessionStatusEl.textContent = 'En attente de la création de la partie...';
+        } else if (sessionMaxPlayers != null) {
+            sessionStatusEl.textContent = `${sessionCurrentPlayers}/${sessionMaxPlayers} joueurs connectés`;
+        }
+    }
+    if (joinBtn) {
+        joinBtn.disabled = !sessionAvailable;
+    }
+}
+
+// Rejoindre la session (sans code, une seule partie)
+joinBtn.addEventListener('click', () => {
     const playerName = document.getElementById('playerNameInput').value.trim();
     
-    if (!sessionCode || !playerName) {
-        showError('Veuillez remplir tous les champs');
+    if (!playerName) {
+        showError('Veuillez entrer votre nom');
+        return;
+    }
+    if (!sessionAvailable) {
+        showError('Aucune partie n\'est disponible pour le moment.');
         return;
     }
     
-    currentSessionId = sessionCode;
     // Le meneur rejoint comme un joueur normal, mais sera identifié comme meneur plus tard
-    socket.emit('player:join-session', { sessionId: sessionCode, playerName: playerName });
+    socket.emit('player:join-session', { playerName: playerName });
 });
 
 // Connexion réussie
 socket.on('player:joined', (data) => {
+    currentSessionId = data.sessionId || currentSessionId;
     showScreen('waiting-screen');
 });
 
 // Erreur de connexion
 socket.on('player:join-error', (data) => {
     showError(data.message);
+});
+
+// Informations sur l'existence ou non d'une partie
+socket.on('session:none', () => {
+    sessionAvailable = false;
+    sessionCurrentPlayers = 0;
+    sessionMaxPlayers = null;
+    updateSessionStatus();
+});
+
+socket.on('session:created', (data) => {
+    sessionAvailable = true;
+    sessionMaxPlayers = data.maxPlayers;
+    updateSessionStatus();
+});
+
+socket.on('session:player-count', (data) => {
+    sessionAvailable = true;
+    sessionCurrentPlayers = data.current;
+    sessionMaxPlayers = data.max;
+    updateSessionStatus();
 });
 
 // Meneur sélectionné
@@ -217,12 +261,15 @@ socket.on('session:stopped', (data) => {
     currentCellIndex = null;
     currentCell = null;
     showScreen('join-screen');
-    document.getElementById('sessionCodeInput').value = '';
     document.getElementById('playerNameInput').value = '';
     
     if (data && data.message) {
         showGamePopup({ message: data.message });
     }
+    sessionAvailable = false;
+    sessionCurrentPlayers = 0;
+    sessionMaxPlayers = null;
+    updateSessionStatus();
 });
 
 // Fonctions utilitaires

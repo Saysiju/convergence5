@@ -22,6 +22,8 @@ const gameData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data.json'), '
 
 // État des sessions de jeu
 const gameSessions = {};
+// Dans cette application il n'y a qu'une seule partie active à la fois
+let currentSessionId = null;
 
 // Fonction pour obtenir toutes les catégories uniques
 function getAllCategories() {
@@ -150,6 +152,21 @@ function generateSessionId() {
 io.on('connection', (socket) => {
     console.log('Nouvelle connexion:', socket.id);
 
+    // Informer le nouveau client de l'état actuel de la partie (s'il y en a une)
+    if (currentSessionId && gameSessions[currentSessionId]) {
+        const session = gameSessions[currentSessionId];
+        socket.emit('session:created', {
+            sessionId: currentSessionId,
+            maxPlayers: session.maxPlayers
+        });
+        socket.emit('session:player-count', {
+            current: session.players.length,
+            max: session.maxPlayers
+        });
+    } else {
+        socket.emit('session:none');
+    }
+
     // Maître du jeu : créer une nouvelle session
     socket.on('master:create-session', (data) => {
         const sessionId = generateSessionId();
@@ -172,9 +189,19 @@ io.on('connection', (socket) => {
             timer: 240, // 4 minutes
             timerInterval: null
         };
+        currentSessionId = sessionId;
         
         socket.join(sessionId);
         socket.emit('master:session-created', { sessionId });
+        // Informer tous les clients qu'une nouvelle partie est disponible
+        io.emit('session:created', {
+            sessionId,
+            maxPlayers: gameSessions[sessionId].maxPlayers
+        });
+        io.emit('session:player-count', {
+            current: 0,
+            max: gameSessions[sessionId].maxPlayers
+        });
         console.log(`Session créée: ${sessionId} par ${socket.id}`);
     });
 
@@ -210,16 +237,23 @@ io.on('connection', (socket) => {
             
             // Supprimer la session
             delete gameSessions[sessionId];
+            if (currentSessionId === sessionId) {
+                currentSessionId = null;
+            }
+            // Informer tous les clients qu'il n'y a plus de partie active
+            io.emit('session:none');
             console.log(`Session arrêtée: ${sessionId}`);
         }
     });
 
     // Joueur : rejoindre une session
     socket.on('player:join-session', (data) => {
-        const { sessionId, playerName } = data;
+        const { sessionId: requestedSessionId, playerName } = data;
         
-        if (!gameSessions[sessionId]) {
-            socket.emit('player:join-error', { message: 'Session introuvable' });
+        const sessionId = requestedSessionId || currentSessionId;
+        
+        if (!sessionId || !gameSessions[sessionId]) {
+            socket.emit('player:join-error', { message: 'Aucune partie en cours. Veuillez attendre que le maître du jeu crée une partie.' });
             return;
         }
         
@@ -258,6 +292,11 @@ io.on('connection', (socket) => {
                 totalPoints: p.totalPoints,
                 power: p.power
             }))
+        });
+        // Mettre à jour le compteur global de joueurs pour toutes les interfaces
+        io.emit('session:player-count', {
+            current: session.players.length,
+            max: session.maxPlayers
         });
         
         console.log(`Joueur ${playerName} a rejoint la session ${sessionId}`);
@@ -805,6 +844,13 @@ io.on('connection', (socket) => {
                         ready: p.ready
                     }))
                 });
+                // Mettre à jour le compteur global de joueurs si c'est la session active
+                if (sessionId === currentSessionId) {
+                    io.emit('session:player-count', {
+                        current: session.players.length,
+                        max: session.maxPlayers
+                    });
+                }
             }
             
             // Si c'est le meneur qui se déconnecte
@@ -816,7 +862,7 @@ io.on('connection', (socket) => {
     });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3003;
 server.listen(PORT, () => {
     console.log(`🚀 Serveur démarré sur le port ${PORT}`);
     console.log(`📱 Accès: http://localhost:${PORT}`);

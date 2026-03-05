@@ -40,10 +40,11 @@ document.getElementById('selectLeaderBtn')?.addEventListener('click', () => {
 // Session créée
 socket.on('master:session-created', (data) => {
     currentSessionId = data.sessionId;
-    document.getElementById('sessionCode').textContent = currentSessionId;
-    document.getElementById('sessionInfo').style.display = 'block';
+    const info = document.getElementById('sessionInfo');
+    if (info) {
+        info.style.display = 'block';
+    }
     showScreen('waiting-players-screen');
-    document.getElementById('sessionCodeDisplay').textContent = currentSessionId;
 });
 
 // Joueur rejoint

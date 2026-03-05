@@ -11,6 +11,7 @@
     <meta name="apple-mobile-web-app-title" content="Convergence 5">
     <link rel="stylesheet" href="game.css">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="sounds.js"></script>
 </head>
 <body>
     <!-- Écran de création de session -->
@@ -24,8 +25,7 @@
             </div>
             <button id="createSessionBtn" class="btn btn-primary">Créer une partie</button>
             <div id="sessionInfo" class="session-info" style="display: none;">
-                <p><strong>Code de session :</strong> <span id="sessionCode"></span></p>
-                <p>Partagez ce code avec les joueurs pour qu'ils rejoignent la partie.</p>
+                <p>Partie créée. Les joueurs peuvent maintenant rejoindre.</p>
             </div>
         </div>
     </div>
@@ -34,7 +34,6 @@
     <div id="waiting-players-screen" class="screen">
         <div class="container">
             <h1>En attente des joueurs</h1>
-            <p>Code de session : <strong id="sessionCodeDisplay"></strong></p>
             <div id="playersList" class="players-list"></div>
             <button id="selectLeaderBtn" class="btn btn-primary" style="display: none; margin-top: 20px;">Choisir le meneur</button>
             <button id="stopSessionBtn" class="btn btn-danger" style="margin-top: 10px;">Arrêter la partie</button>
