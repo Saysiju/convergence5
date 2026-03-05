@@ -14,11 +14,13 @@
     <script src="sounds.js"></script>
 </head>
 <body>
+    <button id="fullscreenToggle" class="fullscreen-toggle" aria-label="Basculer en plein écran">
+        ⛶ <span>Plein écran</span>
+    </button>
     <!-- Écran de création de session -->
     <div id="create-session-screen" class="screen active">
         <div class="container">
             <h1>Convergence 5 - Maître du Jeu</h1>
-            <button id="fullscreenBtn" class="btn btn-small">Plein écran</button>
             <div class="form-group">
                 <label for="maxPlayers">Nombre de joueurs :</label>
                 <input type="number" id="maxPlayers" min="2" max="10" value="4">
@@ -108,6 +110,16 @@
             });
         }
 
+        function isFullscreen() {
+            return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+        }
+
+        function updateFullscreenButton() {
+            const btn = document.getElementById('fullscreenToggle');
+            if (!btn) return;
+            btn.style.display = isFullscreen() ? 'none' : 'inline-flex';
+        }
+
         function requestFullscreen() {
             const elem = document.documentElement;
             if (elem.requestFullscreen) {
@@ -120,11 +132,16 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const fsBtn = document.getElementById('fullscreenBtn');
-            if (fsBtn) {
-                fsBtn.addEventListener('click', requestFullscreen);
+            const btn = document.getElementById('fullscreenToggle');
+            if (btn) {
+                btn.addEventListener('click', requestFullscreen);
             }
+            updateFullscreenButton();
         });
+
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+        document.addEventListener('msfullscreenchange', updateFullscreenButton);
     </script>
     <script src="popup.js"></script>
     <script src="master.js"></script>

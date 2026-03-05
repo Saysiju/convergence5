@@ -811,3 +811,34 @@ input[type="number"]:focus {
     font-size: 56px;
     margin-bottom: 16px;
 }
+
+/* Bouton plein écran global (en haut à droite) */
+.fullscreen-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1100;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: #0b1120;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.6);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fullscreen-toggle span {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.fullscreen-toggle:hover {
+    background: linear-gradient(135deg, #0ea5e9, #4f46e5);
+    transform: translateY(-1px);
+}
