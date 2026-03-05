@@ -87,79 +87,97 @@ function startQuestionsPhase(sessionId, reason = 'time') {
         return;
     }
 
-    // Arrêter le timer principal s'il tourne encore
-    if (session.timerInterval) {
-        clearInterval(session.timerInterval);
-        session.timerInterval = null;
-    }
+    try {
+        // Arrêter le timer principal s'il tourne encore
+        if (session.timerInterval) {
+            clearInterval(session.timerInterval);
+            session.timerInterval = null;
+        }
 
-    // Construire la file de 5 questions uniquement une fois
-    if (!Array.isArray(session.questionQueue) || session.questionQueue.length === 0) {
-        const selectedThemes = session.selectedThemes || [];
-        const gridThemes = session.gridThemes || [];
+        // Construire la file de 5 questions uniquement une fois
+        if (!Array.isArray(session.questionQueue) || session.questionQueue.length === 0) {
+            const selectedThemes = session.selectedThemes || [];
+            const gridThemes = session.gridThemes || [];
 
-        // 3 thèmes choisis au début de partie
-        const primaryThemes = selectedThemes.slice(0, 3);
+            // 3 thèmes choisis au début de partie
+            const primaryThemes = selectedThemes.slice(0, 3);
 
-        // 2 thèmes non choisis mais présents dans la grille
-        const secondaryThemes = gridThemes.filter(cat => !primaryThemes.includes(cat));
-        const extraThemes = secondaryThemes.slice(0, 2);
+            // 2 thèmes non choisis mais présents dans la grille
+            const secondaryThemes = gridThemes.filter(cat => !primaryThemes.includes(cat));
+            const extraThemes = secondaryThemes.slice(0, 2);
 
-        const questionCategories = [...primaryThemes, ...extraThemes];
+            const questionCategories = [...primaryThemes, ...extraThemes];
 
-        // Si pour une raison quelconque on n'a pas 5 thèmes, compléter avec toutes les catégories
-        if (questionCategories.length < 5) {
-            const allCategories = getAllCategories();
-            for (const cat of allCategories) {
-                if (!questionCategories.includes(cat)) {
-                    questionCategories.push(cat);
-                    if (questionCategories.length >= 5) break;
+            // Si pour une raison quelconque on n'a pas 5 thèmes, compléter avec toutes les catégories
+            if (questionCategories.length < 5) {
+                const allCategories = getAllCategories();
+                for (const cat of allCategories) {
+                    if (!questionCategories.includes(cat)) {
+                        questionCategories.push(cat);
+                        if (questionCategories.length >= 5) break;
+                    }
                 }
             }
+
+            // Si malgré tout on n'a aucune catégorie valide, on termine proprement la partie
+            if (questionCategories.length === 0) {
+                session.gameState = 'ended';
+                io.to(sessionId).emit('session:final-score', {
+                    score: session.score
+                });
+                return;
+            }
+
+            session.questionQueue = questionCategories.slice(0, 5).map((category, index) => {
+                const item = getRandomItemByCategory(category);
+                const points = index < 3 ? 10 : 20; // 3 thèmes choisis, puis 2 non choisis
+                return {
+                    index,
+                    category,
+                    points,
+                    itemName: item ? item.name : null,
+                    questionText: getQuestionTextForItem(item),
+                    answered: false,
+                    correct: null,
+                    playerId: null
+                };
+            });
         }
 
-        session.questionQueue = questionCategories.slice(0, 5).map((category, index) => {
-            const item = getRandomItemByCategory(category);
-            const points = index < 3 ? 10 : 20; // 3 thèmes choisis, puis 2 non choisis
-            return {
-                index,
-                category,
-                points,
-                itemName: item ? item.name : null,
-                questionText: getQuestionTextForItem(item),
-                answered: false,
-                correct: null,
-                playerId: null
-            };
+        session.gameState = 'questions';
+        session.currentQuestionIndex = 0;
+        session.currentQuestion = (session.questionQueue && session.questionQueue[0]) || null;
+
+        // Informer tout le monde que la phase 2 commence
+        io.to(sessionId).emit('session:questions-phase-start', {
+            reason,
+            score: session.score
+        });
+
+        // Envoyer les informations détaillées au maître du jeu
+        const questionsForMaster = (session.questionQueue || []).map(q => ({
+            index: q.index,
+            category: q.category,
+            points: q.points,
+            questionText: q.questionText,
+            itemName: q.itemName
+        }));
+
+        io.to(session.masterId).emit('master:questions-start', {
+            score: session.score,
+            lives: session.lives,
+            energy: session.energy,
+            questions: questionsForMaster
+        });
+    } catch (err) {
+        console.error('Erreur lors du démarrage de la phase 2 :', err);
+        // En cas de bug imprévu, on termine proprement la partie avec le score courant
+        session.gameState = 'ended';
+        io.to(sessionId).emit('session:final-score', {
+            score: session.score
         });
     }
-
-    session.gameState = 'questions';
-    session.currentQuestionIndex = 0;
-    session.currentQuestion = session.questionQueue[0] || null;
-
-    // Informer tout le monde que la phase 2 commence
-    io.to(sessionId).emit('session:questions-phase-start', {
-        reason,
-        score: session.score
-    });
-
-    // Envoyer les informations détaillées au maître du jeu
-    const questionsForMaster = (session.questionQueue || []).map(q => ({
-        index: q.index,
-        category: q.category,
-        points: q.points,
-        questionText: q.questionText,
-        itemName: q.itemName
-    }));
-
-    io.to(session.masterId).emit('master:questions-start', {
-        score: session.score,
-        lives: session.lives,
-        energy: session.energy,
-        questions: questionsForMaster
-    });
-        }
+}
         if (line.length >= 4) {
             lines.push(line);
         }
@@ -929,22 +947,23 @@ io.on('connection', (socket) => {
                 grid: session.grid,
                 cellAnswers: session.cellAnswers
             });
-            // Passage à la phase de questions si les vies sont à 0
-            if (session.lives <= 0) {
-                if (session.timerInterval) {
-                    clearInterval(session.timerInterval);
-                    session.timerInterval = null;
-                }
-                startQuestionsPhase(sessionId, 'lives');
-            }
         }
         
-        // Mettre à jour le score, les vies et l'énergie pour tous
+        // Mettre à jour le score, les vies et l'énergie pour tous (y compris si les vies tombent à 0)
         io.to(sessionId).emit('session:game-update', {
             score: session.score,
             lives: session.lives,
             energy: session.energy
         });
+
+        // Passage à la phase de questions si les vies sont à 0
+        if (session.lives <= 0) {
+            if (session.timerInterval) {
+                clearInterval(session.timerInterval);
+                session.timerInterval = null;
+            }
+            startQuestionsPhase(sessionId, 'lives');
+        }
         
         // Cacher les propositions pour tous les joueurs après la réponse
         session.players.forEach(p => {
