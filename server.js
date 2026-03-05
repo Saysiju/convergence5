@@ -47,7 +47,7 @@ function getNewItemForCategory(category, usedNames) {
     return availableItems[Math.floor(Math.random() * availableItems.length)];
 }
 
-// Fonction pour détecter les lignes et diagonales de 4+ mots trouvés
+// Fonction pour détecter les lignes et diagonales de 4+ mots trouvés (phase 1)
 function detectLinesAndDiagonals(cellAnswers, gridSize = 5) {
     const lines = [];
     
@@ -58,7 +58,107 @@ function detectLinesAndDiagonals(cellAnswers, gridSize = 5) {
             const index = row * gridSize + col;
             if (cellAnswers[index] === 'correct') {
                 line.push(index);
+    }
+}
+
+// Fonction utilitaire pour récupérer un élément aléatoire (pour les questions finales)
+function getRandomItemByCategory(category) {
+    const items = gameData.filter(item => item.category === category);
+    if (items.length === 0) return null;
+    return items[Math.floor(Math.random() * items.length)];
+}
+
+// Générer une question lisible à partir des données
+function getQuestionTextForItem(item) {
+    if (!item) return 'Question : trouvez la bonne réponse.';
+    if (item.question && typeof item.question === 'string') return item.question;
+    if (item.indice_phrase) return `Question : ${item.indice_phrase}`;
+    if (item.indice_mot) return `Question : ${item.indice_mot}`;
+    return `Question sur le thème "${item.category}" : trouvez la bonne réponse.`;
+}
+
+// Démarrer la phase de questions finales (phase 2)
+function startQuestionsPhase(sessionId, reason = 'time') {
+    const session = gameSessions[sessionId];
+    if (!session) return;
+
+    // Ne pas relancer si déjà en phase questions ou si la partie est déjà terminée
+    if (session.gameState === 'questions' || session.gameState === 'ended') {
+        return;
+    }
+
+    // Arrêter le timer principal s'il tourne encore
+    if (session.timerInterval) {
+        clearInterval(session.timerInterval);
+        session.timerInterval = null;
+    }
+
+    // Construire la file de 5 questions uniquement une fois
+    if (!Array.isArray(session.questionQueue) || session.questionQueue.length === 0) {
+        const selectedThemes = session.selectedThemes || [];
+        const gridThemes = session.gridThemes || [];
+
+        // 3 thèmes choisis au début de partie
+        const primaryThemes = selectedThemes.slice(0, 3);
+
+        // 2 thèmes non choisis mais présents dans la grille
+        const secondaryThemes = gridThemes.filter(cat => !primaryThemes.includes(cat));
+        const extraThemes = secondaryThemes.slice(0, 2);
+
+        const questionCategories = [...primaryThemes, ...extraThemes];
+
+        // Si pour une raison quelconque on n'a pas 5 thèmes, compléter avec toutes les catégories
+        if (questionCategories.length < 5) {
+            const allCategories = getAllCategories();
+            for (const cat of allCategories) {
+                if (!questionCategories.includes(cat)) {
+                    questionCategories.push(cat);
+                    if (questionCategories.length >= 5) break;
+                }
             }
+        }
+
+        session.questionQueue = questionCategories.slice(0, 5).map((category, index) => {
+            const item = getRandomItemByCategory(category);
+            const points = index < 3 ? 10 : 20; // 3 thèmes choisis, puis 2 non choisis
+            return {
+                index,
+                category,
+                points,
+                itemName: item ? item.name : null,
+                questionText: getQuestionTextForItem(item),
+                answered: false,
+                correct: null,
+                playerId: null
+            };
+        });
+    }
+
+    session.gameState = 'questions';
+    session.currentQuestionIndex = 0;
+    session.currentQuestion = session.questionQueue[0] || null;
+
+    // Informer tout le monde que la phase 2 commence
+    io.to(sessionId).emit('session:questions-phase-start', {
+        reason,
+        score: session.score
+    });
+
+    // Envoyer les informations détaillées au maître du jeu
+    const questionsForMaster = (session.questionQueue || []).map(q => ({
+        index: q.index,
+        category: q.category,
+        points: q.points,
+        questionText: q.questionText,
+        itemName: q.itemName
+    }));
+
+    io.to(session.masterId).emit('master:questions-start', {
+        score: session.score,
+        lives: session.lives,
+        energy: session.energy,
+        questions: questionsForMaster
+    });
         }
         if (line.length >= 4) {
             lines.push(line);
@@ -500,16 +600,17 @@ io.on('connection', (socket) => {
         session.gridThemes = gridThemes; // Stocker les 5 thèmes utilisés dans la grille
         session.gameState = 'playing';
         
-        // Démarrer le timer
-        session.timer = 240;
+        // Démarrer le timer (5 minutes)
+        session.timer = 300;
         session.timerInterval = setInterval(() => {
             session.timer--;
             io.to(sessionId).emit('session:timer-update', { timer: session.timer });
             
             if (session.timer <= 0) {
                 clearInterval(session.timerInterval);
-                session.gameState = 'ended';
-                io.to(sessionId).emit('session:game-ended', { reason: 'time', score: session.score });
+                session.timerInterval = null;
+                // Passage à la phase de questions (phase 2)
+                startQuestionsPhase(sessionId, 'time');
             }
         }, 1000);
         
@@ -828,12 +929,13 @@ io.on('connection', (socket) => {
                 grid: session.grid,
                 cellAnswers: session.cellAnswers
             });
-            
-            // Vérifier la défaite
+            // Passage à la phase de questions si les vies sont à 0
             if (session.lives <= 0) {
-                clearInterval(session.timerInterval);
-                session.gameState = 'defeat';
-                io.to(sessionId).emit('session:defeat', { reason: 'lives' });
+                if (session.timerInterval) {
+                    clearInterval(session.timerInterval);
+                    session.timerInterval = null;
+                }
+                startQuestionsPhase(sessionId, 'lives');
             }
         }
         
@@ -856,6 +958,109 @@ io.on('connection', (socket) => {
         session.currentPropositions = null;
     });
 
+    // Phase 2 : sélection du joueur pour une question
+    socket.on('master:select-question-player', (data) => {
+        const { sessionId, questionIndex, playerId } = data;
+        const session = gameSessions[sessionId];
+
+        if (!session || session.masterId !== socket.id) return;
+        if (session.gameState !== 'questions') return;
+        if (!Array.isArray(session.questionQueue)) return;
+
+        const question = session.questionQueue.find(q => q.index === questionIndex);
+        if (!question) return;
+
+        const player = session.players.find(p => p.id === playerId);
+        if (!player) return;
+
+        question.playerId = playerId;
+        session.currentQuestionIndex = questionIndex;
+        session.currentQuestion = question;
+
+        io.to(session.masterId).emit('master:question-player-selected', {
+            questionIndex,
+            playerId
+        });
+    });
+
+    // Phase 2 : afficher la question au joueur sélectionné
+    socket.on('master:show-question-to-player', (data) => {
+        const { sessionId } = data;
+        const session = gameSessions[sessionId];
+
+        if (!session || session.masterId !== socket.id) return;
+        if (session.gameState !== 'questions') return;
+
+        const question = session.currentQuestion;
+        if (!question || !question.playerId) return;
+
+        const payload = {
+            category: question.category,
+            question: question.questionText,
+            points: question.points,
+            duration: 60
+        };
+
+        // Informer le maître que la question est affichée
+        io.to(session.masterId).emit('master:question-shown', {
+            questionIndex: question.index
+        });
+
+        // Afficher la question au joueur choisi
+        io.to(question.playerId).emit('player:show-final-question', payload);
+    });
+
+    // Phase 2 : résultat de la question (correct / incorrect)
+    socket.on('master:question-result', (data) => {
+        const { sessionId, correct } = data;
+        const session = gameSessions[sessionId];
+
+        if (!session || session.masterId !== socket.id) return;
+        if (session.gameState !== 'questions') return;
+
+        const question = session.currentQuestion;
+        if (!question) return;
+
+        // Mettre à jour le score
+        if (correct) {
+            session.score += question.points;
+        }
+
+        question.answered = true;
+        question.correct = !!correct;
+
+        // Cacher la question côté joueur
+        if (question.playerId) {
+            io.to(question.playerId).emit('player:hide-final-question');
+        }
+
+        // Mettre à jour les stats globales
+        io.to(sessionId).emit('session:game-update', {
+            score: session.score,
+            lives: session.lives,
+            energy: session.energy
+        });
+
+        // Chercher la prochaine question non traitée
+        const nextQuestion = (session.questionQueue || []).find(q => !q.answered);
+
+        if (nextQuestion) {
+            session.currentQuestionIndex = nextQuestion.index;
+            session.currentQuestion = nextQuestion;
+
+            io.to(session.masterId).emit('master:next-question-ready', {
+                questionIndex: nextQuestion.index,
+                score: session.score
+            });
+        } else {
+            // Toutes les questions ont été posées : fin définitive de la partie
+            session.gameState = 'ended';
+            io.to(sessionId).emit('session:final-score', {
+                score: session.score
+            });
+        }
+    });
+
     // Déconnexion
     socket.on('disconnect', () => {
         console.log('Déconnexion:', socket.id);
@@ -867,9 +1072,10 @@ io.on('connection', (socket) => {
             // Si c'est le maître qui se déconnecte, arrêter la session
             if (session.masterId === socket.id) {
                 io.to(sessionId).emit('session:stopped');
-                if (session.timerInterval) {
-                    clearInterval(session.timerInterval);
-                }
+        if (session.timerInterval) {
+            clearInterval(session.timerInterval);
+            session.timerInterval = null;
+        }
                 delete gameSessions[sessionId];
                 break;
             }

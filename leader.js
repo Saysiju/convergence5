@@ -248,18 +248,14 @@ function showError(message) {
     }, 5000);
 }
 
-// Fin de partie (temps écoulé) - affichage du score
+// Fin de partie (temps écoulé) - cet événement n'est plus utilisé pour terminer la partie
 socket.on('session:game-ended', (data) => {
-    showScreen('end-game-screen');
-    document.getElementById('endGameTitle').textContent = 'Partie terminée';
-    document.getElementById('endGameMessage').textContent = `Le temps est écoulé. Score final : ${data.score} points`;
+    // La fin réelle arrive via session:final-score après la phase 2.
 });
 
-// Défaite (vies épuisées)
+// Défaite (vies épuisées) - remplacée par la phase de questions
 socket.on('session:defeat', (data) => {
-    showScreen('end-game-screen');
-    document.getElementById('endGameTitle').textContent = 'Défaite';
-    document.getElementById('endGameMessage').textContent = 'Les vies sont épuisées';
+    // On ne montre plus d'écran de défaite ici.
 });
 
 // Session arrêtée
@@ -278,6 +274,18 @@ socket.on('session:stopped', (data) => {
     sessionCurrentPlayers = 0;
     sessionMaxPlayers = null;
     updateSessionStatus();
+});
+
+// Début de la phase 2 (information simple)
+socket.on('session:questions-phase-start', (data) => {
+    // Le meneur reste sur son écran de jeu, mais sait qu'une phase de questions est en cours.
+});
+
+// Score final (après la phase 2)
+socket.on('session:final-score', (data) => {
+    showScreen('end-game-screen');
+    document.getElementById('endGameTitle').textContent = 'Partie terminée';
+    document.getElementById('endGameMessage').textContent = `Score final : ${data.score} points`;
 });
 
 // Fonctions utilitaires

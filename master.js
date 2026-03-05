@@ -10,6 +10,10 @@ let allCategories = [];
 let grid = [];
 let cellAnswers = {};
 
+// Phase 2 : questions finales
+let questions = [];
+let currentQuestionIndex = null;
+
 // Éléments DOM
 const createSessionScreen = document.getElementById('create-session-screen');
 const waitingPlayersScreen = document.getElementById('waiting-players-screen');
@@ -18,6 +22,11 @@ const selectThemesScreen = document.getElementById('select-themes-screen');
 const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
 const masterGridEl = document.getElementById('master-grid');
+const questionsSection = document.getElementById('questions-section');
+const questionsListEl = document.getElementById('questions-list');
+const questionPlayerSelectEl = document.getElementById('questionPlayerSelect');
+const currentQuestionThemeEl = document.getElementById('currentQuestionTheme');
+const currentQuestionTextEl = document.getElementById('currentQuestionText');
 
 // Créer une session
 document.getElementById('createSessionBtn').addEventListener('click', () => {
@@ -114,6 +123,25 @@ socket.on('master:game-started', (data) => {
     }
 });
 
+// Début de la phase 2 (information générale)
+socket.on('session:questions-phase-start', (data) => {
+    showScreen('game-screen');
+    if (questionsSection) {
+        questionsSection.style.display = 'block';
+    }
+});
+
+// Phase 2 : réception des questions côté maître
+socket.on('master:questions-start', (data) => {
+    questions = data.questions || [];
+    if (questionsSection) {
+        questionsSection.style.display = 'block';
+    }
+    currentQuestionIndex = questions.length > 0 ? questions[0].index : null;
+    renderQuestionsList();
+    updateCurrentQuestionPanel();
+});
+
 // Mise à jour de la grille pour le maître du jeu
 socket.on('master:grid-updated', (data) => {
     grid = data.grid || [];
@@ -169,6 +197,13 @@ socket.on('session:stopped', (data) => {
     if (data && data.message) {
         showGamePopup({ message: data.message });
     }
+});
+
+// Score final (après la phase 2)
+socket.on('session:final-score', (data) => {
+    showScreen('end-game-screen');
+    document.getElementById('endGameTitle').textContent = 'Partie terminée';
+    document.getElementById('endGameMessage').textContent = `Score final : ${data.score} points`;
 });
 
 // Nouvelle partie
@@ -257,6 +292,85 @@ function renderLeaderSelection() {
     });
 }
 
+// Rendre la liste des questions (phase 2)
+function renderQuestionsList() {
+    if (!questionsListEl) return;
+    questionsListEl.innerHTML = '';
+
+    questions.forEach((q) => {
+        const div = document.createElement('div');
+        div.className = 'question-item';
+        const status = q.answered ? (q.correct ? '✅' : '✖️') : '⏳';
+        const pointsLabel = `${q.points} pts`;
+        div.textContent = `${status} Q${q.index + 1} - ${q.category} (${pointsLabel})`;
+        if (currentQuestionIndex === q.index) {
+            div.classList.add('question-item-current');
+        }
+        questionsListEl.appendChild(div);
+    });
+}
+
+function getCurrentQuestion() {
+    if (!Array.isArray(questions)) return null;
+    return questions.find(q => q.index === currentQuestionIndex) || null;
+}
+
+function updateCurrentQuestionPanel() {
+    const q = getCurrentQuestion();
+    if (!q) {
+        if (currentQuestionThemeEl) currentQuestionThemeEl.textContent = '';
+        if (currentQuestionTextEl) currentQuestionTextEl.textContent = 'Toutes les questions ont été posées.';
+        return;
+    }
+
+    if (currentQuestionThemeEl) {
+        currentQuestionThemeEl.textContent = `Thème : ${q.category} — ${q.points} points`;
+    }
+    if (currentQuestionTextEl) {
+        currentQuestionTextEl.textContent = q.questionText || '';
+    }
+
+    // Remplir la liste des joueurs
+    if (questionPlayerSelectEl) {
+        questionPlayerSelectEl.innerHTML = '';
+        players.forEach((p) => {
+            const option = document.createElement('option');
+            option.value = p.id;
+            option.textContent = p.name;
+            questionPlayerSelectEl.appendChild(option);
+        });
+    }
+
+    // Réinitialiser les boutons d'action
+    const showBtn = document.getElementById('showQuestionToPlayerBtn');
+    const correctBtn = document.getElementById('questionCorrectBtn');
+    const incorrectBtn = document.getElementById('questionIncorrectBtn');
+    if (showBtn) showBtn.disabled = true;
+    if (correctBtn) correctBtn.disabled = true;
+    if (incorrectBtn) incorrectBtn.disabled = true;
+}
+
+// Mise à jour après sélection du joueur côté serveur
+socket.on('master:question-player-selected', (data) => {
+    const showBtn = document.getElementById('showQuestionToPlayerBtn');
+    if (showBtn) showBtn.disabled = false;
+});
+
+// Quand la question est affichée au joueur
+socket.on('master:question-shown', (data) => {
+    const correctBtn = document.getElementById('questionCorrectBtn');
+    const incorrectBtn = document.getElementById('questionIncorrectBtn');
+    if (correctBtn) correctBtn.disabled = false;
+    if (incorrectBtn) incorrectBtn.disabled = false;
+});
+
+// Quand le serveur indique la prochaine question
+socket.on('master:next-question-ready', (data) => {
+    currentQuestionIndex = data.questionIndex;
+    renderQuestionsList();
+    updateCurrentQuestionPanel();
+});
+
 socket.on('session:leader-selected', (data) => {
     selectedLeaderId = data.leaderId;
     const leader = players.find(p => p.id === data.leaderId);
@@ -266,6 +380,53 @@ socket.on('session:leader-selected', (data) => {
     // Mettre à jour la liste des joueurs pour afficher le meneur
     renderPlayersList();
 });
+
+// Boutons de la phase 2 (sélection du joueur et validation de la réponse)
+const selectQuestionPlayerBtn = document.getElementById('selectQuestionPlayerBtn');
+if (selectQuestionPlayerBtn) {
+    selectQuestionPlayerBtn.addEventListener('click', () => {
+        const q = getCurrentQuestion();
+        if (!q || !currentSessionId || !questionPlayerSelectEl) return;
+        const playerId = questionPlayerSelectEl.value;
+        if (!playerId) return;
+
+        socket.emit('master:select-question-player', {
+            sessionId: currentSessionId,
+            questionIndex: q.index,
+            playerId
+        });
+    });
+}
+
+const showQuestionToPlayerBtn = document.getElementById('showQuestionToPlayerBtn');
+if (showQuestionToPlayerBtn) {
+    showQuestionToPlayerBtn.addEventListener('click', () => {
+        if (!currentSessionId) return;
+        socket.emit('master:show-question-to-player', { sessionId: currentSessionId });
+    });
+}
+
+const questionCorrectBtn = document.getElementById('questionCorrectBtn');
+if (questionCorrectBtn) {
+    questionCorrectBtn.addEventListener('click', () => {
+        if (!currentSessionId) return;
+        socket.emit('master:question-result', {
+            sessionId: currentSessionId,
+            correct: true
+        });
+    });
+}
+
+const questionIncorrectBtn = document.getElementById('questionIncorrectBtn');
+if (questionIncorrectBtn) {
+    questionIncorrectBtn.addEventListener('click', () => {
+        if (!currentSessionId) return;
+        socket.emit('master:question-result', {
+            sessionId: currentSessionId,
+            correct: false
+        });
+    });
+}
 
 function renderThemesSelection() {
     const list = document.getElementById('themesList');

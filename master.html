@@ -88,6 +88,31 @@
             <div class="grid-container" style="margin-top: 12px;">
                 <div id="master-grid" class="grid"></div>
             </div>
+
+            <!-- Phase 2 : questions finales -->
+            <div id="questions-section" class="questions-section" style="margin-top: 20px; display: none;">
+                <h2>Questions finales</h2>
+                <p id="questionsIntroText">
+                    Phase 2 en cours : 5 questions à poser, d'abord sur les 3 thèmes choisis, puis sur les 2 thèmes non choisis.
+                </p>
+                <div id="questions-list" class="questions-list"></div>
+                <div id="current-question-panel" class="current-question-panel" style="margin-top: 16px;">
+                    <h3 id="currentQuestionTitle">Question actuelle</h3>
+                    <p id="currentQuestionTheme"></p>
+                    <p id="currentQuestionText" class="current-question-text"></p>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="questionPlayerSelect">Choisir le joueur qui répond :</label>
+                        <select id="questionPlayerSelect"></select>
+                    </div>
+                    <div class="buttons-row" style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button id="selectQuestionPlayerBtn" class="btn btn-primary">Valider le joueur</button>
+                        <button id="showQuestionToPlayerBtn" class="btn btn-primary" disabled>Afficher la question au joueur</button>
+                        <button id="questionCorrectBtn" class="btn btn-primary" disabled>Correct</button>
+                        <button id="questionIncorrectBtn" class="btn btn-danger" disabled>Incorrect / Temps écoulé</button>
+                    </div>
+                </div>
+            </div>
+
             <button id="stopSessionBtnGame" class="btn btn-danger" style="margin-top: 16px; width: 100%;">Arrêter la partie</button>
         </div>
     </div>

@@ -87,6 +87,21 @@
         <div id="waiting-message" class="waiting-message">
             <p>En attente que le meneur révèle un thème...</p>
         </div>
+
+        <!-- Phase 2 : question finale pour un joueur -->
+        <div id="final-question-overlay" class="final-question-overlay" style="display: none;">
+            <div class="final-question-content">
+                <h2>Question finale</h2>
+                <p id="finalQuestionTheme" class="final-question-theme"></p>
+                <p id="finalQuestionText" class="final-question-text"></p>
+                <p class="final-question-timer">
+                    Temps restant : <span id="finalQuestionTimer">60</span> s
+                </p>
+                <p class="final-question-instruction">
+                    Répondez à haute voix, le maître du jeu validera votre réponse.
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Écran de fin de partie -->

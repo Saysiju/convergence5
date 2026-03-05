@@ -9,6 +9,10 @@ let selectedPower = null;
 let allCategories = [];
 let currentCellIndex = null;
 
+// Phase 2 : question finale
+let finalQuestionTimerId = null;
+let finalQuestionRemaining = 0;
+
 // État de la session côté client (une seule partie à la fois)
 let sessionAvailable = false;
 let sessionMaxPlayers = null;
@@ -22,6 +26,7 @@ const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
 const sessionStatusEl = document.getElementById('sessionStatus');
 const joinBtn = document.getElementById('joinBtn');
+const finalQuestionOverlay = document.getElementById('final-question-overlay');
 
 function updateSessionStatus() {
     if (sessionStatusEl) {
@@ -157,6 +162,8 @@ function renderPowersConfig() {
             if (descEl) {
                 descEl.textContent = POWER_DESCRIPTIONS[id] || '';
             }
+            // Réévaluer immédiatement l'état du bouton Prêt après le choix du pouvoir
+            updatePointsSum();
         });
         container.appendChild(btn);
     });
@@ -222,6 +229,11 @@ socket.on('session:game-started', (data) => {
     showScreen('game-screen');
 });
 
+// Phase 2 : début (information simple)
+socket.on('session:questions-phase-start', (data) => {
+    // On reste sur l'écran de jeu, rien de spécial à faire ici
+});
+
 // Afficher les propositions
 socket.on('player:show-propositions', (data) => {
     const { category, propositions, cellIndex, availablePowers = {} } = data;
@@ -251,6 +263,54 @@ socket.on('player:show-propositions', (data) => {
     }
     
     renderPropositions(propositions, cellIndex);
+});
+
+// Phase 2 : afficher une question finale pour ce joueur
+socket.on('player:show-final-question', (data) => {
+    if (!finalQuestionOverlay) return;
+
+    const themeEl = document.getElementById('finalQuestionTheme');
+    const textEl = document.getElementById('finalQuestionText');
+    const timerEl = document.getElementById('finalQuestionTimer');
+
+    if (themeEl) {
+        themeEl.textContent = `Thème : ${data.category} — ${data.points} points`;
+    }
+    if (textEl) {
+        textEl.textContent = data.question || '';
+    }
+
+    finalQuestionRemaining = data.duration || 60;
+    if (timerEl) {
+        timerEl.textContent = finalQuestionRemaining.toString();
+    }
+
+    finalQuestionOverlay.style.display = 'flex';
+
+    if (finalQuestionTimerId) {
+        clearInterval(finalQuestionTimerId);
+    }
+    finalQuestionTimerId = setInterval(() => {
+        finalQuestionRemaining = Math.max(0, finalQuestionRemaining - 1);
+        if (timerEl) {
+            timerEl.textContent = finalQuestionRemaining.toString();
+        }
+        if (finalQuestionRemaining <= 0) {
+            clearInterval(finalQuestionTimerId);
+            finalQuestionTimerId = null;
+        }
+    }, 1000);
+});
+
+// Phase 2 : cacher la question finale
+socket.on('player:hide-final-question', () => {
+    if (finalQuestionTimerId) {
+        clearInterval(finalQuestionTimerId);
+        finalQuestionTimerId = null;
+    }
+    if (finalQuestionOverlay) {
+        finalQuestionOverlay.style.display = 'none';
+    }
 });
 
 function renderPropositions(propositions, cellIndex) {
@@ -360,6 +420,13 @@ socket.on('session:stopped', (data) => {
     sessionCurrentPlayers = 0;
     sessionMaxPlayers = null;
     updateSessionStatus();
+});
+
+// Score final envoyé à tous (après la phase 2)
+socket.on('session:final-score', (data) => {
+    showScreen('end-game-screen');
+    document.getElementById('endGameTitle').textContent = 'Partie terminée';
+    document.getElementById('endGameMessage').textContent = `Score final : ${data.score} points`;
 });
 
 // Fonctions utilitaires
