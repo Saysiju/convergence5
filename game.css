@@ -640,76 +640,76 @@ input[type="number"]:focus {
 }
 
 /* Optimisation tablette paysage (Lenovo Tab One ~10") */
-@media (min-width: 900px) and (max-width: 1400px) and (orientation: landscape) {
+@media (min-width: 700px) && (max-width: 1600px) and (orientation: landscape) {
     body {
-        padding: 8px;
+        padding: 4px;
     }
 
     .container {
-        padding: 16px 20px;
+        padding: 10px 12px;
         border-radius: 16px;
     }
 
     .game-header,
     .game-stats {
-        padding: 8px 16px;
-        margin-bottom: 8px;
+        padding: 4px 8px;
+        margin-bottom: 4px;
     }
 
     .stat-label {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .stat-value {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     h1 {
-        font-size: 22px;
-        margin-bottom: 12px;
+        font-size: 20px;
+        margin-bottom: 8px;
     }
 
     /* Grille principale 5x5 plus compacte (meneur / MJ réseau) */
     .grid-container {
-        padding: 10px;
-        border-radius: 16px;
+        padding: 6px;
+        border-radius: 14px;
     }
 
     .grid {
-        gap: 6px;
+        gap: 4px;
     }
 
     .grid-cell {
-        padding: 4px;
-        border-radius: 10px;
-        font-size: 12px;
+        padding: 2px;
+        border-radius: 8px;
+        font-size: 11px;
     }
 
     /* Grille de propositions côté joueurs plus compacte */
     .propositions-container {
-        padding: 12px 14px;
-        margin-top: 8px;
-        border-radius: 14px;
+        padding: 8px 10px;
+        margin-top: 6px;
+        border-radius: 12px;
     }
 
     .propositions-container h2 {
-        margin-bottom: 8px;
-        font-size: 18px;
+        margin-bottom: 6px;
+        font-size: 16px;
     }
 
     .propositions-grid {
-        gap: 8px;
+        gap: 6px;
     }
 
     .proposition-btn {
-        padding: 10px 8px;
-        font-size: 13px;
-        border-radius: 10px;
+        padding: 8px 6px;
+        font-size: 12px;
+        border-radius: 8px;
     }
 
     .waiting-message {
-        padding: 20px;
-        margin-top: 8px;
+        padding: 16px;
+        margin-top: 6px;
     }
 }
 
