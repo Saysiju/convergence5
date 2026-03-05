@@ -70,6 +70,21 @@
             <button id="showPropositionsBtn" class="btn btn-primary">Afficher les propositions</button>
             <button id="passBtn" class="btn btn-secondary">Passe</button>
         </div>
+
+        <!-- Phase 2 : question finale affichée chez le meneur si c'est lui qui répond -->
+        <div id="final-question-overlay" class="final-question-overlay" style="display: none;">
+            <div class="final-question-content">
+                <h2>Question finale</h2>
+                <p id="finalQuestionTheme" class="final-question-theme"></p>
+                <p id="finalQuestionText" class="final-question-text"></p>
+                <p class="final-question-timer">
+                    Temps restant : <span id="finalQuestionTimer">60</span> s
+                </p>
+                <p class="final-question-instruction">
+                    Répondez à haute voix, le maître du jeu validera votre réponse.
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Écran de fin de partie -->

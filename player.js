@@ -12,6 +12,7 @@ let currentCellIndex = null;
 // Phase 2 : question finale
 let finalQuestionTimerId = null;
 let finalQuestionRemaining = 0;
+let isInQuestionsPhase = false;
 
 // État de la session côté client (une seule partie à la fois)
 let sessionAvailable = false;
@@ -226,12 +227,22 @@ socket.on('player:ready-error', (data) => {
 
 // Partie démarrée
 socket.on('session:game-started', (data) => {
+    isInQuestionsPhase = false;
     showScreen('game-screen');
 });
 
-// Phase 2 : début (information simple)
+// Phase 2 : début
 socket.on('session:questions-phase-start', (data) => {
-    // On reste sur l'écran de jeu, rien de spécial à faire ici
+    isInQuestionsPhase = true;
+    // On reste sur l'écran de jeu, mais on ne doit plus voir les textes d'attente ni les propositions
+    const waiting = document.getElementById('waiting-message');
+    const propositionsContainer = document.getElementById('propositions-container');
+    if (waiting) {
+        waiting.style.display = 'none';
+    }
+    if (propositionsContainer) {
+        propositionsContainer.style.display = 'none';
+    }
 });
 
 // Afficher les propositions
@@ -350,7 +361,10 @@ socket.on('player:power-activated', (data) => {
 // Cacher les propositions
 socket.on('player:hide-propositions', () => {
     document.getElementById('propositions-container').style.display = 'none';
-    document.getElementById('waiting-message').style.display = 'block';
+    // En phase 2, on ne réaffiche jamais le message d'attente
+    if (!isInQuestionsPhase) {
+        document.getElementById('waiting-message').style.display = 'block';
+    }
     currentCellIndex = null;
 });
 

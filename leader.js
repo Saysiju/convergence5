@@ -7,6 +7,10 @@ let currentCellIndex = null;
 let currentCell = null;
 let cellAnswers = {}; // { cellIndex: 'correct' | 'incorrect' | 'pass' }
 
+// Phase 2 : question finale (si le meneur est sélectionné pour répondre)
+let finalQuestionTimerId = null;
+let finalQuestionRemaining = 0;
+
 // État de la session (une seule partie à la fois)
 let sessionAvailable = false;
 let sessionMaxPlayers = null;
@@ -19,6 +23,7 @@ const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
 const sessionStatusEl = document.getElementById('sessionStatus');
 const joinBtn = document.getElementById('joinBtn');
+const finalQuestionOverlay = document.getElementById('final-question-overlay');
 
 function updateSessionStatus() {
     if (sessionStatusEl) {
@@ -274,6 +279,75 @@ socket.on('session:stopped', (data) => {
     sessionCurrentPlayers = 0;
     sessionMaxPlayers = null;
     updateSessionStatus();
+});
+
+// Début de la phase 2 (information simple)
+socket.on('session:questions-phase-start', (data) => {
+    // On ne doit plus voir la grille de thèmes ni les détails de cellule
+    const gridContainer = document.getElementById('grid-container');
+    const cellDetails = document.getElementById('cell-details');
+    if (gridContainer) {
+        gridContainer.style.display = 'none';
+    }
+    if (cellDetails) {
+        cellDetails.style.display = 'none';
+    }
+});
+
+// Score final (après la phase 2)
+socket.on('session:final-score', (data) => {
+    showScreen('end-game-screen');
+    document.getElementById('endGameTitle').textContent = 'Partie terminée';
+    document.getElementById('endGameMessage').textContent = `Score final : ${data.score} points`;
+});
+
+// Phase 2 : afficher une question finale chez le meneur
+socket.on('player:show-final-question', (data) => {
+    // Cet événement sera reçu uniquement si le meneur est le joueur sélectionné
+    if (!finalQuestionOverlay) return;
+
+    const themeEl = document.getElementById('finalQuestionTheme');
+    const textEl = document.getElementById('finalQuestionText');
+    const timerEl = document.getElementById('finalQuestionTimer');
+
+    if (themeEl) {
+        themeEl.textContent = `Thème : ${data.category} — ${data.points} points`;
+    }
+    if (textEl) {
+        textEl.textContent = data.question || '';
+    }
+
+    finalQuestionRemaining = data.duration || 60;
+    if (timerEl) {
+        timerEl.textContent = finalQuestionRemaining.toString();
+    }
+
+    finalQuestionOverlay.style.display = 'flex';
+
+    if (finalQuestionTimerId) {
+        clearInterval(finalQuestionTimerId);
+    }
+    finalQuestionTimerId = setInterval(() => {
+        finalQuestionRemaining = Math.max(0, finalQuestionRemaining - 1);
+        if (timerEl) {
+            timerEl.textContent = finalQuestionRemaining.toString();
+        }
+        if (finalQuestionRemaining <= 0) {
+            clearInterval(finalQuestionTimerId);
+            finalQuestionTimerId = null;
+        }
+    }, 1000);
+});
+
+// Phase 2 : cacher la question finale chez le meneur
+socket.on('player:hide-final-question', () => {
+    if (finalQuestionTimerId) {
+        clearInterval(finalQuestionTimerId);
+        finalQuestionTimerId = null;
+    }
+    if (finalQuestionOverlay) {
+        finalQuestionOverlay.style.display = 'none';
+    }
 });
 
 // Début de la phase 2 (information simple)

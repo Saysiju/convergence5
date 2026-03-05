@@ -85,6 +85,12 @@
                     <span id="gameEnergy" class="stat-value">5</span>
                 </div>
             </div>
+            <!-- Contrôles du chrono (phase 1) -->
+            <div class="timer-controls" style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+                <button id="timerStartBtn" class="btn btn-primary btn-small">Démarrer le chrono</button>
+                <button id="timerPauseBtn" class="btn btn-secondary btn-small">Pause</button>
+                <button id="timerResetBtn" class="btn btn-secondary btn-small">Réinitialiser à 5:00</button>
+            </div>
             <div class="grid-container" style="margin-top: 12px;">
                 <div id="master-grid" class="grid"></div>
             </div>
@@ -100,6 +106,7 @@
                     <h3 id="currentQuestionTitle">Question actuelle</h3>
                     <p id="currentQuestionTheme"></p>
                     <p id="currentQuestionText" class="current-question-text"></p>
+                    <p id="currentQuestionAnswer" class="current-question-answer"></p>
                     <div class="form-group" style="margin-top: 10px;">
                         <label for="questionPlayerSelect">Choisir le joueur qui répond :</label>
                         <select id="questionPlayerSelect"></select>

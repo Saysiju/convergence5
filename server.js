@@ -50,7 +50,7 @@ function getNewItemForCategory(category, usedNames) {
 // Fonction pour détecter les lignes et diagonales de 4+ mots trouvés (phase 1)
 function detectLinesAndDiagonals(cellAnswers, gridSize = 5) {
     const lines = [];
-    
+
     // Vérifier les lignes horizontales
     for (let row = 0; row < gridSize; row++) {
         const line = [];
@@ -58,7 +58,52 @@ function detectLinesAndDiagonals(cellAnswers, gridSize = 5) {
             const index = row * gridSize + col;
             if (cellAnswers[index] === 'correct') {
                 line.push(index);
+            }
+        }
+        if (line.length >= 4) {
+            lines.push(line);
+        }
     }
+
+    // Vérifier les lignes verticales
+    for (let col = 0; col < gridSize; col++) {
+        const line = [];
+        for (let row = 0; row < gridSize; row++) {
+            const index = row * gridSize + col;
+            if (cellAnswers[index] === 'correct') {
+                line.push(index);
+            }
+        }
+        if (line.length >= 4) {
+            lines.push(line);
+        }
+    }
+
+    // Vérifier la diagonale principale (haut-gauche vers bas-droite)
+    const diag1 = [];
+    for (let i = 0; i < gridSize; i++) {
+        const index = i * gridSize + i;
+        if (cellAnswers[index] === 'correct') {
+            diag1.push(index);
+        }
+    }
+    if (diag1.length >= 4) {
+        lines.push(diag1);
+    }
+
+    // Vérifier la diagonale secondaire (haut-droite vers bas-gauche)
+    const diag2 = [];
+    for (let i = 0; i < gridSize; i++) {
+        const index = i * gridSize + (gridSize - 1 - i);
+        if (cellAnswers[index] === 'correct') {
+            diag2.push(index);
+        }
+    }
+    if (diag2.length >= 4) {
+        lines.push(diag2);
+    }
+
+    return lines;
 }
 
 // Fonction utilitaire pour récupérer un élément aléatoire (pour les questions finales)
@@ -122,6 +167,7 @@ function startQuestionsPhase(sessionId, reason = 'time') {
             // Si malgré tout on n'a aucune catégorie valide, on termine proprement la partie
             if (questionCategories.length === 0) {
                 session.gameState = 'ended';
+                session.gameEndedAt = new Date().toISOString();
                 io.to(sessionId).emit('session:final-score', {
                     score: session.score
                 });
@@ -173,55 +219,11 @@ function startQuestionsPhase(sessionId, reason = 'time') {
         console.error('Erreur lors du démarrage de la phase 2 :', err);
         // En cas de bug imprévu, on termine proprement la partie avec le score courant
         session.gameState = 'ended';
+        session.gameEndedAt = new Date().toISOString();
         io.to(sessionId).emit('session:final-score', {
             score: session.score
         });
     }
-}
-        if (line.length >= 4) {
-            lines.push(line);
-        }
-    }
-    
-    // Vérifier les lignes verticales
-    for (let col = 0; col < gridSize; col++) {
-        const line = [];
-        for (let row = 0; row < gridSize; row++) {
-            const index = row * gridSize + col;
-            if (cellAnswers[index] === 'correct') {
-                line.push(index);
-            }
-        }
-        if (line.length >= 4) {
-            lines.push(line);
-        }
-    }
-    
-    // Vérifier la diagonale principale (haut-gauche vers bas-droite)
-    const diag1 = [];
-    for (let i = 0; i < gridSize; i++) {
-        const index = i * gridSize + i;
-        if (cellAnswers[index] === 'correct') {
-            diag1.push(index);
-        }
-    }
-    if (diag1.length >= 4) {
-        lines.push(diag1);
-    }
-    
-    // Vérifier la diagonale secondaire (haut-droite vers bas-gauche)
-    const diag2 = [];
-    for (let i = 0; i < gridSize; i++) {
-        const index = i * gridSize + (gridSize - 1 - i);
-        if (cellAnswers[index] === 'correct') {
-            diag2.push(index);
-        }
-    }
-    if (diag2.length >= 4) {
-        lines.push(diag2);
-    }
-    
-    return lines;
 }
 
 // Fonction pour remplacer les mots dans une ligne/diagonale
@@ -232,6 +234,73 @@ function replaceWordsInLine(session, lineIndices) {
         if (!lineIndices.includes(index)) {
             usedNames.add(cell.name);
         }
+    });
+
+    // Maître du jeu : définir le nom de l'équipe en fin de partie
+    socket.on('master:set-team-name', (data) => {
+        const { sessionId, teamName } = data;
+        const session = gameSessions[sessionId];
+
+        if (!session || session.masterId !== socket.id) return;
+        const name = (teamName || '').trim();
+        if (!name) return;
+
+        session.teamName = name;
+
+        // Informer tous les clients de la session du nom d'équipe
+        io.to(sessionId).emit('session:team-name-updated', {
+            teamName: session.teamName
+        });
+
+        // Vérifier si on peut déjà persister la session
+        checkAndPersistTeamSession(sessionId);
+    });
+
+    // Joueur : soumettre un e-mail
+    socket.on('player:submit-email', (data) => {
+        const { sessionId, email } = data;
+        const session = gameSessions[sessionId];
+        if (!session) return;
+
+        const player = session.players.find(p => p.id === socket.id);
+        if (!player) return;
+
+        const trimmed = (email || '').trim();
+        if (!trimmed) return;
+
+        if (!session.emailResponses[player.id]) {
+            session.emailResponsesCount += 1;
+        }
+
+        session.emailResponses[player.id] = {
+            name: player.name,
+            email: trimmed,
+            skipped: false
+        };
+
+        checkAndPersistTeamSession(sessionId);
+    });
+
+    // Joueur : choisir de ne pas fournir d'e-mail
+    socket.on('player:skip-email', (data) => {
+        const { sessionId } = data;
+        const session = gameSessions[sessionId];
+        if (!session) return;
+
+        const player = session.players.find(p => p.id === socket.id);
+        if (!player) return;
+
+        if (!session.emailResponses[player.id]) {
+            session.emailResponsesCount += 1;
+        }
+
+        session.emailResponses[player.id] = {
+            name: player.name,
+            email: null,
+            skipped: true
+        };
+
+        checkAndPersistTeamSession(sessionId);
     });
     
     // Obtenir les 5 thèmes disponibles dans la grille
@@ -618,19 +687,15 @@ io.on('connection', (socket) => {
         session.gridThemes = gridThemes; // Stocker les 5 thèmes utilisés dans la grille
         session.gameState = 'playing';
         
-        // Démarrer le timer (5 minutes)
+        // Initialiser le timer à 5 minutes, mais ne pas le lancer automatiquement.
+        // Le maître du jeu contrôle le départ / pause / reset du chrono.
         session.timer = 300;
-        session.timerInterval = setInterval(() => {
-            session.timer--;
-            io.to(sessionId).emit('session:timer-update', { timer: session.timer });
-            
-            if (session.timer <= 0) {
-                clearInterval(session.timerInterval);
-                session.timerInterval = null;
-                // Passage à la phase de questions (phase 2)
-                startQuestionsPhase(sessionId, 'time');
-            }
-        }, 1000);
+        if (session.timerInterval) {
+            clearInterval(session.timerInterval);
+            session.timerInterval = null;
+        }
+        // Envoyer la valeur initiale du timer à toutes les interfaces
+        io.to(sessionId).emit('session:timer-update', { timer: session.timer });
         
         // Envoyer la grille au meneur et l'état initial au maître du jeu
         io.to(session.leader).emit('leader:grid-received', { grid: shuffledGrid });
@@ -646,6 +711,62 @@ io.on('connection', (socket) => {
             score: session.score,
             energy: session.energy
         });
+    });
+
+    // Maître : contrôle du chrono (phase 1)
+    socket.on('master:timer-start', (data) => {
+        const { sessionId } = data;
+        const session = gameSessions[sessionId];
+        
+        if (!session || session.masterId !== socket.id) return;
+        if (session.gameState !== 'playing') return;
+        if (session.timerInterval) return; // déjà en cours
+        if (session.timer <= 0) return;
+
+        session.timerInterval = setInterval(() => {
+            session.timer--;
+            io.to(sessionId).emit('session:timer-update', { timer: session.timer });
+            
+            if (session.timer <= 0) {
+                clearInterval(session.timerInterval);
+                session.timerInterval = null;
+                // Passage à la phase de questions (phase 2) si la fonction existe
+                if (typeof startQuestionsPhase === 'function') {
+                    startQuestionsPhase(sessionId, 'time');
+                } else {
+                    session.gameState = 'ended';
+                    io.to(sessionId).emit('session:final-score', {
+                        score: session.score
+                    });
+                }
+            }
+        }, 1000);
+    });
+
+    socket.on('master:timer-pause', (data) => {
+        const { sessionId } = data;
+        const session = gameSessions[sessionId];
+        
+        if (!session || session.masterId !== socket.id) return;
+        if (session.timerInterval) {
+            clearInterval(session.timerInterval);
+            session.timerInterval = null;
+        }
+    });
+
+    socket.on('master:timer-reset', (data) => {
+        const { sessionId } = data;
+        const session = gameSessions[sessionId];
+        
+        if (!session || session.masterId !== socket.id) return;
+        
+        // Réinitialiser le timer à 5 minutes et arrêter tout intervalle en cours
+        session.timer = 300;
+        if (session.timerInterval) {
+            clearInterval(session.timerInterval);
+            session.timerInterval = null;
+        }
+        io.to(sessionId).emit('session:timer-update', { timer: session.timer });
     });
 
     // Meneur : révéler un thème (afficher le nom)
@@ -962,7 +1083,16 @@ io.on('connection', (socket) => {
                 clearInterval(session.timerInterval);
                 session.timerInterval = null;
             }
-            startQuestionsPhase(sessionId, 'lives');
+            // Lancer la phase 2 uniquement si la fonction existe
+            if (typeof startQuestionsPhase === 'function') {
+                startQuestionsPhase(sessionId, 'lives');
+            } else {
+                // Sécurité : si la phase 2 n'est pas disponible, terminer proprement
+                session.gameState = 'ended';
+                io.to(sessionId).emit('session:final-score', {
+                    score: session.score
+                });
+            }
         }
         
         // Cacher les propositions pour tous les joueurs après la réponse
@@ -1074,6 +1204,7 @@ io.on('connection', (socket) => {
         } else {
             // Toutes les questions ont été posées : fin définitive de la partie
             session.gameState = 'ended';
+            session.gameEndedAt = new Date().toISOString();
             io.to(sessionId).emit('session:final-score', {
                 score: session.score
             });

@@ -27,6 +27,7 @@ const questionsListEl = document.getElementById('questions-list');
 const questionPlayerSelectEl = document.getElementById('questionPlayerSelect');
 const currentQuestionThemeEl = document.getElementById('currentQuestionTheme');
 const currentQuestionTextEl = document.getElementById('currentQuestionText');
+const currentQuestionAnswerEl = document.getElementById('currentQuestionAnswer');
 
 // Créer une session
 document.getElementById('createSessionBtn').addEventListener('click', () => {
@@ -208,8 +209,16 @@ socket.on('session:final-score', (data) => {
 
 // Nouvelle partie
 document.getElementById('newGameBtn')?.addEventListener('click', () => {
+    // Arrêter proprement la session en cours pour remettre
+    // les interfaces meneur / joueurs à l'état initial
+    if (currentSessionId) {
+        socket.emit('master:stop-session', { sessionId: currentSessionId });
+    }
     showScreen('create-session-screen');
-    document.getElementById('sessionInfo').style.display = 'none';
+    const info = document.getElementById('sessionInfo');
+    if (info) {
+        info.style.display = 'none';
+    }
 });
 
 // Boutons pour arrêter la session (écrans attente + jeu)
@@ -320,6 +329,7 @@ function updateCurrentQuestionPanel() {
     if (!q) {
         if (currentQuestionThemeEl) currentQuestionThemeEl.textContent = '';
         if (currentQuestionTextEl) currentQuestionTextEl.textContent = 'Toutes les questions ont été posées.';
+        if (currentQuestionAnswerEl) currentQuestionAnswerEl.textContent = '';
         return;
     }
 
@@ -328,6 +338,11 @@ function updateCurrentQuestionPanel() {
     }
     if (currentQuestionTextEl) {
         currentQuestionTextEl.textContent = q.questionText || '';
+    }
+    if (currentQuestionAnswerEl) {
+        currentQuestionAnswerEl.textContent = q.itemName 
+            ? `Réponse : ${q.itemName}`
+            : '';
     }
 
     // Remplir la liste des joueurs
@@ -425,6 +440,32 @@ if (questionIncorrectBtn) {
             sessionId: currentSessionId,
             correct: false
         });
+    });
+}
+
+// Contrôles du chrono côté maître du jeu
+const timerStartBtn = document.getElementById('timerStartBtn');
+const timerPauseBtn = document.getElementById('timerPauseBtn');
+const timerResetBtn = document.getElementById('timerResetBtn');
+
+if (timerStartBtn) {
+    timerStartBtn.addEventListener('click', () => {
+        if (!currentSessionId) return;
+        socket.emit('master:timer-start', { sessionId: currentSessionId });
+    });
+}
+
+if (timerPauseBtn) {
+    timerPauseBtn.addEventListener('click', () => {
+        if (!currentSessionId) return;
+        socket.emit('master:timer-pause', { sessionId: currentSessionId });
+    });
+}
+
+if (timerResetBtn) {
+    timerResetBtn.addEventListener('click', () => {
+        if (!currentSessionId) return;
+        socket.emit('master:timer-reset', { sessionId: currentSessionId });
     });
 }
 
