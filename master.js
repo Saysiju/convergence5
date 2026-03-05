@@ -7,6 +7,8 @@ let players = [];
 let selectedLeaderId = null;
 let selectedThemes = [];
 let allCategories = [];
+let grid = [];
+let cellAnswers = {};
 
 // Éléments DOM
 const createSessionScreen = document.getElementById('create-session-screen');
@@ -15,6 +17,7 @@ const selectLeaderScreen = document.getElementById('select-leader-screen');
 const selectThemesScreen = document.getElementById('select-themes-screen');
 const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
+const masterGridEl = document.getElementById('master-grid');
 
 // Créer une session
 document.getElementById('createSessionBtn').addEventListener('click', () => {
@@ -99,14 +102,37 @@ socket.on('master:show-theme-selection', (data) => {
 });
 
 // Partie démarrée
-socket.on('master:game-started', () => {
+socket.on('master:game-started', (data) => {
     showScreen('game-screen');
+    if (data) {
+        if (data.score != null) document.getElementById('gameScore').textContent = data.score;
+        if (data.lives != null) document.getElementById('gameLives').textContent = data.lives;
+        if (data.energy != null) {
+            const energyEl = document.getElementById('gameEnergy');
+            if (energyEl) energyEl.textContent = data.energy;
+        }
+    }
+});
+
+// Mise à jour de la grille pour le maître du jeu
+socket.on('master:grid-updated', (data) => {
+    grid = data.grid || [];
+    cellAnswers = data.cellAnswers || {};
+    renderMasterGrid();
 });
 
 // Mise à jour du jeu
 socket.on('session:game-update', (data) => {
-    document.getElementById('gameScore').textContent = data.score;
-    document.getElementById('gameLives').textContent = data.lives;
+    if (data.score != null) {
+        document.getElementById('gameScore').textContent = data.score;
+    }
+    if (data.lives != null) {
+        document.getElementById('gameLives').textContent = data.lives;
+    }
+    if (data.energy != null) {
+        const energyEl = document.getElementById('gameEnergy');
+        if (energyEl) energyEl.textContent = data.energy;
+    }
 });
 
 // Mise à jour du timer
@@ -149,6 +175,18 @@ socket.on('session:stopped', (data) => {
 document.getElementById('newGameBtn')?.addEventListener('click', () => {
     showScreen('create-session-screen');
     document.getElementById('sessionInfo').style.display = 'none';
+});
+
+// Boutons pour arrêter la session (écrans attente + jeu)
+['stopSessionBtn', 'stopSessionBtnGame'].forEach((id) => {
+    const btn = document.getElementById(id);
+    if (btn) {
+        btn.addEventListener('click', () => {
+            if (currentSessionId) {
+                socket.emit('master:stop-session', { sessionId: currentSessionId });
+            }
+        });
+    }
 });
 
 // Fonctions utilitaires
@@ -281,3 +319,25 @@ document.getElementById('startGameBtn').addEventListener('click', () => {
         });
     }
 });
+
+function renderMasterGrid() {
+    if (!masterGridEl) return;
+    masterGridEl.innerHTML = '';
+    
+    if (!Array.isArray(grid) || grid.length === 0) return;
+    
+    grid.forEach((cell, index) => {
+        const cellDiv = document.createElement('div');
+        cellDiv.className = 'grid-cell';
+        
+        const answer = cellAnswers[index];
+        if (answer === 'correct') {
+            cellDiv.classList.add('grid-cell-correct');
+        } else if (answer === 'incorrect' || answer === 'pass') {
+            cellDiv.classList.add('grid-cell-incorrect');
+        }
+        
+        cellDiv.textContent = cell.category;
+        masterGridEl.appendChild(cellDiv);
+    });
+}

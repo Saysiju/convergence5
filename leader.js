@@ -183,8 +183,16 @@ document.getElementById('passBtn').addEventListener('click', () => {
 
 // Mise à jour du jeu
 socket.on('session:game-update', (data) => {
-    document.getElementById('gameScore').textContent = data.score;
-    document.getElementById('gameLives').textContent = data.lives;
+    if (data.score != null) {
+        document.getElementById('gameScore').textContent = data.score;
+    }
+    if (data.lives != null) {
+        document.getElementById('gameLives').textContent = data.lives;
+    }
+    if (data.energy != null) {
+        const energyEl = document.getElementById('gameEnergy');
+        if (energyEl) energyEl.textContent = data.energy;
+    }
 });
 
 // Mise à jour du timer

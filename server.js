@@ -185,8 +185,9 @@ io.on('connection', (socket) => {
             currentPropositions: null,
             cellAnswers: {}, // { cellIndex: 'correct' | 'incorrect' | 'pass' }
             score: 0,
-            lives: 3,
-            timer: 240, // 4 minutes
+            lives: 5,
+            timer: 300, // 5 minutes
+            energy: 5,  // points d'énergie pour les pouvoirs
             timerInterval: null
         };
         currentSessionId = sessionId;
@@ -366,6 +367,10 @@ io.on('connection', (socket) => {
                 socket.emit('player:ready-error', { message: 'Vous devez distribuer exactement 3 points' });
                 return;
             }
+            if (!player.power) {
+                socket.emit('player:ready-error', { message: 'Vous devez choisir un pouvoir' });
+                return;
+            }
             
             player.ready = true;
             
@@ -508,14 +513,19 @@ io.on('connection', (socket) => {
             }
         }, 1000);
         
-        // Envoyer la grille au meneur uniquement
+        // Envoyer la grille au meneur et l'état initial au maître du jeu
         io.to(session.leader).emit('leader:grid-received', { grid: shuffledGrid });
         io.to(session.masterId).emit('master:game-started');
+        io.to(session.masterId).emit('master:grid-updated', {
+            grid: shuffledGrid,
+            cellAnswers: session.cellAnswers
+        });
         io.to(sessionId).emit('session:game-started', {
             sessionId: sessionId,
             leaderId: session.leader,
             lives: session.lives,
-            score: session.score
+            score: session.score,
+            energy: session.energy
         });
     });
 
@@ -595,6 +605,19 @@ io.on('connection', (socket) => {
         const availablePowers = getAvailablePowers(session);
         if (!availablePowers[power]) return;
         
+        // Initialiser l'énergie si nécessaire
+        if (typeof session.energy !== 'number') {
+            session.energy = 5;
+        }
+
+        // Plus d'énergie disponible : impossible d'utiliser un pouvoir
+        if (session.energy <= 0) {
+            return;
+        }
+
+        // Consommer 1 point d'énergie
+        session.energy -= 1;
+
         const cell = session.grid[cellIndex];
         const count = availablePowers[power];
         
@@ -659,6 +682,10 @@ io.on('connection', (socket) => {
                         grid: session.grid,
                         cellAnswers: session.cellAnswers
                     });
+                    io.to(session.masterId).emit('master:grid-updated', {
+                        grid: session.grid,
+                        cellAnswers: session.cellAnswers
+                    });
                 }
                 io.to(sessionId).emit('player:indice-revealed', { hint: 'Grille rafraîchie !', type: 'info' });
                 break;
@@ -680,6 +707,11 @@ io.on('connection', (socket) => {
             io.to(session.leader).emit('leader:cell-updated', {
                 cellIndex: session.currentCell,
                 status: 'pass'
+            });
+            // Mettre à jour la grille côté maître du jeu
+            io.to(session.masterId).emit('master:grid-updated', {
+                grid: session.grid,
+                cellAnswers: session.cellAnswers
             });
         }
         
@@ -757,14 +789,20 @@ io.on('connection', (socket) => {
                     reason: `${lines.length} ligne(s) ou diagonale(s) complétée(s) !`
                 });
                 
-                // Mettre à jour le score pour tous
+                // Mettre à jour le score / vies / énergie pour tous
                 io.to(sessionId).emit('session:game-update', {
                     score: session.score,
-                    lives: session.lives
+                    lives: session.lives,
+                    energy: session.energy
                 });
                 
                 // Notifier le meneur de la mise à jour complète de la grille
                 io.to(session.leader).emit('leader:grid-updated', {
+                    grid: session.grid,
+                    cellAnswers: session.cellAnswers
+                });
+                // Mettre à jour la grille côté maître du jeu
+                io.to(session.masterId).emit('master:grid-updated', {
                     grid: session.grid,
                     cellAnswers: session.cellAnswers
                 });
@@ -773,6 +811,11 @@ io.on('connection', (socket) => {
                 io.to(session.leader).emit('leader:cell-updated', {
                     cellIndex: cellIndex,
                     status: 'correct'
+                });
+                // Mettre à jour la grille côté maître du jeu
+                io.to(session.masterId).emit('master:grid-updated', {
+                    grid: session.grid,
+                    cellAnswers: session.cellAnswers
                 });
             }
             
@@ -788,6 +831,11 @@ io.on('connection', (socket) => {
                 cellIndex: cellIndex,
                 status: 'incorrect'
             });
+            // Mettre à jour la grille côté maître du jeu
+            io.to(session.masterId).emit('master:grid-updated', {
+                grid: session.grid,
+                cellAnswers: session.cellAnswers
+            });
             
             // Vérifier la défaite
             if (session.lives <= 0) {
@@ -797,10 +845,11 @@ io.on('connection', (socket) => {
             }
         }
         
-        // Mettre à jour le score et les vies pour tous
+        // Mettre à jour le score, les vies et l'énergie pour tous
         io.to(sessionId).emit('session:game-update', {
             score: session.score,
-            lives: session.lives
+            lives: session.lives,
+            energy: session.energy
         });
         
         // Cacher les propositions pour tous les joueurs après la réponse

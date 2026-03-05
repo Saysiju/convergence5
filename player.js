@@ -177,13 +177,14 @@ function updatePointsSum() {
     document.getElementById('pointsSum').textContent = sum;
     
     const readyBtn = document.getElementById('readyBtn');
-    readyBtn.disabled = sum !== 3;
+    // Le joueur doit avoir distribué exactement 3 points ET choisi un pouvoir
+    readyBtn.disabled = !(sum === 3 && selectedPower);
 }
 
 // Se déclarer prêt
 document.getElementById('readyBtn').addEventListener('click', () => {
     const sum = Object.values(themeValues).reduce((total, val) => total + val, 0);
-    if (sum === 3) {
+    if (sum === 3 && selectedPower) {
         socket.emit('player:ready', { sessionId: currentSessionId });
         showScreen('waiting-screen');
     }
@@ -283,8 +284,16 @@ socket.on('player:answer-result', (data) => {
 
 // Mise à jour du jeu
 socket.on('session:game-update', (data) => {
-    document.getElementById('gameScore').textContent = data.score;
-    document.getElementById('gameLives').textContent = data.lives;
+    if (data.score != null) {
+        document.getElementById('gameScore').textContent = data.score;
+    }
+    if (data.lives != null) {
+        document.getElementById('gameLives').textContent = data.lives;
+    }
+    if (data.energy != null) {
+        const energyEl = document.getElementById('gameEnergy');
+        if (energyEl) energyEl.textContent = data.energy;
+    }
 });
 
 // Bonus points (ligne/diagonale complétée)
