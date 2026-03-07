@@ -34,17 +34,24 @@ function getAllCategories() {
 
 // Fonction pour obtenir un nouvel élément aléatoire d'une catégorie (différent de ceux déjà utilisés)
 function getNewItemForCategory(category, usedNames) {
-    // Convertir usedNames en Set si c'est un tableau pour une recherche plus rapide
+    if (!category) {
+        const any = gameData[Math.floor(Math.random() * gameData.length)];
+        return any || null;
+    }
     const usedNamesSet = Array.isArray(usedNames) ? new Set(usedNames) : usedNames;
-    const availableItems = gameData.filter(item => 
+    const availableItems = gameData.filter(item =>
         item.category === category && !usedNamesSet.has(item.name)
     );
-    if (availableItems.length === 0) {
-        // Si tous les éléments sont utilisés, réinitialiser
-        const allItems = gameData.filter(item => item.category === category);
+    if (availableItems.length > 0) {
+        return availableItems[Math.floor(Math.random() * availableItems.length)];
+    }
+    const allItems = gameData.filter(item => item.category === category);
+    if (allItems.length > 0) {
         return allItems[Math.floor(Math.random() * allItems.length)];
     }
-    return availableItems[Math.floor(Math.random() * availableItems.length)];
+    // Fallback : n'importe quel élément du jeu
+    const fallback = gameData[Math.floor(Math.random() * gameData.length)];
+    return fallback || null;
 }
 
 // Fonction pour détecter les lignes et diagonales de 4+ mots trouvés (phase 1)
@@ -236,83 +243,14 @@ function replaceWordsInLine(session, lineIndices) {
         }
     });
 
-    // Maître du jeu : définir le nom de l'équipe en fin de partie
-    socket.on('master:set-team-name', (data) => {
-        const { sessionId, teamName } = data;
-        const session = gameSessions[sessionId];
+    // Obtenir les 5 thèmes disponibles dans la grille (fallback: toutes les catégories)
+    const availableThemes = (session.gridThemes && session.gridThemes.length) ? session.gridThemes : getAllCategories();
+    if (!availableThemes.length) return;
 
-        if (!session || session.masterId !== socket.id) return;
-        const name = (teamName || '').trim();
-        if (!name) return;
-
-        session.teamName = name;
-
-        // Informer tous les clients de la session du nom d'équipe
-        io.to(sessionId).emit('session:team-name-updated', {
-            teamName: session.teamName
-        });
-
-        // Vérifier si on peut déjà persister la session
-        checkAndPersistTeamSession(sessionId);
-    });
-
-    // Joueur : soumettre un e-mail
-    socket.on('player:submit-email', (data) => {
-        const { sessionId, email } = data;
-        const session = gameSessions[sessionId];
-        if (!session) return;
-
-        const player = session.players.find(p => p.id === socket.id);
-        if (!player) return;
-
-        const trimmed = (email || '').trim();
-        if (!trimmed) return;
-
-        if (!session.emailResponses[player.id]) {
-            session.emailResponsesCount += 1;
-        }
-
-        session.emailResponses[player.id] = {
-            name: player.name,
-            email: trimmed,
-            skipped: false
-        };
-
-        checkAndPersistTeamSession(sessionId);
-    });
-
-    // Joueur : choisir de ne pas fournir d'e-mail
-    socket.on('player:skip-email', (data) => {
-        const { sessionId } = data;
-        const session = gameSessions[sessionId];
-        if (!session) return;
-
-        const player = session.players.find(p => p.id === socket.id);
-        if (!player) return;
-
-        if (!session.emailResponses[player.id]) {
-            session.emailResponsesCount += 1;
-        }
-
-        session.emailResponses[player.id] = {
-            name: player.name,
-            email: null,
-            skipped: true
-        };
-
-        checkAndPersistTeamSession(sessionId);
-    });
-    
-    // Obtenir les 5 thèmes disponibles dans la grille
-    const availableThemes = session.gridThemes || [];
-    
     lineIndices.forEach(index => {
-        // Choisir un thème aléatoire parmi les 5 thèmes disponibles
         const randomTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
-        
-        // Obtenir un nouveau mot de ce thème aléatoire
         const newItem = getNewItemForCategory(randomTheme, usedNames);
-        
+        if (!newItem) return;
         // Mettre à jour la cellule
         session.grid[index] = {
             name: newItem.name,
@@ -321,11 +259,7 @@ function replaceWordsInLine(session, lineIndices) {
             indice_mot: newItem.indice_mot,
             indice_phrase: newItem.indice_phrase
         };
-        
-        // Réinitialiser l'état de la cellule
         delete session.cellAnswers[index];
-        
-        // Ajouter le nouveau nom à la liste des noms utilisés pour éviter les doublons
         usedNames.add(newItem.name);
     });
 }
@@ -432,6 +366,71 @@ io.on('connection', (socket) => {
             io.emit('session:none');
             console.log(`Session arrêtée: ${sessionId}`);
         }
+    });
+
+    // Maître du jeu : définir le nom de l'équipe en fin de partie
+    socket.on('master:set-team-name', (data) => {
+        const { sessionId, teamName } = data;
+        const session = gameSessions[sessionId];
+
+        if (!session || session.masterId !== socket.id) return;
+        const name = (teamName || '').trim();
+        if (!name) return;
+
+        session.teamName = name;
+
+        io.to(sessionId).emit('session:team-name-updated', {
+            teamName: session.teamName
+        });
+
+        checkAndPersistTeamSession(sessionId);
+    });
+
+    // Joueur : soumettre un e-mail
+    socket.on('player:submit-email', (data) => {
+        const { sessionId, email } = data;
+        const session = gameSessions[sessionId];
+        if (!session) return;
+
+        const player = session.players.find(p => p.id === socket.id);
+        if (!player) return;
+
+        const trimmed = (email || '').trim();
+        if (!trimmed) return;
+
+        if (!session.emailResponses[player.id]) {
+            session.emailResponsesCount += 1;
+        }
+
+        session.emailResponses[player.id] = {
+            name: player.name,
+            email: trimmed,
+            skipped: false
+        };
+
+        checkAndPersistTeamSession(sessionId);
+    });
+
+    // Joueur : choisir de ne pas fournir d'e-mail
+    socket.on('player:skip-email', (data) => {
+        const { sessionId } = data;
+        const session = gameSessions[sessionId];
+        if (!session) return;
+
+        const player = session.players.find(p => p.id === socket.id);
+        if (!player) return;
+
+        if (!session.emailResponses[player.id]) {
+            session.emailResponsesCount += 1;
+        }
+
+        session.emailResponses[player.id] = {
+            name: player.name,
+            email: null,
+            skipped: true
+        };
+
+        checkAndPersistTeamSession(sessionId);
     });
 
     // Joueur : rejoindre une session
