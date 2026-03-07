@@ -15,7 +15,7 @@
     ],
     "indice_mot": "reporter",
     "indice_phrase": "Un jeune reporter belge aux aventures exotiques",
-    "question": "De quoi s'agit-il si je te dis : \"Un jeune reporter belge aux aventures exotiques\" ?"
+    "question": "Quel jeune reporter belge vit des aventures exotiques avec son chien Milou ?"
   },
   {
     "name": "Batman",
@@ -33,7 +33,7 @@
     ],
     "indice_mot": "chauve-souris",
     "indice_phrase": "Le justicier masqué de Gotham City",
-    "question": "De quoi s'agit-il si je te dis : \"Le justicier masqué de Gotham City\" ?"
+    "question": "Quel justicier masqué protège Gotham City en incarnant la chauve-souris ?"
   },
   {
     "name": "Spider-Man",
@@ -51,7 +51,7 @@
     ],
     "indice_mot": "araignée",
     "indice_phrase": "Super-héros qui grimpe aux murs à New York",
-    "question": "De quoi s'agit-il si je te dis : \"Super-héros qui grimpe aux murs à New York\" ?"
+    "question": "Quel super-héros grimpe aux murs à New York et a des pouvoirs d'araignée ?"
   },
   {
     "name": "Corto Maltese",
@@ -69,7 +69,7 @@
     ],
     "indice_mot": "marin",
     "indice_phrase": "Aventurier marin créé par Hugo Pratt",
-    "question": "De quoi s'agit-il si je te dis : \"Aventurier marin créé par Hugo Pratt\" ?"
+    "question": "Quel aventurier marin a été créé par le dessinateur Hugo Pratt ?"
   },
   {
     "name": "Astérix",
@@ -87,7 +87,7 @@
     ],
     "indice_mot": "Gaulois",
     "indice_phrase": "Petit Gaulois résistant à l'envahisseur romain",
-    "question": "De quoi s'agit-il si je te dis : \"Petit Gaulois résistant à l'envahisseur romain\" ?"
+    "question": "Quel petit Gaulois résiste à l'envahisseur romain avec une potion magique ?"
   },
   {
     "name": "Lucky Luke",
@@ -105,7 +105,7 @@
     ],
     "indice_mot": "cow-boy",
     "indice_phrase": "Le cow-boy qui tire plus vite que son ombre",
-    "question": "De quoi s'agit-il si je te dis : \"Le cow-boy qui tire plus vite que son ombre\" ?"
+    "question": "Quel cow-boy tire plus vite que son ombre et combat les Dalton ?"
   },
   {
     "name": "Rorschach (Watchmen)",
@@ -123,7 +123,7 @@
     ],
     "indice_mot": "masque",
     "indice_phrase": "Vigilant au masque de taches d'encre",
-    "question": "De quoi s'agit-il si je te dis : \"Vigilant au masque de taches d'encre\" ?"
+    "question": "Quel vigilant porte un masque de taches d'encre dans Watchmen ?"
   },
   {
     "name": "Blacksad",
@@ -141,7 +141,7 @@
     ],
     "indice_mot": "détective",
     "indice_phrase": "Détective félin dans un monde anthropomorphe",
-    "question": "De quoi s'agit-il si je te dis : \"Détective félin dans un monde anthropomorphe\" ?"
+    "question": "Quel détective est un félin dans un monde anthropomorphe ?"
   },
   {
     "name": "Captain America",
@@ -159,7 +159,7 @@
     ],
     "indice_mot": "bouclier",
     "indice_phrase": "Super-soldat américain au bouclier",
-    "question": "De quoi s'agit-il si je te dis : \"Super-soldat américain au bouclier\" ?"
+    "question": "Quel super-soldat américain combat avec un bouclier indestructible ?"
   },
   {
     "name": "Daredevil",
@@ -177,7 +177,7 @@
     ],
     "indice_mot": "aveugle",
     "indice_phrase": "Avocat aveugle justicier de Hell's Kitchen",
-    "question": "De quoi s'agit-il si je te dis : \"Avocat aveugle justicier de Hell's Kitchen\" ?"
+    "question": "Quel avocat aveugle devient justicier dans Hell's Kitchen ?"
   },
   {
     "name": "Vito Corleone (Le Parrain)",
@@ -195,7 +195,7 @@
     ],
     "indice_mot": "parrain",
     "indice_phrase": "Le chef de la famille mafieuse Corleone",
-    "question": "De quoi s'agit-il si je te dis : \"Le chef de la famille mafieuse Corleone\" ?"
+    "question": "Quel chef de la famille mafieuse Corleone règne dans Le Parrain ?"
   },
   {
     "name": "Tony Montana (Scarface)",
@@ -213,7 +213,7 @@
     ],
     "indice_mot": "cocaïne",
     "indice_phrase": "Traficant cubain à Miami",
-    "question": "De quoi s'agit-il si je te dis : \"Traficant cubain à Miami\" ?"
+    "question": "Quel trafiquant cubain s'empare de Miami dans Scarface ?"
   },
   {
     "name": "Neo (Matrix)",
@@ -231,7 +231,7 @@
     ],
     "indice_mot": "pilule",
     "indice_phrase": "L'élu qui découvre la réalité de la matrice",
-    "question": "De quoi s'agit-il si je te dis : \"L'élu qui découvre la réalité de la matrice\" ?"
+    "question": "Quel personnage découvre qu'il est l'élu et perce la réalité de la Matrice ?"
   },
   {
     "name": "Tyler Durden (Fight Club)",
@@ -249,7 +249,7 @@
     ],
     "indice_mot": "savon",
     "indice_phrase": "Fondateur d'un club de combat clandestin",
-    "question": "De quoi s'agit-il si je te dis : \"Fondateur d'un club de combat clandestin\" ?"
+    "question": "Qui fonde un club de combat clandestin et fabrique du savon ?"
   },
   {
     "name": "Hannibal Lecter",
@@ -267,7 +267,7 @@
     ],
     "indice_mot": "cannibale",
     "indice_phrase": "Psychiatre cannibale au QI exceptionnel",
-    "question": "De quoi s'agit-il si je te dis : \"Psychiatre cannibale au QI exceptionnel\" ?"
+    "question": "Quel psychiatre cannibale a un QI exceptionnel ?"
   },
   {
     "name": "Forrest Gump",
@@ -285,7 +285,7 @@
     ],
     "indice_mot": "chocolat",
     "indice_phrase": "Simple d'esprit qui traverse l'histoire américaine",
-    "question": "De quoi s'agit-il si je te dis : \"Simple d'esprit qui traverse l'histoire américaine\" ?"
+    "question": "Quel personnage simple d'esprit traverse l'histoire américaine en courant ?"
   },
   {
     "name": "Indiana Jones",
@@ -303,7 +303,7 @@
     ],
     "indice_mot": "fouet",
     "indice_phrase": "Archéologue aventurier au chapeau et au fouet",
-    "question": "De quoi s'agit-il si je te dis : \"Archéologue aventurier au chapeau et au fouet\" ?"
+    "question": "Quel archéologue aventurier a un chapeau et un fouet ?"
   },
   {
     "name": "Joker (The Dark Knight)",
@@ -321,7 +321,7 @@
     ],
     "indice_mot": "clown",
     "indice_phrase": "Criminel au visage de clown à Gotham",
-    "question": "De quoi s'agit-il si je te dis : \"Criminel au visage de clown à Gotham\" ?"
+    "question": "Quel criminel au visage de clown sème le chaos à Gotham ?"
   },
   {
     "name": "Jules Winnfield (Pulp Fiction)",
@@ -339,7 +339,7 @@
     ],
     "indice_mot": "bible",
     "indice_phrase": "Tueur qui cite la Bible avant d'exécuter",
-    "question": "De quoi s'agit-il si je te dis : \"Tueur qui cite la Bible avant d'exécuter\" ?"
+    "question": "Quel tueur cite la Bible avant d'exécuter ses cibles ?"
   },
   {
     "name": "Darth Vader",
@@ -357,7 +357,7 @@
     ],
     "indice_mot": "respirateur",
     "indice_phrase": "Seigneur Sith à l'armure noire",
-    "question": "De quoi s'agit-il si je te dis : \"Seigneur Sith à l'armure noire\" ?"
+    "question": "Quel seigneur Sith porte une armure noire et un respirateur ?"
   },
   {
     "name": "Walter White (Breaking Bad)",
@@ -375,7 +375,7 @@
     ],
     "indice_mot": "méthamphétamine",
     "indice_phrase": "Professeur devenu producteur de crystal",
-    "question": "De quoi s'agit-il si je te dis : \"Professeur devenu producteur de crystal\" ?"
+    "question": "Quel professeur de chimie devient producteur de crystal meth ?"
   },
   {
     "name": "Tyrion Lannister (Game of Thrones)",
@@ -393,7 +393,7 @@
     ],
     "indice_mot": "nain",
     "indice_phrase": "Nain politique le plus rusé de Westeros",
-    "question": "De quoi s'agit-il si je te dis : \"Nain politique le plus rusé de Westeros\" ?"
+    "question": "Quel nain est le politicien le plus rusé de Westeros ?"
   },
   {
     "name": "Tommy Shelby (Peaky Blinders)",
@@ -411,7 +411,7 @@
     ],
     "indice_mot": "Birmingham",
     "indice_phrase": "Chef de gang dans l'Angleterre des années 20",
-    "question": "De quoi s'agit-il si je te dis : \"Chef de gang dans l'Angleterre des années 20\" ?"
+    "question": "Quel chef de gang dirige Birmingham dans l'Angleterre des années 20 ?"
   },
   {
     "name": "Saul Goodman (Better Call Saul)",
@@ -429,7 +429,7 @@
     ],
     "indice_mot": "avocat",
     "indice_phrase": "Avocat véreux avant Breaking Bad",
-    "question": "De quoi s'agit-il si je te dis : \"Avocat véreux avant Breaking Bad\" ?"
+    "question": "Quel avocat véreux travaillait avant l'époque de Breaking Bad ?"
   },
   {
     "name": "Omar Little (The Wire)",
@@ -447,7 +447,7 @@
     ],
     "indice_mot": "sifflet",
     "indice_phrase": "Braqueur de trafiquants à Baltimore",
-    "question": "De quoi s'agit-il si je te dis : \"Braqueur de trafiquants à Baltimore\" ?"
+    "question": "Qui braque les trafiquants à Baltimore en sifflant ?"
   },
   {
     "name": "Don Draper (Mad Men)",
@@ -465,7 +465,7 @@
     ],
     "indice_mot": "publicité",
     "indice_phrase": "Directeur créatif dans les années 60",
-    "question": "De quoi s'agit-il si je te dis : \"Directeur créatif dans les années 60\" ?"
+    "question": "Quel directeur créatif travaille dans la publicité des années 60 ?"
   },
   {
     "name": "Sherlock Holmes (Sherlock)",
@@ -483,7 +483,7 @@
     ],
     "indice_mot": "déduction",
     "indice_phrase": "Détective génial au manteau bleu",
-    "question": "De quoi s'agit-il si je te dis : \"Détective génial au manteau bleu\" ?"
+    "question": "Quel détective génial porte un manteau bleu et déduit tout ?"
   },
   {
     "name": "Michael Scofield (Prison Break)",
@@ -501,7 +501,7 @@
     ],
     "indice_mot": "tatouage",
     "indice_phrase": "Ingénieur qui se fait incarcérer pour évader son frère",
-    "question": "De quoi s'agit-il si je te dis : \"Ingénieur qui se fait incarcérer pour évader son frère\" ?"
+    "question": "Quel ingénieur se fait incarcérer pour faire évader son frère ?"
   },
   {
     "name": "Rick Grimes (The Walking Dead)",
@@ -519,7 +519,7 @@
     ],
     "indice_mot": "shérif",
     "indice_phrase": "Shérif survivant en monde post-apocalyptique",
-    "question": "De quoi s'agit-il si je te dis : \"Shérif survivant en monde post-apocalyptique\" ?"
+    "question": "Quel shérif survit en monde post-apocalyptique face aux zombies ?"
   },
   {
     "name": "Eleven (Stranger Things)",
@@ -537,7 +537,7 @@
     ],
     "indice_mot": "télékinésie",
     "indice_phrase": "Enfant aux pouvoirs psychiques",
-    "question": "De quoi s'agit-il si je te dis : \"Enfant aux pouvoirs psychiques\" ?"
+    "question": "Quel enfant possède des pouvoirs psychiques et télékinésiques ?"
   },
   {
     "name": "Socrate",
@@ -555,7 +555,7 @@
     ],
     "indice_mot": "maïeutique",
     "indice_phrase": "Philosophe grec condamné à boire la ciguë",
-    "question": "De quoi s'agit-il si je te dis : \"Philosophe grec condamné à boire la ciguë\" ?"
+    "question": "Quel philosophe grec a été condamné à boire la ciguë ?"
   },
   {
     "name": "Platon",
@@ -573,7 +573,7 @@
     ],
     "indice_mot": "caverne",
     "indice_phrase": "Disciple de Socrate, auteur de la théorie des Idées",
-    "question": "De quoi s'agit-il si je te dis : \"Disciple de Socrate, auteur de la théorie des Idées\" ?"
+    "question": "Quel disciple de Socrate a fondé la théorie des Idées et le mythe de la caverne ?"
   },
   {
     "name": "Aristote",
@@ -591,7 +591,7 @@
     ],
     "indice_mot": "Lyceum",
     "indice_phrase": "Philosophe grec précepteur d'Alexandre",
-    "question": "De quoi s'agit-il si je te dis : \"Philosophe grec précepteur d'Alexandre\" ?"
+    "question": "Quel philosophe grec a été le précepteur d'Alexandre le Grand ?"
   },
   {
     "name": "Machiavel",
@@ -609,7 +609,7 @@
     ],
     "indice_mot": "Prince",
     "indice_phrase": "Auteur du Prince, conseiller politique florentin",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur du Prince, conseiller politique florentin\" ?"
+    "question": "Quel Florentin a écrit Le Prince et conseillé les princes ?"
   },
   {
     "name": "Nietzsche",
@@ -627,7 +627,7 @@
     ],
     "indice_mot": "surhomme",
     "indice_phrase": "Philosophe de la volonté de puissance",
-    "question": "De quoi s'agit-il si je te dis : \"Philosophe de la volonté de puissance\" ?"
+    "question": "Quel philosophe a théorisé la volonté de puissance et le surhomme ?"
   },
   {
     "name": "Descartes",
@@ -645,7 +645,7 @@
     ],
     "indice_mot": "cogito",
     "indice_phrase": "Philosophe du cogito ergo sum",
-    "question": "De quoi s'agit-il si je te dis : \"Philosophe du cogito ergo sum\" ?"
+    "question": "Quel philosophe a énoncé « Je pense donc je suis » (cogito ergo sum) ?"
   },
   {
     "name": "Kant",
@@ -663,7 +663,7 @@
     ],
     "indice_mot": "impératif",
     "indice_phrase": "Philosophe des Lumières de Königsberg",
-    "question": "De quoi s'agit-il si je te dis : \"Philosophe des Lumières de Königsberg\" ?"
+    "question": "Quel philosophe des Lumières de Königsberg a défini l'impératif catégorique ?"
   },
   {
     "name": "Hannah Arendt",
@@ -681,7 +681,7 @@
     ],
     "indice_mot": "banalité",
     "indice_phrase": "Philosophe de la condition humaine",
-    "question": "De quoi s'agit-il si je te dis : \"Philosophe de la condition humaine\" ?"
+    "question": "Quelle philosophe a analysé la condition humaine et la banalité du mal ?"
   },
   {
     "name": "Jean-Paul Sartre",
@@ -699,7 +699,7 @@
     ],
     "indice_mot": "existentialisme",
     "indice_phrase": "Philosophe de l'existentialisme et de la liberté",
-    "question": "De quoi s'agit-il si je te dis : \"Philosophe de l'existentialisme et de la liberté\" ?"
+    "question": "Quel philosophe a incarné l'existentialisme et la liberté ?"
   },
   {
     "name": "Michel Foucault",
@@ -717,7 +717,7 @@
     ],
     "indice_mot": "surveillance",
     "indice_phrase": "Philosophe du pouvoir et des institutions",
-    "question": "De quoi s'agit-il si je te dis : \"Philosophe du pouvoir et des institutions\" ?"
+    "question": "Quel philosophe a analysé le pouvoir et les institutions (surveillance, discipline) ?"
   },
   {
     "name": "Victor Hugo",
@@ -735,7 +735,7 @@
     ],
     "indice_mot": "Notre-Dame",
     "indice_phrase": "Auteur des Misérables et de Notre-Dame de Paris",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur des Misérables et de Notre-Dame de Paris\" ?"
+    "question": "Quel auteur a écrit Les Misérables et Notre-Dame de Paris ?"
   },
   {
     "name": "Albert Camus",
@@ -753,7 +753,7 @@
     ],
     "indice_mot": "absurde",
     "indice_phrase": "Auteur de L'Étranger et du Mythe de Sisyphe",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur de L'Étranger et du Mythe de Sisyphe\" ?"
+    "question": "Quel auteur a écrit L'Étranger et Le Mythe de Sisyphe ?"
   },
   {
     "name": "George Orwell",
@@ -771,7 +771,7 @@
     ],
     "indice_mot": "Big Brother",
     "indice_phrase": "Auteur de 1984 et de La Ferme des animaux",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur de 1984 et de La Ferme des animaux\" ?"
+    "question": "Quel auteur a écrit 1984 et La Ferme des animaux ?"
   },
   {
     "name": "Franz Kafka",
@@ -789,7 +789,7 @@
     ],
     "indice_mot": "métamorphose",
     "indice_phrase": "Auteur de La Métamorphose",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur de La Métamorphose\" ?"
+    "question": "Quel auteur a écrit La Métamorphose ?"
   },
   {
     "name": "Fiodor Dostoïevski",
@@ -807,7 +807,7 @@
     ],
     "indice_mot": "Crime",
     "indice_phrase": "Auteur russe de Crime et Châtiment",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur russe de Crime et Châtiment\" ?"
+    "question": "Quel auteur russe a écrit Crime et Châtiment ?"
   },
   {
     "name": "Jules Verne",
@@ -825,7 +825,7 @@
     ],
     "indice_mot": "Nautilus",
     "indice_phrase": "Auteur de Vingt mille lieues sous les mers",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur de Vingt mille lieues sous les mers\" ?"
+    "question": "Quel auteur a écrit Vingt mille lieues sous les mers ?"
   },
   {
     "name": "Ernest Hemingway",
@@ -843,7 +843,7 @@
     ],
     "indice_mot": "vieil homme",
     "indice_phrase": "Auteur du Vieil Homme et la Mer",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur du Vieil Homme et la Mer\" ?"
+    "question": "Quel auteur a écrit Le Vieil Homme et la Mer ?"
   },
   {
     "name": "Stephen King",
@@ -861,7 +861,7 @@
     ],
     "indice_mot": "horreur",
     "indice_phrase": "Maître du roman d'horreur américain",
-    "question": "De quoi s'agit-il si je te dis : \"Maître du roman d'horreur américain\" ?"
+    "question": "Quel auteur américain est le maître du roman d'horreur ?"
   },
   {
     "name": "Philip K. Dick",
@@ -879,7 +879,7 @@
     ],
     "indice_mot": "androïdes",
     "indice_phrase": "Auteur de science-fiction, Blade Runner",
-    "question": "De quoi s'agit-il si je te dis : \"Auteur de science-fiction, Blade Runner\" ?"
+    "question": "Quel auteur de science-fiction a inspiré Blade Runner ?"
   },
   {
     "name": "Margaret Atwood",
@@ -897,7 +897,7 @@
     ],
     "indice_mot": "servante",
     "indice_phrase": "Auteure de La Servante écarlate",
-    "question": "De quoi s'agit-il si je te dis : \"Auteure de La Servante écarlate\" ?"
+    "question": "Quelle auteure a écrit La Servante écarlate ?"
   },
   {
     "name": "Al Pacino",
@@ -915,7 +915,7 @@
     ],
     "indice_mot": "Parrain",
     "indice_phrase": "Acteur du Parrain et de Scarface",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur du Parrain et de Scarface\" ?"
+    "question": "Quel acteur a joué dans Le Parrain et Scarface ?"
   },
   {
     "name": "Robert De Niro",
@@ -933,7 +933,7 @@
     ],
     "indice_mot": "Taxi Driver",
     "indice_phrase": "Acteur des Affranchis et de Taxi Driver",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur des Affranchis et de Taxi Driver\" ?"
+    "question": "Quel acteur a joué dans Les Affranchis et Taxi Driver ?"
   },
   {
     "name": "Leonardo DiCaprio",
@@ -951,7 +951,7 @@
     ],
     "indice_mot": "Titanic",
     "indice_phrase": "Acteur de Titanic et de Revenant",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur de Titanic et de Revenant\" ?"
+    "question": "Quel acteur a joué dans Titanic et The Revenant ?"
   },
   {
     "name": "Joaquin Phoenix",
@@ -969,7 +969,7 @@
     ],
     "indice_mot": "Joker",
     "indice_phrase": "Acteur du Joker et de Gladiator",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur du Joker et de Gladiator\" ?"
+    "question": "Quel acteur a joué le Joker et dans Gladiator ?"
   },
   {
     "name": "Brad Pitt",
@@ -987,7 +987,7 @@
     ],
     "indice_mot": "Fight Club",
     "indice_phrase": "Acteur de Fight Club et d'Ocean's Eleven",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur de Fight Club et d'Ocean's Eleven\" ?"
+    "question": "Quel acteur a joué dans Fight Club et Ocean's Eleven ?"
   },
   {
     "name": "Tom Hanks",
@@ -1005,7 +1005,7 @@
     ],
     "indice_mot": "Forrest",
     "indice_phrase": "Acteur de Forrest Gump et de Cast Away",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur de Forrest Gump et de Cast Away\" ?"
+    "question": "Quel acteur a joué Forrest Gump et le naufragé de Cast Away ?"
   },
   {
     "name": "Mads Mikkelsen",
@@ -1023,7 +1023,7 @@
     ],
     "indice_mot": "Hannibal",
     "indice_phrase": "Acteur danois de Hannibal et Casino Royale",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur danois de Hannibal et Casino Royale\" ?"
+    "question": "Quel acteur danois a joué Hannibal et dans Casino Royale ?"
   },
   {
     "name": "Johnny Depp",
@@ -1041,7 +1041,7 @@
     ],
     "indice_mot": "Pirates",
     "indice_phrase": "Acteur de Pirates des Caraïbes",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur de Pirates des Caraïbes\" ?"
+    "question": "Quel acteur incarne le capitaine des Pirates des Caraïbes ?"
   },
   {
     "name": "Denzel Washington",
@@ -1059,7 +1059,7 @@
     ],
     "indice_mot": "Training",
     "indice_phrase": "Acteur de Training Day et Malcolm X",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur de Training Day et Malcolm X\" ?"
+    "question": "Quel acteur a joué dans Training Day et Malcolm X ?"
   },
   {
     "name": "Jack Nicholson",
@@ -1077,7 +1077,7 @@
     ],
     "indice_mot": "Shining",
     "indice_phrase": "Acteur du Shining et de Vol au-dessus d'un nid de coucou",
-    "question": "De quoi s'agit-il si je te dis : \"Acteur du Shining et de Vol au-dessus d'un nid de coucou\" ?"
+    "question": "Quel acteur a joué dans The Shining et Vol au-dessus d'un nid de coucou ?"
   },
   {
     "name": "Martin Scorsese",
@@ -1095,7 +1095,7 @@
     ],
     "indice_mot": "mob",
     "indice_phrase": "Réalisateur des Affranchis et de Taxi Driver",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur des Affranchis et de Taxi Driver\" ?"
+    "question": "Quel réalisateur a signé Les Affranchis et Taxi Driver ?"
   },
   {
     "name": "Christopher Nolan",
@@ -1113,7 +1113,7 @@
     ],
     "indice_mot": "Inception",
     "indice_phrase": "Réalisateur d'Inception et de Dark Knight",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur d'Inception et de Dark Knight\" ?"
+    "question": "Quel réalisateur a dirigé Inception et The Dark Knight ?"
   },
   {
     "name": "Quentin Tarantino",
@@ -1131,7 +1131,7 @@
     ],
     "indice_mot": "Pulp Fiction",
     "indice_phrase": "Réalisateur de Pulp Fiction et Kill Bill",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur de Pulp Fiction et Kill Bill\" ?"
+    "question": "Quel réalisateur a fait Pulp Fiction et Kill Bill ?"
   },
   {
     "name": "Steven Spielberg",
@@ -1149,7 +1149,7 @@
     ],
     "indice_mot": "dinosaures",
     "indice_phrase": "Réalisateur de Jurassic Park et E.T.",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur de Jurassic Park et E.T.\" ?"
+    "question": "Quel réalisateur a fait Jurassic Park et E.T. ?"
   },
   {
     "name": "Stanley Kubrick",
@@ -1167,7 +1167,7 @@
     ],
     "indice_mot": "Shining",
     "indice_phrase": "Réalisateur de 2001 et du Shining",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur de 2001 et du Shining\" ?"
+    "question": "Quel réalisateur a fait 2001, l'Odyssée de l'espace et The Shining ?"
   },
   {
     "name": "David Fincher",
@@ -1185,7 +1185,7 @@
     ],
     "indice_mot": "Fight Club",
     "indice_phrase": "Réalisateur de Fight Club et Seven",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur de Fight Club et Seven\" ?"
+    "question": "Quel réalisateur a fait Fight Club et Seven ?"
   },
   {
     "name": "Ridley Scott",
@@ -1203,7 +1203,7 @@
     ],
     "indice_mot": "Alien",
     "indice_phrase": "Réalisateur d'Alien et de Blade Runner",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur d'Alien et de Blade Runner\" ?"
+    "question": "Quel réalisateur a fait Alien et Blade Runner ?"
   },
   {
     "name": "Alfred Hitchcock",
@@ -1221,7 +1221,7 @@
     ],
     "indice_mot": "Psychose",
     "indice_phrase": "Maître du suspense, auteur de Psychose",
-    "question": "De quoi s'agit-il si je te dis : \"Maître du suspense, auteur de Psychose\" ?"
+    "question": "Quel maître du suspense a réalisé Psychose ?"
   },
   {
     "name": "Denis Villeneuve",
@@ -1239,7 +1239,7 @@
     ],
     "indice_mot": "Dune",
     "indice_phrase": "Réalisateur de Dune et Arrival",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur de Dune et Arrival\" ?"
+    "question": "Quel réalisateur a signé Dune et Premier Contact (Arrival) ?"
   },
   {
     "name": "James Cameron",
@@ -1257,7 +1257,7 @@
     ],
     "indice_mot": "Titanic",
     "indice_phrase": "Réalisateur de Titanic et Avatar",
-    "question": "De quoi s'agit-il si je te dis : \"Réalisateur de Titanic et Avatar\" ?"
+    "question": "Quel réalisateur a fait Titanic et Avatar ?"
   },
   {
     "name": "MrBeast",
@@ -1275,7 +1275,7 @@
     ],
     "indice_mot": "YouTube",
     "indice_phrase": "Créateur aux défis et giveaways géants",
-    "question": "De quoi s'agit-il si je te dis : \"Créateur aux défis et giveaways géants\" ?"
+    "question": "Quel créateur est connu pour ses défis et giveaways géants sur YouTube ?"
   },
   {
     "name": "Squeezie",
@@ -1293,7 +1293,7 @@
     ],
     "indice_mot": "streaming",
     "indice_phrase": "Streamer et YouTuber français",
-    "question": "De quoi s'agit-il si je te dis : \"Streamer et YouTuber français\" ?"
+    "question": "Quel streamer et YouTuber français est parmi les plus populaires ?"
   },
   {
     "name": "Inoxtag",
@@ -1311,7 +1311,7 @@
     ],
     "indice_mot": "Minecraft",
     "indice_phrase": "Streamer français connu pour Minecraft",
-    "question": "De quoi s'agit-il si je te dis : \"Streamer français connu pour Minecraft\" ?"
+    "question": "Quel streamer français est surtout connu pour Minecraft ?"
   },
   {
     "name": "Léna Situations",
@@ -1329,7 +1329,7 @@
     ],
     "indice_mot": "lifestyle",
     "indice_phrase": "Influenceuse lifestyle française",
-    "question": "De quoi s'agit-il si je te dis : \"Influenceuse lifestyle française\" ?"
+    "question": "Quelle influenceuse lifestyle française est très suivie ?"
   },
   {
     "name": "Elon Musk",
@@ -1347,7 +1347,7 @@
     ],
     "indice_mot": "Tesla",
     "indice_phrase": "PDG de Tesla et SpaceX",
-    "question": "De quoi s'agit-il si je te dis : \"PDG de Tesla et SpaceX\" ?"
+    "question": "Qui est le PDG de Tesla et SpaceX ?"
   },
   {
     "name": "Andrew Tate",
@@ -1365,7 +1365,7 @@
     ],
     "indice_mot": "kickboxing",
     "indice_phrase": "Influenceur controversé, ancien kickboxeur",
-    "question": "De quoi s'agit-il si je te dis : \"Influenceur controversé, ancien kickboxeur\" ?"
+    "question": "Quel influenceur controversé est ancien kickboxeur ?"
   },
   {
     "name": "Amixem",
@@ -1383,7 +1383,7 @@
     ],
     "indice_mot": "YouTube",
     "indice_phrase": "YouTuber français aux vidéos variées",
-    "question": "De quoi s'agit-il si je te dis : \"YouTuber français aux vidéos variées\" ?"
+    "question": "Quel YouTuber français propose des vidéos très variées ?"
   },
   {
     "name": "HugoDécrypte",
@@ -1401,7 +1401,7 @@
     ],
     "indice_mot": "actualités",
     "indice_phrase": "YouTuber d'actualités et vulgarisation",
-    "question": "De quoi s'agit-il si je te dis : \"YouTuber d'actualités et vulgarisation\" ?"
+    "question": "Quel YouTuber vulgarise l'actualité ?"
   },
   {
     "name": "Gary Vaynerchuk",
@@ -1419,7 +1419,7 @@
     ],
     "indice_mot": "marketing",
     "indice_phrase": "Entrepreneur et expert en marketing",
-    "question": "De quoi s'agit-il si je te dis : \"Entrepreneur et expert en marketing\" ?"
+    "question": "Quel entrepreneur est expert en marketing et en médias sociaux ?"
   },
   {
     "name": "PewDiePie",
@@ -1437,7 +1437,7 @@
     ],
     "indice_mot": "YouTube",
     "indice_phrase": "YouTuber suédois au plus d'abonnés",
-    "question": "De quoi s'agit-il si je te dis : \"YouTuber suédois au plus d'abonnés\" ?"
+    "question": "Quel YouTuber suédois a longtemps été le plus abonné au monde ?"
   },
   {
     "name": "Mario",
@@ -1455,7 +1455,7 @@
     ],
     "indice_mot": "plombier",
     "indice_phrase": "Plombier italien sauteur de Nintendo",
-    "question": "De quoi s'agit-il si je te dis : \"Plombier italien sauteur de Nintendo\" ?"
+    "question": "Quel plombier italien de Nintendo saute sur les champignons ?"
   },
   {
     "name": "Link (Zelda)",
@@ -1473,7 +1473,7 @@
     ],
     "indice_mot": "épée",
     "indice_phrase": "Héros de la série Zelda",
-    "question": "De quoi s'agit-il si je te dis : \"Héros de la série Zelda\" ?"
+    "question": "Quel héros brandit l'épée dans la série Zelda ?"
   },
   {
     "name": "Lara Croft",
@@ -1491,7 +1491,7 @@
     ],
     "indice_mot": "archéologue",
     "indice_phrase": "Archéologue aventurière de Tomb Raider",
-    "question": "De quoi s'agit-il si je te dis : \"Archéologue aventurière de Tomb Raider\" ?"
+    "question": "Quelle archéologue aventurière est l'héroïne de Tomb Raider ?"
   },
   {
     "name": "Kratos (God of War)",
@@ -1509,7 +1509,7 @@
     ],
     "indice_mot": "Sparte",
     "indice_phrase": "Dieu de la guerre spartiate",
-    "question": "De quoi s'agit-il si je te dis : \"Dieu de la guerre spartiate\" ?"
+    "question": "Quel dieu de la guerre est un Spartiate ?"
   },
   {
     "name": "Geralt de Riv (The Witcher)",
@@ -1527,7 +1527,7 @@
     ],
     "indice_mot": "sorcelerie",
     "indice_phrase": "Chasseur de monstres mutant",
-    "question": "De quoi s'agit-il si je te dis : \"Chasseur de monstres mutant\" ?"
+    "question": "Quel chasseur de monstres mutant est le héros de The Witcher ?"
   },
   {
     "name": "Solid Snake (Metal Gear)",
@@ -1545,7 +1545,7 @@
     ],
     "indice_mot": "infiltration",
     "indice_phrase": "Agent d'infiltration légendaire",
-    "question": "De quoi s'agit-il si je te dis : \"Agent d'infiltration légendaire\" ?"
+    "question": "Quel agent d'infiltration légendaire est le héros de Metal Gear ?"
   },
   {
     "name": "Ezio Auditore (Assassin's Creed)",
@@ -1563,7 +1563,7 @@
     ],
     "indice_mot": "assassin",
     "indice_phrase": "Assassin de la Renaissance italienne",
-    "question": "De quoi s'agit-il si je te dis : \"Assassin de la Renaissance italienne\" ?"
+    "question": "Quel assassin évolue dans la Renaissance italienne ?"
   },
   {
     "name": "Master Chief (Halo)",
@@ -1581,7 +1581,7 @@
     ],
     "indice_mot": "Spartan",
     "indice_phrase": "Super-soldat Spartan de Halo",
-    "question": "De quoi s'agit-il si je te dis : \"Super-soldat Spartan de Halo\" ?"
+    "question": "Quel super-soldat Spartan est le héros de Halo ?"
   },
   {
     "name": "Arthur Morgan (Red Dead Redemption 2)",
@@ -1599,7 +1599,7 @@
     ],
     "indice_mot": "cow-boy",
     "indice_phrase": "Hors-la-loi du Far West",
-    "question": "De quoi s'agit-il si je te dis : \"Hors-la-loi du Far West\" ?"
+    "question": "Quel hors-la-loi du Far West est le héros de Red Dead Redemption 2 ?"
   },
   {
     "name": "Pac-Man",
@@ -1617,6 +1617,6 @@
     ],
     "indice_mot": "fantômes",
     "indice_phrase": "Personnage jaune qui mange des pastilles",
-    "question": "De quoi s'agit-il si je te dis : \"Personnage jaune qui mange des pastilles\" ?"
+    "question": "Quel personnage jaune mange des pastilles et fuit les fantômes ?"
   }
 ]
