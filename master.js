@@ -1,5 +1,6 @@
 // Interface maître du jeu
 const socket = io();
+const RECONNECT_KEY = 'convergence5_reconnect_master';
 
 let currentSessionId = null;
 let maxPlayers = 4;
@@ -28,6 +29,18 @@ const questionPlayerSelectEl = document.getElementById('questionPlayerSelect');
 const currentQuestionThemeEl = document.getElementById('currentQuestionTheme');
 const currentQuestionTextEl = document.getElementById('currentQuestionText');
 const currentQuestionAnswerEl = document.getElementById('currentQuestionAnswer');
+
+// À la connexion, tenter une reconnexion si on a des données stockées
+socket.on('connect', () => {
+    try {
+        const raw = localStorage.getItem(RECONNECT_KEY);
+        if (!raw) return;
+        const d = JSON.parse(raw);
+        if (d.sessionId && d.role === 'master' && d.reconnectKey) {
+            socket.emit('client:reconnect', { sessionId: d.sessionId, role: d.role, reconnectKey: d.reconnectKey });
+        }
+    } catch (e) {}
+});
 
 // Créer une session
 document.getElementById('createSessionBtn').addEventListener('click', () => {
@@ -58,6 +71,44 @@ socket.on('master:session-created', (data) => {
         info.style.display = 'block';
     }
     showScreen('waiting-players-screen');
+});
+
+socket.on('master:reconnect-data', (data) => {
+    try {
+        localStorage.setItem(RECONNECT_KEY, JSON.stringify({ sessionId: data.sessionId, role: 'master', reconnectKey: data.reconnectKey }));
+    } catch (e) {}
+});
+
+socket.on('master:reconnected', (data) => {
+    currentSessionId = data.sessionId;
+    if (data.players) players = data.players;
+    if (data.selectedThemes) selectedThemes = data.selectedThemes;
+    if (data.selectedLeaderId !== undefined) selectedLeaderId = data.selectedLeaderId;
+    if (data.grid) grid = data.grid;
+    if (data.cellAnswers) cellAnswers = data.cellAnswers;
+    const info = document.getElementById('sessionInfo');
+    if (info) {
+        info.style.display = 'block';
+    }
+    const session = { gameState: data.gameState };
+    if (data.gameState === 'waiting' || data.gameState === 'configuring') {
+        showScreen('waiting-players-screen');
+        renderPlayersList();
+    } else if (data.gameState === 'playing' || data.gameState === 'questions') {
+        showScreen('game-screen');
+        if (data.score != null) document.getElementById('gameScore').textContent = data.score;
+        if (data.lives != null) document.getElementById('gameLives').textContent = data.lives;
+        if (data.energy != null) {
+            const el = document.getElementById('gameEnergy');
+            if (el) el.textContent = data.energy;
+        }
+        if (data.timer != null) {
+            const m = Math.floor(data.timer / 60);
+            const s = data.timer % 60;
+            document.getElementById('gameTimer').textContent = m + ':' + String(s).padStart(2, '0');
+        }
+        renderMasterGrid();
+    }
 });
 
 // Joueur rejoint
@@ -164,6 +215,13 @@ socket.on('session:game-update', (data) => {
     }
 });
 
+socket.on('session:player-answer-announce', (data) => {
+    const msg = data.correct
+        ? `${data.playerName} a trouvé la bonne réponse`
+        : `${data.playerName} a donné une mauvaise réponse`;
+    showGamePopup({ icon: data.correct ? '✓' : '✗', title: data.correct ? 'Bonne réponse' : 'Mauvaise réponse', message: msg });
+});
+
 // Mise à jour du timer
 socket.on('session:timer-update', (data) => {
     const minutes = Math.floor(data.timer / 60);
@@ -188,6 +246,7 @@ socket.on('session:defeat', (data) => {
 
 // Session arrêtée
 socket.on('session:stopped', (data) => {
+    try { localStorage.removeItem(RECONNECT_KEY); } catch (e) {}
     currentSessionId = null;
     players = [];
     selectedLeaderId = null;
@@ -255,12 +314,16 @@ function renderPlayersList() {
         div.className = 'player-item';
         const isLeader = selectedLeaderId === player.id;
         const leaderBadge = isLeader ? '<span class="leader-badge">👑 Meneur</span>' : '';
+        const themeStr = player.themeValues && Object.keys(player.themeValues).length && !isLeader
+            ? Object.entries(player.themeValues).filter(([, v]) => v > 0).map(([cat, v]) => `${cat}: ${v}`).join(' · ')
+            : '';
         div.innerHTML = `
             <span class="player-name">${player.name} ${leaderBadge}</span>
             <span class="player-status ${player.ready ? 'ready' : 'not-ready'}">
                 ${player.ready ? '✓ Prêt' : 'En attente'}
             </span>
             ${player.totalPoints !== undefined && !isLeader ? `<span class="player-points">Points: ${player.totalPoints}/3</span>` : ''}
+            ${themeStr ? `<span class="player-themes">${themeStr}</span>` : ''}
         `;
         list.appendChild(div);
     });

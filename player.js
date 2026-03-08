@@ -1,5 +1,6 @@
 // Interface joueur
 const socket = io();
+const RECONNECT_KEY = 'convergence5_reconnect_player';
 
 let currentSessionId = null;
 let playerId = null;
@@ -8,6 +9,7 @@ let themeValues = {};
 let selectedPower = null;
 let allCategories = [];
 let currentCellIndex = null;
+let waitingPlayers = [];
 
 // Phase 2 : question finale
 let finalQuestionTimerId = null;
@@ -41,6 +43,58 @@ function updateSessionStatus() {
         joinBtn.disabled = !sessionAvailable;
     }
 }
+
+socket.on('connect', () => {
+    try {
+        const raw = localStorage.getItem(RECONNECT_KEY);
+        if (!raw) return;
+        const d = JSON.parse(raw);
+        if (d.sessionId && d.role === 'player' && d.reconnectKey) {
+            socket.emit('client:reconnect', {
+                sessionId: d.sessionId,
+                role: d.role,
+                reconnectKey: d.reconnectKey,
+                playerName: d.playerName || ''
+            });
+        }
+    } catch (e) {}
+});
+
+socket.on('player:reconnect-data', (data) => {
+    try {
+        localStorage.setItem(RECONNECT_KEY, JSON.stringify({
+            sessionId: data.sessionId,
+            role: 'player',
+            reconnectKey: data.reconnectKey,
+            playerName: data.playerName || playerName
+        }));
+    } catch (e) {}
+});
+
+socket.on('player:reconnected', (data) => {
+    playerId = data.playerId;
+    currentSessionId = data.sessionId;
+    if (data.themeValues) themeValues = data.themeValues;
+    if (data.selectedPower) selectedPower = data.selectedPower;
+    if (data.gameState === 'playing' || data.gameState === 'questions') {
+        showScreen('game-screen');
+        if (data.score != null) document.getElementById('gameScore').textContent = data.score;
+        if (data.lives != null) document.getElementById('gameLives').textContent = data.lives;
+        if (data.timer != null) {
+            const m = Math.floor(data.timer / 60);
+            const s = data.timer % 60;
+            document.getElementById('gameTimer').textContent = m + ':' + String(s).padStart(2, '0');
+        }
+        const energyEl = document.getElementById('gameEnergy');
+        if (energyEl && data.energy != null) energyEl.textContent = data.energy;
+        updateMyThemePointsDisplay();
+    } else {
+        if (data.players) waitingPlayers = data.players;
+        showScreen('waiting-screen');
+        renderWaitingPlayersList();
+        updateMyThemePointsDisplay();
+    }
+});
 
 // Rejoindre une session (unique, sans code)
 joinBtn.addEventListener('click', () => {
@@ -94,6 +148,46 @@ socket.on('session:player-count', (data) => {
     updateSessionStatus();
 });
 
+socket.on('session:player-ready', (data) => {
+    if (data.players) waitingPlayers = data.players;
+    renderWaitingPlayersList();
+});
+
+socket.on('session:player-updated', (data) => {
+    if (data.players) waitingPlayers = data.players;
+    renderWaitingPlayersList();
+});
+
+function renderWaitingPlayersList() {
+    const container = document.getElementById('waiting-players-list');
+    if (!container) return;
+    container.innerHTML = '';
+    waitingPlayers.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'waiting-player-item';
+        const themeStr = p.themeValues && Object.keys(p.themeValues).length
+            ? Object.entries(p.themeValues)
+                .filter(([, v]) => v > 0)
+                .map(([cat, v]) => `${cat}: ${v}`)
+                .join(' · ')
+            : '';
+        div.innerHTML = `
+            <span class="waiting-player-name">${p.name}</span>
+            <span class="waiting-player-status ${p.ready ? 'ready' : 'not-ready'}">${p.ready ? 'Prêt' : 'En attente'}</span>
+            ${themeStr ? `<span class="waiting-player-themes">${themeStr}</span>` : ''}
+        `;
+        container.appendChild(div);
+    });
+}
+
+function updateMyThemePointsDisplay() {
+    const el = document.getElementById('my-theme-points');
+    if (!el || !themeValues) return;
+    const parts = Object.entries(themeValues).filter(([, v]) => v > 0).map(([cat, v]) => `${cat}: ${v}`);
+    el.textContent = parts.length ? `Vos points : ${parts.join(' · ')}` : '';
+    el.style.display = parts.length ? 'block' : 'none';
+}
+
 // Charger les catégories depuis le serveur
 async function loadCategories() {
     try {
@@ -134,16 +228,14 @@ const POWER_LABELS = {
     grille: 'Grille',
     indice: 'Indice',
     vie: 'Vie',
-    points: 'Points',
-    rafraichissement: 'Rafraîchissement'
+    points: 'Points'
 };
 
 const POWER_DESCRIPTIONS = {
     grille: 'Réduit le nombre de propositions pour la case actuelle. Avec 1 joueur : 6 propositions, avec 2 ou plus : 3 propositions.',
     indice: 'Affiche un indice sur la case actuelle. Avec 1 joueur : un mot indice, avec 2 ou plus : une phrase indice.',
     vie: 'Ajoute des vies à l’équipe sur la prochaine bonne réponse (autant de vies que de joueurs ayant ce pouvoir, jusqu’à 10 vies maximum).',
-    points: 'Multiplie les points de la prochaine bonne réponse (×2, ×3 ou ×4 selon le nombre de joueurs ayant ce pouvoir).',
-    rafraichissement: 'Remplace tous les mots des cases déjà noires (mauvaises réponses ou “pass”), une seule fois par partie.'
+    points: 'Multiplie les points de la prochaine bonne réponse (×2, ×3 ou ×4 selon le nombre de joueurs ayant ce pouvoir).'
 };
 
 function renderPowersConfig() {
@@ -180,8 +272,10 @@ function renderPowersConfig() {
     }
 }
 
-// Changer la valeur d'un thème
+// Changer la valeur d'un thème (max 3 points au total)
 window.changeThemeValue = function(category, change) {
+    const sum = Object.values(themeValues).reduce((total, val) => total + val, 0);
+    if (change > 0 && sum >= 3) return;
     const current = themeValues[category] || 0;
     const newValue = Math.max(0, current + change);
     themeValues[category] = newValue;
@@ -229,6 +323,7 @@ socket.on('player:ready-error', (data) => {
 socket.on('session:game-started', (data) => {
     isInQuestionsPhase = false;
     showScreen('game-screen');
+    updateMyThemePointsDisplay();
 });
 
 // Phase 2 : début
@@ -377,6 +472,15 @@ socket.on('player:answer-result', (data) => {
     }
 });
 
+// Annonce aux autres joueurs (on n'affiche pas pour soi, déjà traité par player:answer-result)
+socket.on('session:player-answer-announce', (data) => {
+    if (data.playerId === playerId) return;
+    const msg = data.correct
+        ? `${data.playerName} a trouvé la bonne réponse`
+        : `${data.playerName} a donné une mauvaise réponse`;
+    showGamePopup({ icon: data.correct ? '✓' : '✗', title: data.correct ? 'Bonne réponse' : 'Mauvaise réponse', message: msg });
+});
+
 // Mise à jour du jeu
 socket.on('session:game-update', (data) => {
     if (data.score != null) {
@@ -420,6 +524,7 @@ socket.on('session:defeat', (data) => {
 
 // Session arrêtée
 socket.on('session:stopped', (data) => {
+    try { localStorage.removeItem(RECONNECT_KEY); } catch (e) {}
     currentSessionId = null;
     playerId = null;
     themeValues = {};

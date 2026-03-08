@@ -54,68 +54,81 @@ function getNewItemForCategory(category, usedNames) {
     return fallback || null;
 }
 
-// Fonction pour détecter les lignes et diagonales de 4+ mots trouvés (phase 1)
+// Retourne les segments de 4+ cases consécutives toutes "correct" le long d'une liste d'indices ordonnée
+function getConsecutiveCorrectRuns(orderedIndices, cellAnswers) {
+    const runs = [];
+    let current = [];
+    for (const idx of orderedIndices) {
+        if (cellAnswers[idx] === 'correct') {
+            current.push(idx);
+        } else {
+            if (current.length >= 4) runs.push([...current]);
+            current = [];
+        }
+    }
+    if (current.length >= 4) runs.push([...current]);
+    return runs;
+}
+
+// Fonction pour détecter les lignes et diagonales de 4+ mots trouvés CONSECUTIFS (phase 1)
+// Une série n'est validée que si les 4 bonnes réponses sont d'affilée (pas de mauvaise/pass au milieu)
 function detectLinesAndDiagonals(cellAnswers, gridSize = 5) {
     const lines = [];
 
-    // Vérifier les lignes horizontales
+    // Lignes horizontales
     for (let row = 0; row < gridSize; row++) {
-        const line = [];
+        const indices = [];
         for (let col = 0; col < gridSize; col++) {
-            const index = row * gridSize + col;
-            if (cellAnswers[index] === 'correct') {
-                line.push(index);
-            }
+            indices.push(row * gridSize + col);
         }
-        if (line.length >= 4) {
-            lines.push(line);
-        }
+        const runs = getConsecutiveCorrectRuns(indices, cellAnswers);
+        runs.forEach(r => lines.push(r));
     }
 
-    // Vérifier les lignes verticales
+    // Lignes verticales
     for (let col = 0; col < gridSize; col++) {
-        const line = [];
+        const indices = [];
         for (let row = 0; row < gridSize; row++) {
-            const index = row * gridSize + col;
-            if (cellAnswers[index] === 'correct') {
-                line.push(index);
-            }
+            indices.push(row * gridSize + col);
         }
-        if (line.length >= 4) {
-            lines.push(line);
-        }
+        const runs = getConsecutiveCorrectRuns(indices, cellAnswers);
+        runs.forEach(r => lines.push(r));
     }
 
-    // Vérifier la diagonale principale (haut-gauche vers bas-droite)
-    const diag1 = [];
+    // Diagonale principale (haut-gauche → bas-droite)
+    const diag1Indices = [];
     for (let i = 0; i < gridSize; i++) {
-        const index = i * gridSize + i;
-        if (cellAnswers[index] === 'correct') {
-            diag1.push(index);
-        }
+        diag1Indices.push(i * gridSize + i);
     }
-    if (diag1.length >= 4) {
-        lines.push(diag1);
-    }
+    getConsecutiveCorrectRuns(diag1Indices, cellAnswers).forEach(r => lines.push(r));
 
-    // Vérifier la diagonale secondaire (haut-droite vers bas-gauche)
-    const diag2 = [];
+    // Diagonale secondaire (haut-droite → bas-gauche)
+    const diag2Indices = [];
     for (let i = 0; i < gridSize; i++) {
-        const index = i * gridSize + (gridSize - 1 - i);
-        if (cellAnswers[index] === 'correct') {
-            diag2.push(index);
-        }
+        diag2Indices.push(i * gridSize + (gridSize - 1 - i));
     }
-    if (diag2.length >= 4) {
-        lines.push(diag2);
-    }
+    getConsecutiveCorrectRuns(diag2Indices, cellAnswers).forEach(r => lines.push(r));
 
     return lines;
 }
 
-// Fonction utilitaire pour récupérer un élément aléatoire (pour les questions finales)
-function getRandomItemByCategory(category) {
-    const items = gameData.filter(item => item.category === category);
+// Récupérer un élément par catégorie et difficulté, excluant les noms déjà utilisés
+function getItemByCategoryAndDifficulty(category, difficulty, excludedNames) {
+    const set = excludedNames instanceof Set ? excludedNames : new Set(excludedNames || []);
+    let items = gameData.filter(item =>
+        item.category === category && item.difficulty === difficulty && !set.has(item.name)
+    );
+    if (items.length === 0) {
+        items = gameData.filter(item => item.category === category && !set.has(item.name));
+    }
+    if (items.length === 0) return null;
+    return items[Math.floor(Math.random() * items.length)];
+}
+
+// Fonction utilitaire pour récupérer un élément aléatoire (pour les questions finales), en excluant les déjà utilisés
+function getRandomItemByCategory(category, excludedNames) {
+    const set = excludedNames instanceof Set ? excludedNames : new Set(excludedNames || []);
+    const items = gameData.filter(item => item.category === category && !set.has(item.name));
     if (items.length === 0) return null;
     return items[Math.floor(Math.random() * items.length)];
 }
@@ -181,9 +194,11 @@ function startQuestionsPhase(sessionId, reason = 'time') {
                 return;
             }
 
+            session.usedItemNames = session.usedItemNames || new Set();
             session.questionQueue = questionCategories.slice(0, 5).map((category, index) => {
-                const item = getRandomItemByCategory(category);
-                const points = index < 3 ? 10 : 20; // 3 thèmes choisis, puis 2 non choisis
+                const item = getRandomItemByCategory(category, session.usedItemNames);
+                if (item) session.usedItemNames.add(item.name);
+                const points = index < 3 ? 10 : 20;
                 return {
                     index,
                     category,
@@ -233,40 +248,23 @@ function startQuestionsPhase(sessionId, reason = 'time') {
     }
 }
 
-// Fonction pour remplacer les mots dans une ligne/diagonale
+// Fonction pour remplacer les mots dans une ligne/diagonale : on remet uniquement le thème (category).
+// Le meneur devra recliquer sur chaque case pour choisir Facile/Moyen/Difficile et générer le personnage (comme au début).
 function replaceWordsInLine(session, lineIndices) {
-    // Obtenir tous les noms actuellement dans la grille (sauf ceux qui vont être remplacés)
-    const usedNames = new Set();
-    session.grid.forEach((cell, index) => {
-        if (!lineIndices.includes(index)) {
-            usedNames.add(cell.name);
-        }
-    });
-
-    // Obtenir les 5 thèmes disponibles dans la grille (fallback: toutes les catégories)
-    const availableThemes = (session.gridThemes && session.gridThemes.length) ? session.gridThemes : getAllCategories();
-    if (!availableThemes.length) return;
-
     lineIndices.forEach(index => {
-        const randomTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
-        const newItem = getNewItemForCategory(randomTheme, usedNames);
-        if (!newItem) return;
-        // Mettre à jour la cellule
-        session.grid[index] = {
-            name: newItem.name,
-            category: newItem.category,
-            propositions: newItem.propositions,
-            indice_mot: newItem.indice_mot,
-            indice_phrase: newItem.indice_phrase
-        };
+        const category = session.grid[index].category;
+        session.grid[index] = { category };
         delete session.cellAnswers[index];
-        usedNames.add(newItem.name);
     });
 }
 
 // Fonction pour générer un ID de session unique
 function generateSessionId() {
     return Math.random().toString(36).substring(2, 9).toUpperCase();
+}
+
+function generateReconnectKey() {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
 // Gestion des connexions Socket.io
@@ -288,6 +286,78 @@ io.on('connection', (socket) => {
         socket.emit('session:none');
     }
 
+    // Reconnexion : reprendre la partie en cours (master, leader ou player)
+    socket.on('client:reconnect', (data) => {
+        const { sessionId, role, reconnectKey, playerName } = data || {};
+        const session = gameSessions[sessionId];
+        if (!session || !reconnectKey) return;
+
+        if (role === 'master' && session.masterReconnectKey === reconnectKey) {
+            session.masterId = socket.id;
+            socket.join(sessionId);
+            socket.emit('master:reconnected', {
+                sessionId,
+                gameState: session.gameState,
+                players: session.players.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    ready: p.ready,
+                    power: p.power,
+                    totalPoints: p.totalPoints,
+                    themeValues: p.themeValues || {}
+                })),
+                selectedThemes: session.selectedThemes,
+                selectedLeaderId: session.leader,
+                grid: session.grid,
+                cellAnswers: session.cellAnswers,
+                score: session.score,
+                lives: session.lives,
+                energy: session.energy,
+                timer: session.timer
+            });
+            return;
+        }
+        if (role === 'leader' && session.leaderReconnectKey === reconnectKey) {
+            session.leader = socket.id;
+            socket.join(sessionId);
+            socket.emit('leader:reconnected', {
+                sessionId,
+                gameState: session.gameState,
+                grid: session.grid,
+                cellAnswers: session.cellAnswers,
+                score: session.score,
+                lives: session.lives,
+                energy: session.energy,
+                timer: session.timer
+            });
+            return;
+        }
+        if (role === 'player') {
+            const player = session.players.find(p => p.reconnectKey === reconnectKey || (playerName && p.name === playerName && p.reconnectKey === reconnectKey));
+            if (!player) return;
+            player.id = socket.id;
+            socket.join(sessionId);
+            socket.emit('player:reconnected', {
+                sessionId,
+                playerId: socket.id,
+                gameState: session.gameState,
+                themeValues: player.themeValues,
+                selectedPower: player.power,
+                score: session.score,
+                lives: session.lives,
+                energy: session.energy,
+                timer: session.timer,
+                players: session.players.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    ready: p.ready,
+                    themeValues: p.themeValues || {},
+                    power: p.power
+                }))
+            });
+        }
+    });
+
     // Maître du jeu : créer une nouvelle session
     socket.on('master:create-session', (data) => {
         const sessionId = generateSessionId();
@@ -296,25 +366,28 @@ io.on('connection', (socket) => {
         gameSessions[sessionId] = {
             id: sessionId,
             masterId: socket.id,
+            masterReconnectKey: generateReconnectKey(),
             maxPlayers: maxPlayers || 4,
             players: [],
             leader: null,
+            leaderReconnectKey: null,
             selectedThemes: [],
-            gameState: 'waiting', // waiting, configuring, playing, victory, defeat
+            gameState: 'waiting',
             grid: null,
             currentCell: null,
             currentPropositions: null,
-            cellAnswers: {}, // { cellIndex: 'correct' | 'incorrect' | 'pass' }
+            cellAnswers: {},
             score: 0,
             lives: 5,
-            timer: 300, // 5 minutes
-            energy: 5,  // points d'énergie pour les pouvoirs
+            timer: 300,
+            energy: 5,
             timerInterval: null
         };
         currentSessionId = sessionId;
         
         socket.join(sessionId);
         socket.emit('master:session-created', { sessionId });
+        socket.emit('master:reconnect-data', { sessionId, reconnectKey: gameSessions[sessionId].masterReconnectKey });
         // Informer tous les clients qu'une nouvelle partie est disponible
         io.emit('session:created', {
             sessionId,
@@ -461,23 +534,26 @@ io.on('connection', (socket) => {
             id: socket.id,
             name: playerName,
             ready: false,
-            themeValues: {}, // { category: points }
+            themeValues: {},
             totalPoints: 0,
-            power: null // grille, indice, vie, points, temps, rafraichissement
+            power: null,
+            reconnectKey: generateReconnectKey()
         };
         
         session.players.push(player);
         socket.join(sessionId);
         socket.emit('player:joined', { sessionId, playerId: socket.id });
+        socket.emit('player:reconnect-data', { sessionId, reconnectKey: player.reconnectKey, playerName });
         
-        // Notifier le maître et tous les joueurs
+        // Notifier le maître et tous les joueurs (avec répartition des points par thème)
         io.to(sessionId).emit('session:player-joined', {
             players: session.players.map(p => ({
                 id: p.id,
                 name: p.name,
                 ready: p.ready,
                 totalPoints: p.totalPoints,
-                power: p.power
+                power: p.power,
+                themeValues: p.themeValues || {}
             }))
         });
         // Mettre à jour le compteur global de joueurs pour toutes les interfaces
@@ -508,7 +584,8 @@ io.on('connection', (socket) => {
                     name: p.name,
                     ready: p.ready,
                     totalPoints: p.totalPoints,
-                    power: p.power
+                    power: p.power,
+                    themeValues: p.themeValues || {}
                 }))
             });
         }
@@ -521,7 +598,7 @@ io.on('connection', (socket) => {
         
         if (!session) return;
         
-        const validPowers = ['grille', 'indice', 'vie', 'points', 'rafraichissement'];
+        const validPowers = ['grille', 'indice', 'vie', 'points'];
         if (!validPowers.includes(power)) return;
         
         const player = session.players.find(p => p.id === socket.id);
@@ -533,7 +610,8 @@ io.on('connection', (socket) => {
                     name: p.name,
                     ready: p.ready,
                     totalPoints: p.totalPoints,
-                    power: p.power
+                    power: p.power,
+                    themeValues: p.themeValues || {}
                 }))
             });
         }
@@ -565,7 +643,9 @@ io.on('connection', (socket) => {
                     id: p.id,
                     name: p.name,
                     ready: p.ready,
-                    power: p.power
+                    power: p.power,
+                    totalPoints: p.totalPoints,
+                    themeValues: p.themeValues || {}
                 }))
             });
             
@@ -600,18 +680,22 @@ io.on('connection', (socket) => {
         }
         
         session.leader = leaderId;
-        // Marquer le meneur comme prêt automatiquement (il n'a pas besoin de distribuer de points)
+        session.leaderReconnectKey = generateReconnectKey();
         leaderPlayer.ready = true;
         session.gameState = 'configuring';
         
         io.to(sessionId).emit('session:leader-selected', { leaderId, leaderName: leaderPlayer.name });
+        io.to(leaderId).emit('leader:reconnect-data', { sessionId, reconnectKey: session.leaderReconnectKey });
         
         // Mettre à jour la liste des joueurs pour montrer que le meneur est prêt
         io.to(sessionId).emit('session:player-ready', {
             players: session.players.map(p => ({
                 id: p.id,
                 name: p.name,
-                ready: p.ready
+                ready: p.ready,
+                power: p.power,
+                totalPoints: p.totalPoints,
+                themeValues: p.themeValues || {}
             }))
         });
         
@@ -654,36 +738,17 @@ io.on('connection', (socket) => {
         const randomThemes = shuffled.slice(0, 2);
         const gridThemes = [...themes, ...randomThemes];
         
-        // Créer la grille 5x5 (5 éléments par thème) sans doublons
+        // Créer la grille 5x5 : uniquement les catégories (les personnages sont choisis au clic avec la difficulté)
         const grid = [];
-        const usedNames = new Set(); // Pour éviter les doublons
-        
         gridThemes.forEach(category => {
-            const categoryItems = gameData.filter(item => item.category === category);
-            const shuffled = categoryItems.sort(() => Math.random() - 0.5);
-            let count = 0;
-            
-            // Sélectionner 5 éléments uniques de cette catégorie
-            for (const item of shuffled) {
-                if (count >= 5) break;
-                if (!usedNames.has(item.name)) {
-                    grid.push({
-                        name: item.name,
-                        category: item.category,
-                        propositions: item.propositions,
-                        indice_mot: item.indice_mot,
-                        indice_phrase: item.indice_phrase
-                    });
-                    usedNames.add(item.name);
-                    count++;
-                }
+            for (let i = 0; i < 5; i++) {
+                grid.push({ category });
             }
         });
-        
-        // Mélanger la grille
         const shuffledGrid = grid.sort(() => Math.random() - 0.5);
         session.grid = shuffledGrid;
-        session.gridThemes = gridThemes; // Stocker les 5 thèmes utilisés dans la grille
+        session.gridThemes = gridThemes;
+        session.usedItemNames = new Set(); // Personnages déjà utilisés (grille + phase 2)
         session.gameState = 'playing';
         
         // Initialiser le timer à 5 minutes, mais ne pas le lancer automatiquement.
@@ -768,27 +833,63 @@ io.on('connection', (socket) => {
         io.to(sessionId).emit('session:timer-update', { timer: session.timer });
     });
 
-    // Meneur : révéler un thème (afficher le nom)
-    socket.on('leader:reveal-theme', (data) => {
-        const { sessionId, cellIndex } = data;
+    // Meneur : choisir la difficulté puis révéler le thème (personnage tiré selon la difficulté)
+    socket.on('leader:reveal-with-difficulty', (data) => {
+        const { sessionId, cellIndex, difficulty } = data;
         const session = gameSessions[sessionId];
         
         if (!session || session.leader !== socket.id) return;
+        if (cellIndex < 0 || cellIndex >= session.grid.length) return;
         
-        if (cellIndex >= 0 && cellIndex < session.grid.length) {
-            session.currentCell = cellIndex;
-            const cell = session.grid[cellIndex];
-            
-            io.to(session.leader).emit('leader:theme-revealed', {
-                cellIndex,
-                name: cell.name
-            });
-        }
+        const cell = session.grid[cellIndex];
+        if (cell.name) return; // déjà choisi
+        
+        const category = cell.category;
+        session.usedItemNames = session.usedItemNames || new Set();
+        const item = getItemByCategoryAndDifficulty(category, difficulty, session.usedItemNames);
+        if (!item) return;
+        
+        session.usedItemNames.add(item.name);
+        const multiplier = difficulty === 'facile' ? 1 : difficulty === 'moyen' ? 2 : 3;
+        session.grid[cellIndex] = {
+            name: item.name,
+            category: item.category,
+            propositions: item.propositions,
+            indice_mot: item.indice_mot,
+            indice_phrase: item.indice_phrase,
+            question: item.question,
+            multiplier
+        };
+        session.currentCell = cellIndex;
+        const updatedCell = session.grid[cellIndex];
+        
+        io.to(session.leader).emit('leader:theme-revealed', {
+            cellIndex,
+            name: updatedCell.name
+        });
+
+        session.currentPropositions = updatedCell.propositions;
+        session.activePowerEffects = {};
+        session.powerGrilleUsed = false;
+        session.powerIndiceUsed = false;
+        const availablePowers = getAvailablePowers(session);
+        session.players.forEach(player => {
+            if (player.id !== session.leader) {
+                io.to(player.id).emit('player:show-propositions', {
+                    category: updatedCell.category,
+                    propositions: updatedCell.propositions,
+                    cellIndex,
+                    availablePowers,
+                    indice_mot: updatedCell.indice_mot,
+                    indice_phrase: updatedCell.indice_phrase
+                });
+            }
+        });
     });
 
     // Calculer les pouvoirs disponibles (au moins 1 joueur l'a choisi)
     function getAvailablePowers(session) {
-        const counts = { grille: 0, indice: 0, vie: 0, points: 0, temps: 0, rafraichissement: 0 };
+        const counts = { grille: 0, indice: 0, vie: 0, points: 0, temps: 0 };
         session.players.forEach(p => {
             if (p.power && p.id !== session.leader) counts[p.power]++;
         });
@@ -811,7 +912,6 @@ io.on('connection', (socket) => {
             session.activePowerEffects = {};
             session.powerGrilleUsed = false;
             session.powerIndiceUsed = false;
-            // powerRafraichissementUsed n'est pas réinitialisé (1 fois par partie)
             
             const availablePowers = getAvailablePowers(session);
             
@@ -891,42 +991,6 @@ io.on('connection', (socket) => {
                 session.activePowerEffects[power] = count;
                 io.to(socket.id).emit('player:power-activated', { power });
                 break;
-                
-            case 'rafraichissement':
-                if (session.powerRafraichissementUsed) return;
-                session.powerRafraichissementUsed = true;
-                const blackIndices = [];
-                for (let i = 0; i < session.grid.length; i++) {
-                    if (session.cellAnswers[i] === 'incorrect' || session.cellAnswers[i] === 'pass') {
-                        blackIndices.push(i);
-                    }
-                }
-                if (blackIndices.length > 0) {
-                    const usedNames = new Set(session.grid.map(c => c.name));
-                    blackIndices.forEach(idx => {
-                        const theme = session.gridThemes[Math.floor(Math.random() * session.gridThemes.length)];
-                        const newItem = getNewItemForCategory(theme, usedNames);
-                        session.grid[idx] = {
-                            name: newItem.name,
-                            category: newItem.category,
-                            propositions: newItem.propositions,
-                            indice_mot: newItem.indice_mot,
-                            indice_phrase: newItem.indice_phrase
-                        };
-                        usedNames.add(newItem.name);
-                        delete session.cellAnswers[idx];
-                    });
-                    io.to(session.leader).emit('leader:grid-updated', {
-                        grid: session.grid,
-                        cellAnswers: session.cellAnswers
-                    });
-                    io.to(session.masterId).emit('master:grid-updated', {
-                        grid: session.grid,
-                        cellAnswers: session.cellAnswers
-                    });
-                }
-                io.to(sessionId).emit('player:indice-revealed', { hint: 'Grille rafraîchie !', type: 'info' });
-                break;
         }
     });
 
@@ -977,16 +1041,15 @@ io.on('connection', (socket) => {
         const cell = session.grid[cellIndex];
         const isCorrect = answer === cell.name;
         const category = cell.category;
-        const points = player.themeValues[category] || 0;
+        const basePoints = player.themeValues[category] || 0;
+        const difficultyMultiplier = cell.multiplier || 1;
+        let finalPoints = basePoints * difficultyMultiplier;
+        const effects = session.activePowerEffects || {};
         
         if (isCorrect) {
-            let finalPoints = points;
-            const effects = session.activePowerEffects || {};
-            
-            // Pouvoir Points : multiplier les points
             if (effects.points) {
                 const mult = effects.points >= 3 ? 4 : (effects.points >= 2 ? 3 : 2);
-                finalPoints = points * mult;
+                finalPoints = finalPoints * mult;
             }
             session.score += finalPoints;
             
@@ -997,7 +1060,12 @@ io.on('connection', (socket) => {
             
             session.cellAnswers[cellIndex] = 'correct';
             socket.emit('player:answer-result', { correct: true, points: finalPoints });
-            
+            io.to(sessionId).emit('session:player-answer-announce', {
+                playerName: player.name,
+                correct: true,
+                playerId: socket.id
+            });
+
             // Détecter les lignes et diagonales de 4+ mots trouvés
             const lines = detectLinesAndDiagonals(session.cellAnswers);
             
@@ -1056,7 +1124,12 @@ io.on('connection', (socket) => {
             session.lives = Math.max(0, session.lives - 1);
             session.cellAnswers[cellIndex] = 'incorrect';
             socket.emit('player:answer-result', { correct: false });
-            
+            io.to(sessionId).emit('session:player-answer-announce', {
+                playerName: player.name,
+                correct: false,
+                playerId: socket.id
+            });
+
             // Notifier le meneur de la mise à jour de la grille
             io.to(session.leader).emit('leader:cell-updated', {
                 cellIndex: cellIndex,

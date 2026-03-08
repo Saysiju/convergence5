@@ -1,5 +1,6 @@
 // Interface meneur
 const socket = io();
+const RECONNECT_KEY = 'convergence5_reconnect_leader';
 
 let currentSessionId = null;
 let grid = [];
@@ -37,6 +38,40 @@ function updateSessionStatus() {
         joinBtn.disabled = !sessionAvailable;
     }
 }
+
+socket.on('connect', () => {
+    try {
+        const raw = localStorage.getItem(RECONNECT_KEY);
+        if (!raw) return;
+        const d = JSON.parse(raw);
+        if (d.sessionId && d.role === 'leader' && d.reconnectKey) {
+            socket.emit('client:reconnect', { sessionId: d.sessionId, role: d.role, reconnectKey: d.reconnectKey });
+        }
+    } catch (e) {}
+});
+
+socket.on('leader:reconnect-data', (data) => {
+    try {
+        localStorage.setItem(RECONNECT_KEY, JSON.stringify({ sessionId: data.sessionId, role: 'leader', reconnectKey: data.reconnectKey }));
+    } catch (e) {}
+});
+
+socket.on('leader:reconnected', (data) => {
+    currentSessionId = data.sessionId;
+    if (data.grid) grid = data.grid;
+    if (data.cellAnswers) cellAnswers = data.cellAnswers || {};
+    showScreen('game-screen');
+    if (data.score != null) document.getElementById('gameScore').textContent = data.score;
+    if (data.lives != null) document.getElementById('gameLives').textContent = data.lives;
+    if (data.timer != null) {
+        const m = Math.floor(data.timer / 60);
+        const s = data.timer % 60;
+        document.getElementById('gameTimer').textContent = m + ':' + String(s).padStart(2, '0');
+    }
+    const energyEl = document.getElementById('gameEnergy');
+    if (energyEl && data.energy != null) energyEl.textContent = data.energy;
+    renderGrid();
+});
 
 // Rejoindre la session (sans code, une seule partie)
 joinBtn.addEventListener('click', () => {
@@ -109,16 +144,13 @@ socket.on('leader:grid-received', (data) => {
 socket.on('leader:theme-revealed', (data) => {
     const { cellIndex, name } = data;
     currentCellIndex = cellIndex;
+    if (grid[cellIndex]) grid[cellIndex].name = name;
     currentCell = grid[cellIndex];
-    
-    // Afficher le nom
+    document.getElementById('difficulty-choice').style.display = 'none';
     document.getElementById('cellName').textContent = name;
     document.getElementById('cellName').classList.remove('cell-name-hidden');
-    document.getElementById('cellCategory').textContent = currentCell.category;
+    document.getElementById('cellCategory').textContent = currentCell ? currentCell.category : '';
     document.getElementById('cell-details').style.display = 'block';
-    // Réinitialiser le bouton (au cas où)
-    document.getElementById('showPropositionsBtn').classList.remove('btn-active');
-    // Re-rendre la grille pour afficher la cellule en jaune
     renderGrid();
 });
 
@@ -146,29 +178,41 @@ function renderGrid() {
         cellDiv.dataset.index = index;
         
         cellDiv.addEventListener('click', () => {
-            // Ne permettre le clic que si la cellule n'a pas encore été répondue
-            if (!cellAnswers[index] && (currentCellIndex === null || currentCellIndex === index)) {
-                socket.emit('leader:reveal-theme', {
-                    sessionId: currentSessionId,
-                    cellIndex: index
-                });
+            if (cellAnswers[index]) return;
+            if (currentCellIndex !== null && currentCellIndex !== index) return;
+            currentCellIndex = index;
+            currentCell = grid[index];
+            document.getElementById('cellCategory').textContent = currentCell.category;
+            document.getElementById('cell-details').style.display = 'block';
+            if (!currentCell.name) {
+                document.getElementById('difficulty-choice').style.display = 'block';
+                document.getElementById('cellName').classList.add('cell-name-hidden');
+                document.getElementById('cellName').textContent = '';
+            } else {
+                document.getElementById('difficulty-choice').style.display = 'none';
+                document.getElementById('cellName').textContent = currentCell.name;
+                document.getElementById('cellName').classList.remove('cell-name-hidden');
             }
+            renderGrid();
         });
         
         gridElement.appendChild(cellDiv);
     });
 }
 
-// Afficher les propositions aux joueurs
-document.getElementById('showPropositionsBtn').addEventListener('click', () => {
-    if (currentCellIndex !== null) {
-        socket.emit('leader:show-propositions', {
+['Facile', 'Moyen', 'Difficile'].forEach(d => {
+    const btn = document.getElementById('btnDifficulty' + d);
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        if (currentCellIndex === null) return;
+        const difficulty = d.toLowerCase();
+        socket.emit('leader:reveal-with-difficulty', {
             sessionId: currentSessionId,
-            cellIndex: currentCellIndex
+            cellIndex: currentCellIndex,
+            difficulty
         });
-        // Marquer le bouton comme actif (jaune)
-        document.getElementById('showPropositionsBtn').classList.add('btn-active');
-    }
+        document.getElementById('difficulty-choice').style.display = 'none';
+    });
 });
 
 // Passer (cacher les propositions)
@@ -179,11 +223,11 @@ document.getElementById('passBtn').addEventListener('click', () => {
     
     // Réinitialiser l'affichage
     document.getElementById('cell-details').style.display = 'none';
+    document.getElementById('difficulty-choice').style.display = 'none';
     document.getElementById('cellName').classList.add('cell-name-hidden');
-    document.getElementById('showPropositionsBtn').classList.remove('btn-active');
     currentCellIndex = null;
     currentCell = null;
-    renderGrid(); // Re-rendre pour enlever le jaune
+    renderGrid();
 });
 
 // Mise à jour du jeu
@@ -198,6 +242,13 @@ socket.on('session:game-update', (data) => {
         const energyEl = document.getElementById('gameEnergy');
         if (energyEl) energyEl.textContent = data.energy;
     }
+});
+
+socket.on('session:player-answer-announce', (data) => {
+    const msg = data.correct
+        ? `${data.playerName} a trouvé la bonne réponse`
+        : `${data.playerName} a donné une mauvaise réponse`;
+    showGamePopup({ icon: data.correct ? '✓' : '✗', title: data.correct ? 'Bonne réponse' : 'Mauvaise réponse', message: msg });
 });
 
 // Mise à jour du timer
@@ -216,7 +267,6 @@ socket.on('leader:cell-updated', (data) => {
     if (currentCellIndex === cellIndex) {
         currentCellIndex = null;
         currentCell = null;
-        document.getElementById('showPropositionsBtn').classList.remove('btn-active');
     }
     renderGrid(); // Re-rendre la grille pour afficher la nouvelle couleur
 });
@@ -231,11 +281,11 @@ socket.on('leader:grid-updated', (data) => {
 // Cacher le menu après une réponse correcte
 socket.on('leader:hide-menu', () => {
     document.getElementById('cell-details').style.display = 'none';
+    document.getElementById('difficulty-choice').style.display = 'none';
     document.getElementById('cellName').classList.add('cell-name-hidden');
-    document.getElementById('showPropositionsBtn').classList.remove('btn-active');
     currentCellIndex = null;
     currentCell = null;
-    renderGrid(); // Re-rendre pour enlever le jaune
+    renderGrid();
 });
 
 // Partie démarrée
@@ -265,6 +315,7 @@ socket.on('session:defeat', (data) => {
 
 // Session arrêtée
 socket.on('session:stopped', (data) => {
+    try { localStorage.removeItem(RECONNECT_KEY); } catch (e) {}
     currentSessionId = null;
     grid = [];
     currentCellIndex = null;
